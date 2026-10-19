@@ -1,0 +1,1989 @@
+<title>Samyama Sadhana</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,500;0,600;1,500&family=Mukta:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one-column phone app. Greeting header, a sky hero that tracks the sun over Bengaluru, illustrated practice rows, floating bottom bar.
+   Warm cream ground, deep teal for action, terracotta robe tones in the illustrations, night-slate for summary cards. */
+:root{
+  --bg:#F4EEE2; --surface:#FFFDF8; --sand:#EDE3CE; --ink:#1F2A30; --muted:#716B5F; --line:#E5DBCA; --track:#E9E0CF;
+  --teal:#2B7A7C; --teal-soft:#DCECE8; --on-teal:#FFFFFF; --terra:#B65A35; --terra-soft:#F4E0D3;
+  --night:#1F2C34; --on-night:#F4EEE2; --night-muted:#A9B4B6; --warn:#B8432E; --shadow:rgba(60,45,20,.10);
+  --ill-skin:#C98A60; --ill-hair:#2E2420; --ill-robe:#B5552F; --ill-robe2:#DB7A40; --ill-sun:#F1B444; --ill-glow:#F7CF73; --ill-line:#9B8C70; --ill-robe-d:#8C3E21; --ill-skin-l:#E0A77E;
+  --f-mango:#EFA338; --f-leaf:#6E9A55; --f-banana:#F0CD55; --f-bowl:#C99E70; --f-green:#7FAE5E; --f-tomato:#D3533A; --f-nut:#C38E59; --f-cup:#93653F; --f-dev:#33414A;
+  --t-peach:#F6DCC5; --t-sage:#DCE6D1; --t-dusk:#D9DEEC; --t-rose:#F2D7D1; --t-sand:#EEE3CB; --t-night:#24343E;
+  --f-display:"Gelasio", Georgia, "Times New Roman", serif;
+  --f-body:"Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13191C; --surface:#1B2327; --sand:#252D2F; --ink:#EFE8DA; --muted:#A29B8D; --line:#2C363A; --track:#2A3337;
+  --teal:#62B5B0; --teal-soft:#1E3533; --on-teal:#0E1B1B; --terra:#E28B5F; --terra-soft:#3A2820;
+  --night:#0D1316; --on-night:#EFE8DA; --night-muted:#8E9A9C; --warn:#E57B63; --shadow:rgba(0,0,0,.35);
+  --ill-skin:#B97C55; --ill-hair:#1A1513; --ill-robe:#A44E2C; --ill-robe2:#C96B37; --ill-sun:#E8A93E; --ill-glow:#F2C46A; --ill-line:#857A63; --ill-robe-d:#73321A; --ill-skin-l:#CC9268;
+  --f-bowl:#A9845D; --f-dev:#6B7B85;
+  --t-peach:#3A2D23; --t-sage:#253027; --t-dusk:#242A37; --t-rose:#352628; --t-sand:#2C2922; --t-night:#0F181D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13191C; --surface:#1B2327; --sand:#252D2F; --ink:#EFE8DA; --muted:#A29B8D; --line:#2C363A; --track:#2A3337;
+  --teal:#62B5B0; --teal-soft:#1E3533; --on-teal:#0E1B1B; --terra:#E28B5F; --terra-soft:#3A2820;
+  --night:#0D1316; --on-night:#EFE8DA; --night-muted:#8E9A9C; --warn:#E57B63; --shadow:rgba(0,0,0,.35);
+  --ill-skin:#B97C55; --ill-hair:#1A1513; --ill-robe:#A44E2C; --ill-robe2:#C96B37; --ill-sun:#E8A93E; --ill-glow:#F2C46A; --ill-line:#857A63; --ill-robe-d:#73321A; --ill-skin-l:#CC9268;
+  --f-bowl:#A9845D; --f-dev:#6B7B85;
+  --t-peach:#3A2D23; --t-sage:#253027; --t-dusk:#242A37; --t-rose:#352628; --t-sand:#2C2922; --t-night:#0F181D; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* illustration classes */
+.sk{fill:var(--ill-skin)} .hr{fill:var(--ill-hair)} .rb{fill:var(--ill-robe)} .rb2{fill:var(--ill-robe2)}
+.skl{fill:none;stroke:var(--ill-skin);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.rbl{fill:none;stroke:var(--ill-robe);stroke-width:4.6;stroke-linecap:round;stroke-linejoin:round}
+.sun{fill:var(--ill-sun)} .glow{fill:var(--ill-glow)} .gl{fill:none;stroke:var(--ill-glow);stroke-width:2.2;stroke-linecap:round}
+.ml{fill:none;stroke:var(--ill-line);stroke-width:1.6;stroke-linecap:round;opacity:.7}
+.om{fill:var(--ill-glow);font-family:var(--f-body);font-weight:600}
+.f-mango{fill:var(--f-mango)} .f-leaf{fill:var(--f-leaf)} .f-banana{fill:var(--f-banana)} .f-bowl{fill:var(--f-bowl)} .f-green{fill:var(--f-green)}
+.f-tomato{fill:var(--f-tomato)} .f-nut{fill:var(--f-nut)} .f-cup{fill:var(--f-cup)} .f-dev{fill:var(--f-dev)} .f-screen{fill:var(--t-dusk)}
+.t-peach{background:var(--t-peach)} .t-sage{background:var(--t-sage)} .t-dusk{background:var(--t-dusk)} .t-rose{background:var(--t-rose)} .t-sand{background:var(--t-sand)} .t-night{background:var(--t-night)}
+.c-teal{background:var(--teal-soft);color:var(--teal)} .c-terra{background:var(--terra-soft);color:var(--terra)}
+.c-sage{background:var(--t-sage);color:var(--f-leaf)} .c-dusk{background:var(--t-dusk);color:var(--ink)}
+
+/* header */
+.top{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:18px 6px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:640px;margin:0 auto}
+.greet small{display:block;color:var(--muted);font-size:15px;line-height:1.1}
+.greet b{font-family:var(--f-display);font-weight:500;font-size:27px;line-height:1.15;display:block}
+.ptitle{font-family:var(--f-display);font-weight:500;font-size:30px;line-height:1.1;display:flex;align-items:center;gap:10px;min-width:0}
+.back{border:0;background:var(--surface);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:0 1px 6px var(--shadow);flex-shrink:0}
+.back svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.av{width:46px;height:46px;border-radius:50%;border:0;display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0}
+.av.ring2{box-shadow:0 0 0 2px var(--surface),0 0 0 4px currentColor}
+.av.lg{width:76px;height:76px;font-size:30px}
+
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 120px;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+
+/* hero */
+.hero{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 6px 20px var(--shadow)}
+.hero svg{display:block;width:100%;height:auto}
+.hero .ov{position:absolute;left:16px;top:14px;right:96px;display:flex;flex-direction:column;gap:2px;pointer-events:none}
+.hero .ov small{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;opacity:.9}
+.hero .ov b{font-family:var(--f-display);font-weight:500;font-size:22px;line-height:1.15}
+.hero.lt .ov{color:#FFFDF8;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.hero.dk .ov{color:#1F2A30}
+.hero .navd{position:absolute;top:12px;right:12px;display:flex;gap:6px}
+.hero .navd button{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,253,248,.85);color:#1F2A30;font-size:18px;line-height:1;display:grid;place-items:center}
+.hero .navd button:disabled{opacity:.4}
+.hero .navd .td{width:auto;padding:0 12px;border-radius:999px;font-size:13px;font-weight:600}
+
+/* coach */
+.coach{background:var(--surface);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:0 2px 10px var(--shadow)}
+.coach .tophead{display:flex;gap:14px;align-items:center}
+.ring{flex-shrink:0;position:relative;width:62px;height:62px}
+.ring svg{width:62px;height:62px;transform:rotate(-90deg)}
+.ring .rt{fill:none;stroke:var(--track);stroke-width:6}
+.ring .rp{fill:none;stroke:var(--teal);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.coach h2{font-family:var(--f-display);font-weight:500;font-size:21px;line-height:1.25;margin:0;text-wrap:balance}
+.coach .hsub{color:var(--muted);font-size:14.5px;margin-top:2px}
+.quote{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:0 4px}
+.quote .qm{width:34px;height:34px;border-radius:50%;background:var(--surface);box-shadow:0 2px 8px var(--shadow);display:grid;place-items:center}
+.quote .qm svg{width:16px;height:16px;fill:var(--teal)}
+.quote blockquote{margin:0;font-family:var(--f-display);font-size:18px;line-height:1.45;text-wrap:balance}
+.quote figcaption{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--terra);font-weight:600}
+.scallop{display:block;width:100%;height:14px}
+.scallop rect{fill:url(#scal)}
+.todoh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.todoh b{font-weight:600;font-size:15px}
+.todoh span{font-size:13px;color:var(--muted)}
+.todos{display:flex;flex-wrap:wrap;gap:8px}
+.todo{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:4px 12px 4px 4px;font-size:14px;font-weight:500;text-align:left}
+.todo .tb{width:30px;height:30px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.todo .tb svg{width:100%;height:100%;display:block}
+.todo.must{border-color:var(--terra);background:var(--terra-soft)}
+.todo.must::after{content:"must";font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--terra)}
+.alldone{display:flex;align-items:center;gap:10px;color:var(--teal);font-weight:600}
+.nextbtn{display:flex;align-items:center;justify-content:center;gap:10px;border:1.5px solid var(--teal);color:var(--teal);border-radius:14px;padding:11px 14px;font-weight:600;font-size:16px;background:none}
+.nextbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round}
+.nextbtn b{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:3px 10px;border-radius:999px;background:var(--teal-soft);color:var(--teal);font-weight:500}
+.alert{font-size:14px;color:var(--warn);font-weight:500}
+.cnote{font-size:14px;color:var(--muted)}
+
+/* sections */
+.sec{display:flex;flex-direction:column;gap:10px}
+.sech{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:0 4px}
+.sech h3{font-family:var(--f-display);font-weight:500;font-size:22px;margin:0}
+.sech span{font-size:13px;color:var(--muted)}
+
+/* shoonya box */
+.shoonya{border-radius:22px;padding:18px 18px 0;display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:6px 10px;position:relative;overflow:hidden;box-shadow:0 2px 10px var(--shadow)}
+.shoonya .eb{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--terra);font-weight:700}
+.shoonya h3{font-family:var(--f-display);font-weight:500;font-size:28px;margin:2px 0 4px;line-height:1.1}
+.shoonya p{margin:0;font-size:14px;color:var(--muted)}
+.shoonya .ill{width:120px;height:120px;grid-row:1;grid-column:2;align-self:end}
+.shoonya .rbtns{display:flex;gap:10px;flex-wrap:wrap;padding:4px 0 18px;grid-column:1/-1}
+.shoonya .rbtns .rbtn{flex:1;justify-content:center}
+nav.tabs[hidden],header.top[hidden]{display:none}
+.rbtn{border:1.6px solid var(--teal);background:var(--surface);color:var(--teal);border-radius:14px;padding:8px 14px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:6px}
+.rbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.rbtn.on{background:var(--teal);color:var(--on-teal)}
+.pop{animation:pop .45s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+
+/* practice list */
+.list{background:var(--surface);border-radius:20px;box-shadow:0 2px 10px var(--shadow);overflow:hidden}
+.prow + .prow{border-top:1px solid var(--line)}
+.pmain{width:100%;border:0;background:none;display:grid;grid-template-columns:28px 56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 14px;text-align:left}
+.chk{width:26px;height:26px;border-radius:8px;border:1.7px solid var(--teal);display:grid;place-items:center;flex-shrink:0}
+.chk svg{width:16px;height:16px;stroke:var(--teal);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.chk.part{background:var(--teal-soft)}
+.chk.part::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.done .chk{background:var(--teal)}
+.done .chk svg{stroke:var(--on-teal)}
+.thumb{width:56px;height:56px;border-radius:14px;display:block;overflow:hidden}
+.thumb svg{width:100%;height:100%;display:block}
+.done .thumb{opacity:.6}
+.pname b{display:block;font-weight:500;font-size:17px;line-height:1.2}
+.done .pname b{color:var(--muted)}
+.pname small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.pname small.met{color:var(--teal);font-weight:600}
+.pname small.over{color:var(--warn);font-weight:600}
+.tag{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--terra);margin-left:6px;vertical-align:2px}
+.pval{font-size:14px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pval .cv{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .2s}
+.open .pval .cv{transform:rotate(90deg)}
+.pval .dots{display:flex;gap:4px}
+.rd{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--teal);display:grid;place-items:center;background:var(--surface)}
+.rd.on{background:var(--teal)}
+.rd svg{width:13px;height:13px;stroke:var(--on-teal);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.pbody{padding:2px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.prow.open{background:color-mix(in srgb,var(--teal-soft) 35%,var(--surface))}
+.ctrl{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ctrl > span{font-size:14.5px;color:var(--muted)}
+.step{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.step button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:21px;line-height:1}
+.step output{min-width:58px;text-align:center;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.pill{border:1px solid var(--line);background:var(--surface);padding:7px 13px;border-radius:999px;font-size:14px;font-weight:500}
+.pill.on{background:var(--teal);border-color:var(--teal);color:var(--on-teal)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.sit{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 12px}
+.x{border:0;background:none;color:var(--muted);font-size:24px;width:32px;height:42px;flex-shrink:0}
+.bar{height:8px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:99px}
+
+/* big sliders */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:46px;margin:0;background:transparent;--p:0%}
+input[type=range]::-webkit-slider-runnable-track{height:14px;border-radius:99px;background:linear-gradient(var(--teal),var(--teal)) 0 0/var(--p) 100% no-repeat,var(--track)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;margin-top:-10px;border-radius:50%;background:var(--surface);border:3px solid var(--teal);box-shadow:0 2px 6px var(--shadow)}
+input[type=range]::-moz-range-track{height:14px;border-radius:99px;background:var(--track)}
+input[type=range]::-moz-range-progress{height:14px;border-radius:99px;background:var(--teal)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--surface);border:3px solid var(--teal)}
+
+/* food */
+.food{background:var(--surface);border-radius:20px;box-shadow:0 2px 10px var(--shadow);padding:16px;display:flex;flex-direction:column;gap:14px}
+.plate{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center}
+.plate svg{width:112px;height:112px}
+.plate .pt{fill:none;stroke:var(--track);stroke-width:14}
+.plate .pf{fill:none;stroke:var(--f-mango);stroke-width:14}
+.plate .ps{fill:none;stroke:var(--f-green);stroke-width:14}
+.plate .tick{stroke:var(--ink);stroke-width:2}
+.plate text{fill:var(--ink);font-family:var(--f-display);font-size:19px;font-weight:600}
+.plate .sub{fill:var(--muted);font-family:var(--f-body);font-size:10px;font-weight:500}
+.plate .sl label{display:flex;justify-content:space-between;font-size:14.5px;font-weight:500;gap:6px}
+.plate .sl label i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.plate .note2{font-size:13px;color:var(--muted)}
+.pledges{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.pledge{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:9px 10px;text-align:left;display:flex;gap:8px;align-items:flex-start;min-width:0}
+.pledge .chk{width:22px;height:22px;border-radius:7px}
+.pledge .chk svg{width:13px;height:13px}
+.pledge b{font-weight:600;font-size:14px;display:block;line-height:1.2}
+.pledge small{color:var(--muted);font-size:12px;display:block;line-height:1.25}
+.pledge.on{background:var(--teal-soft);border-color:transparent}
+.pledge.on .chk{background:var(--teal)}
+.pledge.on .chk svg{stroke:var(--on-teal)}
+.extras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.xt{border:0;border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;font-size:13.5px;font-weight:600;line-height:1.2;text-align:center}
+.xt > svg{width:58px;height:58px}
+.xt .rd{position:absolute;top:8px;right:8px}
+.xt.on{box-shadow:inset 0 0 0 2px var(--teal)}
+textarea{width:100%;min-height:74px;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:10px 12px;resize:vertical;font-size:15px}
+
+/* bottom bar */
+nav.tabs{position:fixed;z-index:6;left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  max-width:560px;margin:0 auto;background:var(--surface);border-radius:22px;box-shadow:0 8px 26px var(--shadow),0 0 0 1px var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:6px}
+nav.tabs button{border:0;background:none;padding:7px 4px;font-size:13px;font-weight:500;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:16px}
+nav.tabs svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button.on{color:var(--teal)}
+nav.tabs button.on svg .fl{fill:currentColor}
+
+/* cards, forms */
+.card{background:var(--surface);border-radius:20px;box-shadow:0 2px 10px var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
+.card h2{font-family:var(--f-display);font-weight:500;font-size:20px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card h2 span{font-family:var(--f-body);font-size:12px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;text-align:right;font-weight:600}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.field input{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:9px 12px;font-size:16px;color:var(--ink);width:100%;min-width:0;min-height:46px}
+input[type=time]{-webkit-appearance:none;appearance:none;display:block;min-width:0;max-width:100%;text-align:left}
+input[type=time]::-webkit-date-and-time-value{text-align:left}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.busy{display:flex;flex-direction:column;gap:8px;background:var(--bg);border-radius:14px;padding:10px}
+.busy .field input{background:var(--surface)}
+.busy .bh{display:flex;gap:6px;align-items:flex-end}
+.busy .bh .field{flex:1}
+.btn{border:0;background:var(--teal);color:var(--on-teal);border-radius:14px;padding:13px 16px;font-weight:600;font-size:16px}
+.btn.ghost{background:var(--surface);color:var(--teal);border:1.5px solid var(--teal)}
+.btn.warn{background:var(--warn);color:#FFFDF8}
+.btn.big{padding:15px 18px;font-size:17px;border-radius:16px}
+.linkbtn{border:0;background:none;color:var(--teal);font-weight:600;padding:4px 0;text-align:left}
+
+/* plan timeline */
+.tl{display:flex;flex-direction:column}
+.tli{display:grid;grid-template-columns:auto 38px minmax(0,1fr) 24px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.tl > :first-child{border-top:0}
+.tchip{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:5px 8px;font-weight:600;font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:74px;text-align:center}
+.tchip.ed{border-color:var(--teal);color:var(--teal)}
+.tli .mini{width:38px;height:38px;border-radius:10px;overflow:hidden}
+.tli .mini svg{width:100%;height:100%;display:block}
+.tli .nm small{display:block;color:var(--muted);font-size:12.5px}
+.tli .nm small.over{color:var(--warn);font-weight:600}
+.tli.prep .nm,.tli.prep .tchip{color:var(--muted)}
+.tli.prep .mini{opacity:.55}
+.tline{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.tline .tt{font-weight:600;font-variant-numeric:tabular-nums;min-width:74px;text-align:center;font-size:13.5px}
+.tline.busyrow{color:var(--muted);font-style:italic}
+.tline.sandhya{color:var(--terra);font-size:13.5px}
+.tedit{display:flex;gap:8px;align-items:center;padding:4px 0 12px}
+.tedit input{flex:1;border:1px solid var(--teal);background:var(--bg);border-radius:12px;padding:9px 12px;font-size:17px;min-height:46px}
+.tick{width:24px;height:24px;border-radius:50%;border:1.6px solid var(--line);display:grid;place-items:center}
+.tick.on{background:var(--teal);border-color:var(--teal)}
+.tick svg{width:14px;height:14px;stroke:var(--on-teal);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.segtabs{display:flex;background:var(--sand);border-radius:14px;padding:4px}
+.segtabs button{flex:1;border:0;background:none;padding:8px;border-radius:11px;font-weight:600;font-size:14.5px;color:var(--muted)}
+.segtabs button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px var(--shadow)}
+
+/* progress */
+.nightcard{background:var(--night);color:var(--on-night);border-radius:22px;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:8px;position:relative;overflow:hidden}
+.nightcard h2{font-family:var(--f-display);font-weight:500;font-size:26px;margin:0 0 4px}
+.nightcard .eb{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--night-muted);font-weight:600}
+.nightcard .bigs{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
+.nightcard .big{display:flex;align-items:center;gap:6px}
+.nightcard .big svg{width:28px;height:28px;stroke:var(--on-night);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.nightcard .big b{font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.nightcard .big small{font-size:13px;line-height:1.05;color:var(--night-muted)}
+.nightcard .ill{width:92px;height:92px;align-self:end}
+.nightcard .foot{grid-column:1/3;font-size:13.5px;color:var(--night-muted)}
+.journey .jh{font-family:var(--f-display);font-size:26px;line-height:1.15}
+.journey .js{color:var(--muted);font-size:14.5px;margin-top:2px}
+.jtrack{position:relative;height:74px;margin:6px 10px 0}
+.jtrack .ln{position:absolute;left:0;right:0;top:14px;height:6px;border-radius:99px;background:var(--track)}
+.jtrack .fill{position:absolute;left:0;top:14px;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--terra),var(--teal))}
+.jtrack .ms{position:absolute;top:8px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--surface);border:3px solid var(--track)}
+.jtrack .ms.past{border-color:var(--teal);background:var(--teal)}
+.jtrack .ms.sam{width:24px;height:24px;margin-left:-12px;top:5px;background:var(--night);border-color:var(--night);display:grid;place-items:center}
+.jtrack .ms.sam svg{width:12px;height:12px;fill:var(--ill-glow)}
+.jtrack .lb{position:absolute;top:34px;font-size:12px;line-height:1.2;color:var(--muted);transform:translateX(-50%);text-align:center;white-space:nowrap}
+.jtrack .lb b{display:block;color:var(--ink);font-weight:600;font-size:12.5px}
+.jtrack .lb.l{transform:translateX(-10px);text-align:left}
+.jtrack .lb.r{transform:translateX(calc(-100% + 10px));text-align:right}
+.jtrack .me{position:absolute;top:2px;width:30px;height:30px;margin-left:-15px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;box-shadow:0 0 0 3px var(--surface),0 2px 8px var(--shadow)}
+.month h3{font-family:var(--f-display);font-weight:500;font-size:21px;margin:0;display:flex;justify-content:space-between;align-items:baseline}
+.month h3 span{font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:500}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .h{font-size:11px;color:var(--muted);text-align:center;font-weight:600}
+.cell{aspect-ratio:1;max-width:100%;border-radius:10px;background:var(--track);position:relative;font-size:12px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:4px 5px;font-variant-numeric:tabular-nums;color:var(--muted);border:0;overflow:hidden}
+.cell.pre{background:transparent;opacity:.45}
+.cell.fut{background:transparent;border:1px dashed var(--line)}
+.cell.today{box-shadow:inset 0 0 0 2px var(--ink)}
+.cell.sel{box-shadow:0 0 0 2px var(--ink)}
+.cell.blank{background:transparent}
+.cell .ml2{font-size:8.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;line-height:1;color:var(--terra)}
+.cell.d1{box-shadow:inset 0 0 0 2px var(--terra)}
+.cell.half{background-image:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--terra) 25%,transparent) 50%)}
+.cell.sam{background:var(--night);color:var(--on-night)}
+.cell.sam .ml2{color:var(--ill-glow);font-size:13px}
+.cell .miss{position:absolute;right:4px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{background:var(--bg);border-radius:14px;padding:10px;min-width:0}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums;font-weight:700;line-height:1.1}
+.stat small{color:var(--muted);font-size:12px;line-height:1.2;display:block}
+.stat.hi b{color:var(--teal)}
+.week{display:grid;grid-template-columns:62px repeat(7,1fr);gap:4px;align-items:center;font-size:12px}
+.week .c{height:22px;border-radius:6px;background:var(--track)}
+.week .c.y{background:var(--teal)}
+.week .hd{text-align:center;color:var(--muted)}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin:0}
+.dl dt{color:var(--muted)}
+.dl dd{margin:0;text-align:right;font-weight:500;min-width:0}
+.dl dd.y{color:var(--teal)}
+.dl dd.n{color:var(--warn)}
+.daylist{display:flex;flex-direction:column;gap:8px}
+.daylist details{background:var(--surface);border-radius:16px;padding:12px 14px;box-shadow:0 2px 8px var(--shadow)}
+.daylist summary{display:flex;justify-content:space-between;gap:8px;list-style:none;cursor:pointer}
+.daylist summary::-webkit-details-marker{display:none}
+.daylist summary small{display:block;color:var(--muted);font-weight:400;font-size:13px}
+.daylist .sc{color:var(--teal);font-variant-numeric:tabular-nums}
+.daylist .inner{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.note{font-size:14px;color:var(--muted)}
+.hint{font-size:13px;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:16px 8px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.empty svg{width:110px;height:110px}
+
+/* profile & settings */
+.phead{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:8px 0 4px}
+.phead b{font-family:var(--f-display);font-size:24px;font-weight:500}
+.phead small{color:var(--muted);font-size:14px}
+.avwrap{position:relative}
+.aved{position:absolute;right:-4px;bottom:-2px;width:32px;height:32px;border-radius:50%;border:3px solid var(--bg);background:var(--teal);display:grid;place-items:center;padding:0}
+.aved svg{width:15px;height:15px;stroke:var(--on-teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.slist{background:var(--surface);border-radius:20px;box-shadow:0 2px 10px var(--shadow);overflow:hidden}
+.srow{width:100%;border:0;background:none;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;text-align:left}
+.slist > * + *{border-top:1px solid var(--line)}
+.sico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.sico svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.srow b{font-weight:500;font-size:16.5px;display:block}
+.srow small{color:var(--muted);font-size:13px;display:block}
+.srow .cv,.member .cv{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2}
+.srow.danger b{color:var(--warn)}
+.sgroup{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:4px 6px 0}
+.tog{width:52px;height:30px;border-radius:999px;border:0;background:var(--track);position:relative;flex-shrink:0}
+.tog::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px var(--shadow);transition:transform .15s}
+.tog.on{background:var(--teal)}
+.tog.on::after{transform:translateX(22px)}
+.drow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px}
+.drow .mini{width:44px;height:44px;border-radius:12px;overflow:hidden}
+.drow .mini svg{width:100%;height:100%;display:block}
+.drow b{font-weight:500;font-size:15.5px;display:block;line-height:1.2}
+.drow small{color:var(--muted);font-size:12.5px}
+.drow .step button{width:36px;height:36px;font-size:18px}
+.drow .step output{min-width:50px;font-size:15.5px}
+.member{width:100%;border:0;background:none;display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;text-align:left}
+.member b{font-weight:600;font-size:16.5px;display:block}
+.member small{color:var(--muted);font-size:13px;display:block}
+.member .ring{width:46px;height:46px}
+.member .ring svg{width:46px;height:46px}
+.member .ring span{font-size:12px}
+.colors{display:flex;gap:12px;margin-top:4px}
+.colors button{width:40px;height:40px;border-radius:50%;border:0}
+.colors button.on{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+.banner{display:flex;gap:12px;align-items:center;background:var(--sand);border-radius:18px;padding:12px 14px;font-size:14px}
+.banner svg{width:64px;height:64px;flex-shrink:0}
+
+/* onboarding */
+.ob{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:20px 28px;gap:18px}
+.ob .sky{border-radius:28px;overflow:hidden;box-shadow:0 10px 30px var(--shadow)}
+.ob .sky svg{display:block;width:100%;height:auto}
+.ob h1{font-family:var(--f-display);font-weight:500;font-size:34px;line-height:1.1;margin:0;text-wrap:balance}
+.ob h2{font-family:var(--f-display);font-weight:500;font-size:28px;line-height:1.15;margin:0;text-wrap:balance}
+.ob p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
+.ob .eb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);font-weight:700}
+.ob .grow{flex:1}
+.ob .dotsrow{display:flex;gap:6px;justify-content:center}
+.ob .dotsrow i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.ob .dotsrow i.on{background:var(--teal);width:20px;border-radius:99px}
+.pick{display:flex;flex-direction:column;gap:10px}
+.pickrow{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--surface);border:0;border-radius:18px;padding:12px 14px;box-shadow:0 2px 10px var(--shadow);text-align:left}
+.pickrow .av{width:52px;height:52px}
+.pickrow b{font-size:18px;font-weight:600;display:block}
+.pickrow small{color:var(--muted);font-size:13.5px}
+.pickrow .cv{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2}
+.facts{display:flex;flex-direction:column;gap:10px}
+.fact{display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;align-items:center;background:var(--surface);border-radius:16px;padding:10px 12px}
+.fact .mini{width:48px;height:48px;border-radius:12px;overflow:hidden}
+.fact .mini svg{width:100%;height:100%;display:block}
+.fact b{display:block;font-weight:600}
+.fact small{color:var(--muted);font-size:13.5px}
+.ob .grid2 input{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;font-size:16px;min-width:0;width:100%}
+.big-input{border:1.5px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 16px;font-size:20px;width:100%;font-family:var(--f-display)}
+
+/* living illustrations */
+.shd{fill:var(--ill-hair);opacity:.13}
+.fold{fill:none;stroke:var(--ill-robe-d);stroke-width:1.1;stroke-linecap:round;opacity:.45}
+.neck{fill:none;stroke:var(--ill-skin-l);stroke-width:1;opacity:.9}
+.eye{fill:none;stroke:var(--ill-hair);stroke-width:.75;stroke-linecap:round}
+.gr{fill:url(#gRobe)} .gl2{fill:url(#gLeg)} .gs{fill:url(#gSkin)} .gg{fill:url(#gGlow)}
+.lg{fill:none;stroke:var(--ill-robe);stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round}
+.arm{fill:none;stroke:var(--ill-skin);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.sleeve{fill:none;stroke:var(--ill-robe2);stroke-width:4.4;stroke-linecap:round}
+.mango{fill:url(#gMango)} .bowl{fill:url(#gBowl)} .scr{fill:url(#gScreen)}
+.anim-glow{animation:aglow 3.6s ease-in-out infinite}
+@keyframes aglow{50%{opacity:.35}}
+.anim-steam{animation:asteam 3.2s ease-in-out infinite;transform-box:fill-box}
+.anim-steam.d2{animation-delay:1.1s}
+@keyframes asteam{0%{transform:translateY(4px);opacity:0}35%{opacity:.9}100%{transform:translateY(-5px);opacity:0}}
+.anim-breathe{transform-box:fill-box;transform-origin:50% 100%;animation:abreathe 6s ease-in-out infinite}
+@keyframes abreathe{50%{transform:scale(1.015,1.035)}}
+.anim-halo{transform-box:fill-box;transform-origin:center;animation:ahalo 5s ease-in-out infinite}
+@keyframes ahalo{50%{transform:scale(1.2);opacity:.45}}
+.anim-cloud{animation:acloud 120s linear infinite}
+.anim-cloud.slow{animation-duration:170s}
+@keyframes acloud{from{transform:translateX(-80px)}to{transform:translateX(460px)}}
+.anim-birds{animation:abirds 30s linear infinite}
+@keyframes abirds{0%{transform:translate(-40px,80px)}100%{transform:translate(420px,14px)}}
+.anim-flap{transform-box:fill-box;transform-origin:center;animation:aflap .45s ease-in-out infinite alternate}
+@keyframes aflap{to{transform:scaleY(.3)}}
+.anim-twinkle{animation:atw 2.8s ease-in-out infinite}
+@keyframes atw{50%{opacity:.2}}
+.anim-rise{animation:arise 3.2s cubic-bezier(.2,.7,.2,1) both}
+@keyframes arise{from{transform:translateY(80px)}}
+.anim-in{animation:ain .9s ease both}
+.anim-in.d1{animation-delay:.5s} .anim-in.d2{animation-delay:.8s} .anim-in.d3{animation-delay:1.1s}
+@keyframes ain{from{opacity:0;transform:translateY(12px)}}
+body{transition:background-color .8s ease}
+
+/* journey colours */
+.jstrip{position:relative;height:18px;border-radius:99px;margin:10px 6px 36px}
+.jstrip .mk{position:absolute;top:-4px;width:2px;height:26px;margin-left:-1px;background:var(--ink);opacity:.3}
+.jstrip .ml3{position:absolute;top:26px;font-size:11.5px;white-space:nowrap;color:var(--muted);transform:translateX(-50%)}
+.jstrip .ml3.r{transform:translateX(-100%)}
+.jstrip .cur{position:absolute;top:-6px;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:var(--teal);border:3px solid var(--surface);box-shadow:0 2px 8px var(--shadow)}
+.simday{font-family:var(--f-display);font-size:26px;line-height:1.15}
+.swatches{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.simbar{position:fixed;z-index:7;left:max(24px,env(safe-area-inset-left,0px));right:max(24px,env(safe-area-inset-right,0px));bottom:calc(94px + env(safe-area-inset-bottom,0px));max-width:540px;margin:0 auto;background:var(--night);color:var(--on-night);border-radius:16px;padding:8px 8px 8px 14px;display:flex;align-items:center;gap:6px;box-shadow:0 8px 24px var(--shadow);font-size:14px}
+.simbar span{flex:1;min-width:0}
+.simbar button{border:0;background:color-mix(in srgb,var(--on-night) 16%,transparent);color:var(--on-night);border-radius:10px;height:34px;min-width:34px;padding:0 10px;font-weight:600}
+.pickrow.on{box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow)}
+
+/* day strip & picker */
+.dayrow{display:flex;gap:8px;align-items:stretch}
+.dstrip{position:relative;flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 4px;scrollbar-width:none}
+.dstrip::-webkit-scrollbar{display:none}
+.dchip{flex:0 0 46px;scroll-snap-align:end;border:0;background:var(--surface);border-radius:14px;padding:6px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 1px 4px var(--shadow)}
+.dchip small{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.03em}
+.dchip b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.dchip i{width:14px;height:14px;border-radius:50%;background:conic-gradient(var(--teal) var(--s),var(--track) 0);display:block;-webkit-mask:radial-gradient(circle,transparent 3.2px,#000 3.6px);mask:radial-gradient(circle,transparent 3.2px,#000 3.6px)}
+.dchip i.no{background:var(--track)}
+.dchip.on{background:var(--teal);color:var(--on-teal)}
+.dchip.on small{color:var(--on-teal);opacity:.85}
+.dchip.on i{background:conic-gradient(var(--on-teal) var(--s),color-mix(in srgb,var(--on-teal) 30%,transparent) 0)}
+.dchip.tdy:not(.on) b{color:var(--teal)}
+.calbtn{flex:0 0 46px;border:0;background:var(--surface);border-radius:14px;display:grid;place-items:center;box-shadow:0 1px 4px var(--shadow)}
+.calbtn svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pastbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--terra-soft);color:var(--ink);border-radius:14px;padding:8px 8px 8px 14px;font-size:14px}
+.pastbar button{border:0;background:var(--surface);color:var(--terra);border-radius:10px;padding:7px 12px;font-weight:600;white-space:nowrap}
+.sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(20,16,10,.38);animation:fadein .2s ease}
+.sheet{position:fixed;z-index:21;left:0;right:0;bottom:0;max-height:82vh;overflow-y:auto;background:var(--bg);border-radius:24px 24px 0 0;box-shadow:0 -10px 30px var(--shadow);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;animation:sheetup .28s cubic-bezier(.2,.8,.2,1);max-width:640px;margin:0 auto}
+.sheet .grab{width:42px;height:5px;border-radius:9px;background:var(--line);margin:0 auto}
+.sheet h3{font-family:var(--f-display);font-weight:500;font-size:22px;margin:0;display:flex;justify-content:space-between;align-items:center}
+.sheet .quick{display:flex;gap:8px;flex-wrap:wrap}
+@keyframes sheetup{from{transform:translateY(40%);opacity:.4}}
+@keyframes fadein{from{opacity:0}}
+/* food pledges list */
+.pledges{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.pledge{border:0;border-radius:0;background:var(--surface);display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;align-items:center;padding:11px 12px;text-align:left}
+.pledge + .pledge{border-top:1px solid var(--line)}
+.pledge b{font-size:15px}
+.pledge.on{background:color-mix(in srgb,var(--teal-soft) 55%,var(--surface))}
+/* durations */
+.dur2{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.dur2 .dtop{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center}
+.dur2 .mini{width:44px;height:44px;border-radius:12px;overflow:hidden}
+.dur2 .mini svg{width:100%;height:100%;display:block}
+.dur2 b{font-weight:500;font-size:15.5px;display:block;line-height:1.2}
+.dur2 small{color:var(--muted);font-size:12.5px}
+.hm{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--muted)}
+.hm input{width:46px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 4px;text-align:center;font-size:16px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.hm input::-webkit-outer-spin-button,.hm input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+/* photo */
+.av{overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.photo{display:flex;align-items:center;gap:14px}
+.photo .av{width:76px;height:76px;font-size:30px}
+.photo input{display:none}
+/* progress charts */
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{fill:var(--muted);font-size:9.5px;font-family:var(--f-body)}
+.chart .gridl{stroke:var(--line);stroke-width:1}
+.chart .bar{fill:var(--teal);transition:opacity .15s}
+.chart .bar.hl{fill:var(--ink)}
+.chart .tgt{stroke:var(--terra);stroke-width:1.5;stroke-dasharray:4 4}
+.chart .ln{fill:none;stroke:var(--teal);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ar{fill:var(--teal);opacity:.14}
+.chart .pt{fill:var(--teal);stroke:var(--surface);stroke-width:1.5}
+.chart .pt.hl{fill:var(--ink)}
+.chart .dt{fill:var(--ink);stroke:var(--surface);stroke-width:1.5}
+.chart .hit{fill:transparent;cursor:pointer}
+.tipline{font-size:13px;color:var(--muted);min-height:18px;margin-top:2px}
+.tipline b{color:var(--ink);font-weight:600}
+.lgd{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);align-items:center}
+.lgd i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpi{background:var(--bg);border-radius:14px;padding:10px;min-width:0}
+.kpi b{display:block;font-size:20px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi small{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+.kpi .up{color:var(--teal);font-weight:700}
+.kpi .down{color:var(--warn);font-weight:700}
+.ovw{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:center}
+.ovw .ring{width:96px;height:96px}
+.ovw .ring svg{width:96px;height:96px}
+.ovw .ring span{font-size:22px;font-family:var(--f-display);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}
+.ovw .ring span small{display:block;font-family:var(--f-body);font-size:9.5px;white-space:nowrap;margin-top:2px;color:var(--muted);font-weight:500;text-align:center;line-height:1}
+.insights{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.insights li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;font-size:14.5px;line-height:1.4}
+.insights li span.tb{width:30px;height:30px;border-radius:9px;overflow:hidden}
+.insights li span.tb svg{width:100%;height:100%;display:block}
+.cgrid{display:grid;gap:3px;align-items:center;font-size:12.5px}
+.cgrid .rl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);padding-right:4px}
+.cgrid .pc{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);font-weight:600}
+.cgrid .hd{font-size:10px;color:var(--muted);text-align:center}
+.cg{aspect-ratio:1;border-radius:4px;background:var(--track)}
+.cg.f{background:var(--teal)}
+.cg.h{background:linear-gradient(135deg,var(--teal) 50%,var(--track) 50%)}
+.cg.nl{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.listtools{display:flex;gap:8px}
+.mhead{font-family:var(--f-display);font-size:19px;padding:6px 4px 0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <pattern id="scal" width="28" height="14" patternUnits="userSpaceOnUse">
+    <path d="M0 6 Q7 0 14 6 T28 6" fill="none" style="stroke:var(--terra)" stroke-width="1.4" opacity=".55"/>
+    <circle cx="14" cy="11.5" r="1.3" style="fill:var(--terra)" opacity=".5"/>
+  </pattern>
+  <linearGradient id="gRobe" gradientUnits="userSpaceOnUse" x1="0" y1="24" x2="0" y2="50"><stop offset="0" style="stop-color:var(--ill-robe2)"/><stop offset="1" style="stop-color:var(--ill-robe)"/></linearGradient>
+  <linearGradient id="gLeg" gradientUnits="userSpaceOnUse" x1="0" y1="42" x2="0" y2="57"><stop offset="0" style="stop-color:var(--ill-robe)"/><stop offset="1" style="stop-color:var(--ill-robe-d)"/></linearGradient>
+  <radialGradient id="gSkin" cx=".38" cy=".32" r=".85"><stop offset="0" style="stop-color:var(--ill-skin-l)"/><stop offset="1" style="stop-color:var(--ill-skin)"/></radialGradient>
+  <radialGradient id="gGlow"><stop offset="0" style="stop-color:var(--ill-glow)" stop-opacity=".9"/><stop offset="1" style="stop-color:var(--ill-glow)" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gMango" cx=".35" cy=".3" r=".9"><stop offset="0" style="stop-color:var(--f-banana)"/><stop offset="1" style="stop-color:var(--f-mango)"/></radialGradient>
+  <linearGradient id="gBowl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--f-bowl)"/><stop offset="1" style="stop-color:var(--f-cup)"/></linearGradient>
+  <linearGradient id="gScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--t-dusk)"/><stop offset="1" style="stop-color:var(--ill-line)"/></linearGradient>
+</defs></svg>
+<header class="top" id="top"></header>
+<main id="main"></main>
+<nav class="tabs" id="tabs"></nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+/* ---------- cloud config (filled in at build time) ---------- */
+const SB_URL='__SB_URL__', SB_KEY='__SB_KEY__';
+const ADMIN_EMAIL='admin@samyama.app';
+const CLOUD_CFG=/^https:/.test(SB_URL)&&SB_KEY.length>20;
+const CLOUD=CLOUD_CFG&&!!window.supabase;
+const sb=CLOUD?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'samyama-auth'}}):null;
+/* ---------- constants ---------- */
+// Samyama batches at Isha Yoga Center, from isha.sadhguru.org
+const BATCHES={dec26:{start:'2026-12-29',end:'2027-01-05',label:'29 Dec 2026 – 5 Jan 2027'},jan27:{start:'2027-01-27',end:'2027-02-03',label:'27 Jan – 3 Feb 2027'}};
+let DAY1,HALF,LAST,SAMYAMA,SEND;
+function syncProg(b){const B=BATCHES[b]||BATCHES.dec26;SAMYAMA=B.start;SEND=B.end;
+  const d=new Date(+SAMYAMA.slice(0,4),+SAMYAMA.slice(5,7)-1,+SAMYAMA.slice(8));
+  const f=n=>{const x=new Date(d);x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+  DAY1=f(-60);LAST=f(-1);HALF=f(-31);}
+syncProg('dec26');
+const LAT=12.9716, LNG=77.5946, TZ=5.5; // Bengaluru
+const SCREEN_IDEAL=90, SCREEN_MAX=120;
+const SHOONYA_GAP=30;
+// Sadhguru quotes, from isha.sadhguru.org and quotewise.io
+const QUOTES=[
+  'The value of life is not in small things you attain to, but in the intensity of your striving.',
+  'The purpose of yoga is to live strong. Strong not just in body, but as a strong life.',
+  'Only your physical body needs a boundary. Everything else about you can be universal.',
+  'The mind is a powerful instrument. Every thought, every emotion that you create changes the very chemistry of your body.',
+  'Devotion is a space where you do not exist – life just flows through you as a certain sweetness and beauty.',
+  'Compassion is the most liberating of emotions.',
+  'If people around you become more important to you than your own wants, your life will be simple and wonderful.'
+];
+const DEF={bhuta:false,sck:0,shoonya:0,shambhavi:0,sk:0,ss:0,asCyc:0,asSec:30,aum:0,ardha:0,patanga:false,shishu:false,
+  dNeg:false,dStim:false,dDairy:false,dOut:false,fruit:0,salad:0,sprouts:false,peanuts:false,sanj:false,digital:null,silence:0,note:''};
+const DURS={bhuta:15,prep:10,surya:25,asanas:60,sck:40,shambhavi:21,shoonya:15,sukha:60,aum:15};
+const DUR_META={bhuta:['Bhuta Shuddhi','First thing each morning','bhuta','sage'],prep:['Preparatory asanas','Before Surya and before Shambhavi','prep','sand'],
+  surya:['Surya Kriya + Surya Shakti','1 cycle + 3 cycles together','sk','peach'],asanas:['Yogasanas','Full set','as','rose'],sck:['Shakti Chalana Kriya','Each round','sck','night'],
+  shambhavi:['Shambhavi','Each round','shambhavi','dusk'],shoonya:['Shoonya','Each round','shoonya','sand'],sukha:['Sukha Kriya','Target sitting','sukha','peach'],aum:['AUM chanting','Usual sitting','aum','night']};
+const COLORS=['teal','terra','sage','dusk'];
+
+/* ---------- illustrations (original, drawn in a 64×64 box) ---------- */
+const HEAD=(x,y)=>`<circle class="sk" cx="${x}" cy="${y}" r="5.4"/><path class="hr" d="M${x-5.5} ${y-1} Q${x-5} ${y-6.6} ${x} ${y-6.6} Q${x+5} ${y-6.6} ${x+5.5} ${y-1} Q${x+2.5} ${y-3.6} ${x} ${y-3.4} Q${x-2.5} ${y-3.6} ${x-5.5} ${y-1}Z"/>`;
+const SEAT=`<path class="rb" d="M13 51 Q32 41 51 51 Q32 57.5 13 51Z"/><path class="rb2" d="M25 31 Q32 27 39 31 L40.5 46 Q32 48.5 23.5 46Z"/><path class="skl" d="M25.6 32 Q20 40 25.5 46.5 M38.4 32 Q44 40 38.5 46.5"/>${HEAD(32,22)}`;
+const STAND_UP=`<path class="skl" d="M29.5 26 L31 8.5 M34.5 26 L33 8.5"/><path class="rb2" d="M27.5 24.5 Q32 22.5 36.5 24.5 L36 41 L28 41Z"/>`;
+const ILL={
+  bhuta:`<g><circle class="sun" cx="14" cy="16" r="3"/><circle class="f-leaf" cx="22" cy="10" r="3"/><circle class="glow" cx="32" cy="7.5" r="3"/><circle class="f-tomato" cx="42" cy="10" r="3"/><circle style="fill:var(--t-dusk);stroke:var(--ill-line)" stroke-width="1" cx="50" cy="16" r="3"/></g>${SEAT}`,
+  sk:`<circle class="sun" cx="47" cy="17" r="9"/>${STAND_UP}<path class="rbl" d="M30 41 L29 56 M34 41 L35 56"/>${HEAD(32,18.5)}`,
+  ss:`<circle class="sun" cx="48" cy="15" r="8"/><path class="rbl" d="M33 40 L43 41 L43.5 55 M33 40 L17 55"/><path class="rb2" d="M23.5 27.5 Q27.5 24.5 31 27 L35.5 40.5 L29 42.5Z"/><path class="skl" d="M25 28 L16 12.5 M28.5 26.5 L19 11.5"/>${HEAD(24,21)}`,
+  as:`<path class="ml" d="M10 57 H54"/>${STAND_UP}<path class="rbl" d="M31 41 L31 57 M33 41 L42 47.5 L33 50.5"/>${HEAD(32,18.5)}`,
+  sck:`<path class="gl" d="M32 47 V14" opacity=".55"/><circle class="glow" cx="32" cy="45" r="2"/><circle class="glow" cx="32" cy="38" r="1.6"/><circle class="glow" cx="32" cy="31" r="1.6"/><circle class="glow" cx="32" cy="24" r="1.6"/><g opacity=".9">${SEAT}</g><path class="gl" d="M32 46 V27" opacity=".9"/><circle class="glow" cx="32" cy="10" r="2.6"/>`,
+  shambhavi:`<path class="gl" d="M32 4 V7 M24 7 L25.6 9.4 M40 7 L38.4 9.4 M20 13 L22.6 14" opacity=".9"/><circle class="glow" cx="32" cy="12" r="2.6"/>${SEAT}`,
+  shoonya:`<circle cx="32" cy="27" r="20" fill="none" style="stroke:var(--ill-line)" stroke-width="1.4" opacity=".55"/>${SEAT}`,
+  sukha:`<path class="ml" d="M8 18 q4 -3 8 0 t8 0 M40 18 q4 -3 8 0 t8 0 M10 25 q3 -2.5 6 0 M48 25 q3 -2.5 6 0"/>${SEAT}`,
+  aum:`<text class="om" x="47" y="21" font-size="15" text-anchor="middle">ॐ</text><path class="gl" d="M38 22 q3 3 0 6" opacity=".7"/>${SEAT}`,
+  ardha:`<path d="M12 30 A20 20 0 0 1 52 30" fill="none" style="stroke:var(--ill-line)" stroke-width="1.6" stroke-dasharray="2 3"/><circle class="sun" cx="52" cy="30" r="2.6"/>${SEAT}`,
+  patanga:`<path class="ml" d="M8 18 q3 -4 6 0 M50 18 q3 -4 6 0"/><path class="rb" d="M32 51 L12 42 Q9.5 50 17 52.5Z M32 51 L52 42 Q54.5 50 47 52.5Z"/><path class="rb2" d="M25 31 Q32 27 39 31 L40 46 Q32 48 24 46Z"/><path class="skl" d="M25.6 32 Q26 44 31 50 M38.4 32 Q38 44 33 50"/>${HEAD(32,22)}`,
+  shishu:`<path class="rb" d="M14 52 Q32 44 50 52 Q32 57.5 14 52Z"/><path class="rb2" d="M25 31 Q32 27 39 31 L40 46 Q32 48 24 46Z"/><path class="rbl" d="M19 41 Q32 35.5 45 40"/><path class="skl" d="M25.6 32 Q19 37 22.5 42 M38.4 32 Q46 35 43.5 41"/>${HEAD(32,22)}`,
+  prep:`<path class="ml" d="M10 52 H54"/><path class="rbl" d="M22 51 L32 38 L42 51"/><path class="rb2" d="M28.5 23 Q32 21.5 35.5 23 L34.5 38.5 L29.5 38.5Z"/><path class="skl" d="M29.5 25 L21 34 M34.5 25 L43 34"/>${HEAD(32,17)}`,
+  sprouts:`<path class="f-bowl" d="M12 40 H52 Q50 54 32 54 Q14 54 12 40Z"/><g class="f-green"><ellipse cx="22" cy="37" rx="5" ry="3.6"/><ellipse cx="32" cy="35" rx="5" ry="3.6"/><ellipse cx="42" cy="37" rx="5" ry="3.6"/><ellipse cx="27" cy="31" rx="4.4" ry="3.2"/><ellipse cx="37" cy="31" rx="4.4" ry="3.2"/></g><path d="M27 28 Q25 20 30 16 M37 28 Q40 21 36 15 M32 32 Q33 24 31 20" fill="none" style="stroke:var(--f-leaf)" stroke-width="1.8" stroke-linecap="round"/>`,
+  peanuts:`<g class="f-nut"><path d="M14 30 q-4 -9 4 -11 q7 -2 8 6 q1 3 4 4 q7 3 3 10 q-4 6 -10 2 q-2 -2 -5 -3 q-4 -2 -4 -8z"/><path transform="translate(22 14) rotate(25 12 20)" d="M14 30 q-4 -9 4 -11 q7 -2 8 6 q1 3 4 4 q7 3 3 10 q-4 6 -10 2 q-2 -2 -5 -3 q-4 -2 -4 -8z"/></g><path class="ml" d="M8 56 H56"/>`,
+  sanj:`<path class="gl" d="M26 10 q-3 4 0 8 t0 8 M34 8 q-3 4 0 8 t0 8" opacity=".85"/><path class="f-cup" d="M16 30 H44 V44 Q44 54 30 54 Q16 54 16 44Z"/><path d="M44 34 q8 0 8 6 q0 6 -8 6" fill="none" style="stroke:var(--f-cup)" stroke-width="3.2"/><ellipse class="f-nut" cx="30" cy="30.5" rx="14" ry="3"/>`,
+  screen:`<rect class="f-dev" x="8" y="12" width="36" height="25" rx="3"/><rect class="f-screen" x="11" y="15" width="30" height="19" rx="1.5"/><path class="ml" d="M20 43 H32 M26 37 V43"/><rect class="f-dev" x="40" y="24" width="15" height="28" rx="3.5"/><rect class="f-screen" x="42.3" y="27.5" width="10.4" height="19" rx="1.2"/>`,
+  silence:`<path class="glow" d="M44 10 a12 12 0 1 0 8 20 a10 10 0 1 1 -8 -20Z"/><circle class="glow" cx="16" cy="14" r="1.3"/><circle class="glow" cx="24" cy="8" r="1"/><circle class="glow" cx="12" cy="26" r="1"/>${SEAT}`,
+  sangha:`<g transform="translate(-13 4) scale(.82)">${SEAT}</g><g transform="translate(24.5 4) scale(.82)">${SEAT.replace(/class="rb2"/g,'class="rb2" style="fill:var(--f-green)"')}</g><circle class="glow" cx="32" cy="10" r="3"/>`
+};
+
+/* refined illustrations: one soft-shaded figure, curves merged into single silhouettes */
+const H2=(x,y)=>`<path class="gs" d="M${x-2.1} ${y+4.4}h4.2v4.4c0 1.3-4.2 1.3-4.2 0Z"/><ellipse class="gs" cx="${x}" cy="${y}" rx="5.3" ry="6.1"/><path class="hr" d="M${x-5.4} ${y+.2}C${x-5.6} ${y-4.8} ${x-3} ${y-7.1} ${x} ${y-7.1}S${x+5.6} ${y-4.8} ${x+5.4} ${y+.2}C${x+4.4} ${y-2.4} ${x+2.4} ${y-3.5} ${x} ${y-3.5}S${x-4.4} ${y-2.4} ${x-5.4} ${y+.2}Z"/><circle class="hr" cx="${x}" cy="${y-8}" r="2.6"/><path class="eye" d="M${x-2.9} ${y+.9}q1.1.8 2.2 0M${x+.7} ${y+.9}q1.1.8 2.2 0"/>`;
+const LEGS_X=`<ellipse class="shd" cx="32" cy="56.2" rx="19" ry="2.2"/><path class="gl2" d="M10.5 50.6C10.5 45.6 19 43.2 32 43.2S53.5 45.6 53.5 50.6C53.5 54.2 44.5 55.8 32 55.8S10.5 54.2 10.5 50.6Z"/><path class="fold" d="M18.5 50.8C24 48.2 29 48.4 32.6 50.4M45.5 50.8C40 48.2 35 48.4 31.4 50.4"/>`;
+const TORSO=`<path class="gr" d="M32 27.6C28.3 27.6 25.4 28.5 23.5 30.5 21.3 32.9 20.5 36.7 19.9 40.6 19.5 43.3 20.4 45.7 23 46.9 25.8 48.1 29 48.3 32 48.3S38.2 48.1 41 46.9C43.6 45.7 44.5 43.3 44.1 40.6 43.5 36.7 42.7 32.9 40.5 30.5 38.6 28.5 35.7 27.6 32 27.6Z"/>`;
+const ARMS_KNEE=`<path class="gr" d="M24.2 30.4C20.6 32 18.6 37.2 17.1 44 16.7 46 17.9 47.6 19.7 47.4 21.3 47.2 21.9 45.8 22.3 44.2 23.3 39.6 24.5 36 26.1 33.5Z"/><path class="gr" d="M39.8 30.4C43.4 32 45.4 37.2 46.9 44 47.3 46 46.1 47.6 44.3 47.4 42.7 47.2 42.1 45.8 41.7 44.2 40.7 39.6 39.5 36 37.9 33.5Z"/><ellipse class="gs" cx="18.4" cy="47.8" rx="2.8" ry="1.9"/><ellipse class="gs" cx="45.6" cy="47.8" rx="2.8" ry="1.9"/><path class="fold" d="M25.2 34C24.4 38 24.6 41.8 26 44.6M38.8 34C39.6 38 39.4 41.8 38 44.6"/>`;
+const SEATED=`${LEGS_X}${TORSO}${ARMS_KNEE}${H2(32,19.6)}<path class="neck" d="M28.8 28.4Q32 31 35.2 28.4"/>`;
+const SEATED_B=`<g class="anim-breathe">${SEATED}</g>`;
+const STAND_BASE=`<ellipse class="shd" cx="32" cy="57.4" rx="10" ry="1.6"/><path class="rb" d="M27.4 40.4H36.6C36.9 46 36.5 51.5 35.9 55.8H33.3L32.3 45.6H31.7L30.7 55.8H28.1C27.5 51.5 27.1 46 27.4 40.4Z"/><ellipse class="gs" cx="29.2" cy="56.5" rx="2.1" ry="1.1"/><ellipse class="gs" cx="34.8" cy="56.5" rx="2.1" ry="1.1"/>`;
+const ARMS_UP=`<path class="gs" d="M27.4 26.6C26.2 20.4 27.6 12.6 31 6.2 31.6 5.2 32.4 5.2 33 6.2 36.4 12.6 37.8 20.4 36.6 26.6L34.8 26.9C35.3 20.6 34.4 14 32 9.8 29.6 14 28.7 20.6 29.2 26.9Z"/>`;
+const TORSO_S=`<path class="gr" d="M27 25.6C29.6 24.4 34.4 24.4 37 25.6 37.9 30.2 37.5 36 36.6 40.8H27.4C26.5 36 26.1 30.2 27 25.6Z"/>`;
+const MOUNTAIN=`<path d="M0 52L17 27 24 35 36 16 64 52Z" style="fill:var(--ill-line)" opacity=".18"/><path d="M36 16 30.5 25 33.5 24 36 27 38.6 24 41.4 25Z" style="fill:var(--surface)" opacity=".7"/>`;
+const NAMASTE_CHEST=`<path class="sleeve" d="M27.8 27.2C25.6 30.6 26.2 34 30.8 34.6M36.2 27.2C38.4 30.6 37.8 34 33.2 34.6"/><path class="gs" d="M30.5 35.6C30.4 32.6 31.1 30.4 32 29.4 32.9 30.4 33.6 32.6 33.5 35.6Z"/>`;
+const PN='M-10 0C-10 -5.5 -5.5 -7.5 -2.5 -5.6 -1 -4.7 1 -4.7 2.5 -5.6 5.5 -7.5 10 -5.5 10 0S5.5 7.5 2.5 5.6C1 4.7 -1 4.7 -2.5 5.6 -5.5 7.5 -10 5.5 -10 0Z';
+const PNT='<path d="M-6.5 -1.5h1.6M-3.5 2h1.6M2 -2h1.6M5 1.6h1.6M-6 2.6h1.2M4 -4h1.2" style="stroke:var(--f-cup)" stroke-width="1" stroke-linecap="round" opacity=".45"/>';
+Object.assign(ILL,{
+  bhuta:`<g class="anim-glow"><circle cx="11" cy="21" r="3" class="f-nut"/><circle cx="17.5" cy="11.5" r="3" style="fill:var(--t-dusk);stroke:var(--ill-line);stroke-width:.6"/><circle cx="32" cy="4.6" r="3" class="f-tomato"/><circle cx="46.5" cy="11.5" r="3" style="fill:var(--surface);stroke:var(--ill-line);stroke-width:.6"/><circle cx="53" cy="21" r="3" class="glow"/></g>${SEATED}`,
+  sk:`<circle class="gg anim-halo" cx="50" cy="13" r="12"/><circle class="sun" cx="50" cy="13" r="6.5"/>${MOUNTAIN}${STAND_BASE}${TORSO_S}${NAMASTE_CHEST}${H2(32,18.4)}`,
+  ss:`<circle class="gg anim-halo" cx="49" cy="14" r="12"/><circle class="sun" cx="49" cy="14" r="6.5"/><ellipse class="shd" cx="30" cy="57" rx="17" ry="1.7"/><path class="lg" d="M30.5 40.5C24.5 46 19.5 51 15 55.4"/><path class="lg" d="M31.5 40.4C36 40.2 40 40.6 42 42.4 42.6 46.4 42.6 51 42.4 55.4"/><ellipse class="gs" cx="13.6" cy="56.2" rx="2.6" ry="1.1"/><ellipse class="gs" cx="44" cy="56.4" rx="2.6" ry="1.1"/><path class="arm" d="M28.2 27.6C26.4 21 26.4 14 28.6 6.6M32.4 27.6C32.8 21 31.8 14 29.6 6.6"/><path class="gr" d="M25.8 27C28.2 25.4 32.4 25.6 34.4 27.4 35.4 31.6 34.8 37 33.4 41.6L27.4 42C26 37.4 25.2 31.4 25.8 27Z"/>${H2(30,19.4)}`,
+  as:`<path class="ml" d="M14 58.2H50"/><ellipse class="shd" cx="31" cy="57.4" rx="8" ry="1.5"/><path class="lg" d="M31 40.6V55.4"/><path class="lg" d="M33.4 41C38.8 43.6 42.6 46.6 37.8 49.4 36 50.4 34 50 32.8 49.2"/><ellipse class="gs" cx="31" cy="56.6" rx="2.3" ry="1.1"/>${ARMS_UP}${TORSO_S}${H2(32,18.4)}`,
+  sck:`<ellipse class="gg anim-glow" cx="32" cy="33" rx="16" ry="23"/>${SEATED_B}<path class="anim-glow" d="M32 46.5V28" style="stroke:var(--ill-glow)" stroke-width="2.2" stroke-linecap="round"/><circle class="glow" cx="32" cy="46.6" r="2.1"/><circle class="glow anim-glow" cx="32" cy="7.4" r="2.2"/>`,
+  shambhavi:`<circle class="gg anim-halo" cx="32" cy="19" r="15"/>${SEATED_B}<circle class="glow" cx="32" cy="16.2" r="1.1"/>`,
+  shoonya:`<circle cx="32" cy="30" r="25" fill="none" style="stroke:var(--ill-line)" stroke-width="1.1" opacity=".45"/><circle class="anim-glow" cx="32" cy="30" r="18" fill="none" style="stroke:var(--ill-line)" stroke-width=".8" opacity=".4"/>${SEATED_B}`,
+  sukha:`<path class="ml anim-glow" d="M5 18q4-3 8 0t8 0M43 18q4-3 8 0t8 0M7 26q3-2.5 6 0M51 26q3-2.5 6 0"/>${SEATED}`,
+  aum:`<circle class="gg anim-halo" cx="49" cy="14" r="11"/><text class="om" x="49" y="19.5" font-size="14" text-anchor="middle">ॐ</text>${SEATED}`,
+  ardha:`<path d="M9 33A23 23 0 0 1 55 33" fill="none" style="stroke:var(--ill-line)" stroke-width="1.4" stroke-dasharray="1.5 3" stroke-linecap="round"/><circle class="sun" cx="55" cy="33" r="2.6"/>${SEATED}`,
+  patanga:`<path class="ml" d="M5 20q3-4 6 0M53 20q3-4 6 0"/><ellipse class="shd" cx="32" cy="55" rx="21" ry="2"/><path class="gl2" d="M9.5 47.4C13.6 42.8 22 42.4 30 48.4H34C42 42.4 50.4 42.8 54.5 47.4 52.6 51.8 44.4 54 34.4 52.8H29.6C19.6 54 11.4 51.8 9.5 47.4Z"/>${TORSO}<path class="gr" d="M24.2 30.4C21.6 33 21.2 39 24.6 45.4 26.2 48.2 28.2 49.6 29.8 49.6L30.6 47.6C28.6 46.6 27 44 26.2 40.6 25.6 37.6 25.8 35 26.4 33.4Z"/><path class="gr" d="M39.8 30.4C42.4 33 42.8 39 39.4 45.4 37.8 48.2 35.8 49.6 34.2 49.6L33.4 47.6C35.4 46.6 37 44 37.8 40.6 38.4 37.6 38.2 35 37.6 33.4Z"/><ellipse class="gs" cx="32" cy="50.2" rx="4.4" ry="1.9"/>${H2(32,19.6)}`,
+  shishu:`<ellipse class="shd" cx="32" cy="56.2" rx="18" ry="2"/><path class="gl2" d="M12 51.4C12 47.2 20 45.4 32 45.4S52 47.2 52 51.4C52 54.4 43.6 55.6 32 55.6S12 54.4 12 51.4Z"/>${TORSO}<path class="lg" style="stroke:var(--ill-robe-d)" d="M17.6 41.6C24 37.8 36 36.8 46 38.6"/><ellipse class="gs" cx="48" cy="38.8" rx="2.6" ry="1.5"/><path class="sleeve" d="M24.4 30.8C20.6 33 19.2 37 20.4 40.6M39.6 30.8C43.6 32.4 45 35.4 44.2 38"/><ellipse class="gs" cx="21" cy="41.6" rx="2.3" ry="1.7"/><ellipse class="gs" cx="43.6" cy="38.6" rx="2.3" ry="1.7"/>${H2(32,19.6)}`,
+  prep:`<path class="ml" d="M12 58.2H52"/>${STAND_BASE}<path class="arm" d="M28 27.4C23.6 26.4 18.6 24 15 21M36 27.4C40.4 26.4 45.4 24 49 21"/>${TORSO_S}${H2(32,18.4)}`,
+  silence:`<path class="glow" d="M46 7a11 11 0 1 0 8.6 18.4A9 9 0 1 1 46 7Z"/><circle class="glow anim-twinkle" cx="13" cy="12" r="1.3"/><circle class="glow anim-twinkle" cx="21" cy="5.5" r="1" style="animation-delay:1s"/><circle class="glow anim-twinkle" cx="9" cy="24" r="1" style="animation-delay:1.8s"/>${SEATED}`,
+  sangha:`<g transform="translate(-14 6) scale(.84)">${SEATED}</g><g transform="translate(24.3 6) scale(.84)">${SEATED.replace(/class="gr"/g,'class="gr" style="fill:var(--f-leaf)"')}</g><circle class="gg anim-halo" cx="32" cy="12" r="7"/>`,
+  fruits:`<ellipse class="shd" cx="32" cy="55.4" rx="20" ry="2"/><path class="f-banana" d="M33 51.5C44 50.5 51.5 43 52.6 30.5 53 29 54.8 29 55 30.6 56 44.6 47 54 35.4 54.6 33 54.8 31.8 52 33 51.5Z"/><path d="M53.4 30.2l.6-3" style="stroke:var(--f-cup)" stroke-width="1.6" stroke-linecap="round"/><path class="mango" d="M19.6 46.6C11.6 40.2 12.4 27.4 22.6 22.6 31.6 18.4 40.4 24.6 40.4 34.6 40.4 45.6 30.4 53.2 19.6 46.6Z"/><path class="f-leaf" d="M29.6 22.4C31 16.6 36.6 13.4 42.4 14.6 40.6 20 35.4 23.2 29.6 22.4Z"/>`,
+  sprouts:`<ellipse class="shd" cx="32" cy="56.4" rx="19" ry="1.8"/><path d="M28.4 33C26.6 25 29 19 33.4 15.4M36.6 33.4C38.8 27 38 21.4 34.8 17.6M31.8 34C32.6 28.4 31.2 24 28.6 21.4" fill="none" style="stroke:var(--f-leaf)" stroke-width="1.8" stroke-linecap="round"/><path class="f-leaf" d="M33.4 15.4c1.6-2.4 4.6-3 6.4-2.2-1 2.4-3.6 3.6-6.4 2.2Z"/><path class="f-leaf" d="M28.6 21.4c-1.8-2-4.8-2.2-6.4-1 1.4 2.2 4.2 3 6.4 1Z"/><g class="f-green"><ellipse cx="21" cy="38" rx="5.2" ry="3.7" transform="rotate(-12 21 38)"/><ellipse cx="32" cy="36" rx="5.4" ry="3.8"/><ellipse cx="43" cy="38" rx="5.2" ry="3.7" transform="rotate(12 43 38)"/><ellipse cx="26.6" cy="33" rx="4.6" ry="3.3"/><ellipse cx="37.4" cy="33" rx="4.6" ry="3.3"/></g><path class="bowl" d="M10.5 39.5H53.5C53 49.6 44 55.6 32 55.6S11 49.6 10.5 39.5Z"/><path d="M12 39.5H52" style="stroke:var(--f-cup)" stroke-width="1.2" opacity=".5"/>`,
+  peanuts:`<ellipse class="shd" cx="32" cy="55.4" rx="20" ry="2"/><g transform="translate(23 43) rotate(-20)"><path class="f-nut" d="${PN}"/>${PNT}</g><g transform="translate(41 36) rotate(28)"><path class="f-nut" d="${PN}"/>${PNT}</g><g transform="translate(39 50) rotate(-6) scale(.78)"><path class="f-nut" d="${PN}"/>${PNT}</g><g style="fill:var(--t-dusk);stroke:var(--ill-line);stroke-width:.5"><path d="M16 24c0-2 2-4 2-4s2 2 2 4a2 2 0 0 1-4 0Z"/><path d="M27 18c0-1.6 1.6-3.2 1.6-3.2s1.6 1.6 1.6 3.2a1.6 1.6 0 0 1-3.2 0Z"/></g>`,
+  sanj:`<path class="ml anim-steam" d="M25 23c-3-3 3-6 0-10"/><path class="ml anim-steam d2" d="M34 23c-3-3 3-6 0-10"/><ellipse class="shd" cx="30" cy="56" rx="17" ry="1.8"/><path d="M45 34.5c7 0 8.6 3 8.6 5.6 0 3.4-3 6.2-8.6 6.4" fill="none" style="stroke:var(--f-cup)" stroke-width="3.2" stroke-linecap="round"/><path class="f-cup" d="M14 30H46V43C46 50 39.4 55 30 55S14 50 14 43Z"/><ellipse class="f-nut" cx="30" cy="30" rx="16" ry="3.4"/><path d="M17.5 34.5V43c0 3 1.6 5.4 4.2 7" fill="none" style="stroke:var(--f-bowl)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>`,
+  screen:`<ellipse class="shd" cx="32" cy="56.4" rx="22" ry="1.8"/><rect class="f-dev" x="7" y="12" width="38" height="26" rx="3.5"/><rect class="scr" x="10" y="15" width="32" height="20" rx="1.6"/><path d="M22 44H30M26 38V44" style="stroke:var(--f-dev)" stroke-width="2.4" stroke-linecap="round"/><rect class="f-dev" x="40" y="23" width="16" height="31" rx="3.6"/><rect class="scr" x="42.2" y="26.6" width="11.6" height="22" rx="1.4"/>`
+});
+const svg=(k,cls)=>`<svg viewBox="0 0 64 64" class="${cls||''}" aria-hidden="true">${ILL[k]}</svg>`;
+const CHECK='<svg viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2 8.8-9.4"/></svg>';
+const CHEV='<svg class="cv" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>';
+const BACK='<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
+const STAR='<svg viewBox="0 0 24 24"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg>';
+const ICO={
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  people:'<circle cx="9" cy="8.5" r="3.3"/><path d="M3 20c.7-3.7 3.2-5.6 6-5.6s5.3 1.9 6 5.6"/><circle cx="16.5" cy="9" r="2.6"/><path d="M16.5 14.3c2.3 0 4.1 1.5 4.6 4.4"/>',
+  moon:'<path d="M19 14.5A7.5 7.5 0 1 1 9.5 5a6 6 0 0 0 9.5 9.5z"/>',
+  cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  copy:'<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+  out:'<path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 16l-4-4 4-4M6 12h10"/>',
+  trash:'<path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13"/>',
+  pen:'<path d="M4 20l1-4L16 5l3 3L8 19z"/>'
+};
+const ico=k=>`<svg viewBox="0 0 24 24">${ICO[k]}</svg>`;
+
+/* ---------- date helpers ---------- */
+const pad=n=>String(n).padStart(2,'0');
+const keyOf=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=k=>{const[a,b,c]=k.split('-').map(Number);return new Date(a,b-1,c)};
+const addD=(k,n)=>{const d=parse(k);d.setDate(d.getDate()+n);return keyOf(d)};
+const diff=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
+var ADMIN_TODAY=null;
+const todayK=()=>ADMIN_TODAY||keyOf(new Date());
+const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
+const fmt=m=>{m=Math.round(m);let h=Math.floor(m/60)%24;const mm=((m%60)+60)%60,ap=h<12?'am':'pm';h=h%12||12;return h+':'+pad(mm)+' '+ap};
+const toHM=m=>pad(Math.floor(m/60)%24)+':'+pad(m%60);
+const fromHM=s=>{const[h,m]=String(s).split(':').map(Number);return (h||0)*60+(m||0)};
+const dur=m=>{m=Math.round(m);return m>=60?Math.floor(m/60)+'h'+(m%60?' '+m%60+'m':''):m+'m'};
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DOWL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONL=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const pretty=k=>{const d=parse(k);return DOW[d.getDay()]+', '+d.getDate()+' '+MON[d.getMonth()]};
+const prettyL=k=>{const d=parse(k);return DOWL[d.getDay()]+', '+d.getDate()+' '+MONL[d.getMonth()]};
+const short=k=>{const d=parse(k);return d.getDate()+' '+MON[d.getMonth()]};
+const r5=m=>Math.ceil(m/5)*5;
+const secLabel=s=>s===60?'1 min':s===90?'1 min 30 sec':s+' sec';
+
+function sun(k){
+  const rad=Math.PI/180,d=parse(k),n=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
+  const g=2*Math.PI/365*(n-1);
+  const eqt=229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
+  const dec=0.006918-0.399912*Math.cos(g)+0.070257*Math.sin(g)-0.006758*Math.cos(2*g)+0.000907*Math.sin(2*g)-0.002697*Math.cos(3*g)+0.00148*Math.sin(3*g);
+  const ha=Math.acos(Math.cos(90.833*rad)/(Math.cos(LAT*rad)*Math.cos(dec))-Math.tan(LAT*rad)*Math.tan(dec))/rad;
+  const noon=720-4*LNG-eqt+TZ*60;
+  return {rise:Math.round(noon-4*ha),noon:Math.round(noon),set:Math.round(noon+4*ha)};
+}
+function phaseOf(k){
+  const n=diff(DAY1,k)+1;
+  if(n<1) return {kind:'build',toDay1:1-n,toSam:diff(k,SAMYAMA)};
+  if(n<=60) return {kind:'full',n,toSam:diff(k,SAMYAMA)};
+  return {kind:'sam',toSam:diff(k,SAMYAMA)};
+}
+
+/* ---------- storage ----------
+   S holds people and logs. In this test version it lives on this phone; later it moves to the shared account.
+   This phone also remembers who is signed in and the theme. */
+const STORE='samyama-sadhana-v1';
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+function defRoutine(weekend){return {wake:300,sleep:1350,busy:weekend?[]:[{l:'Work',s:570,e:1050}],plan:null}}
+function defPerson(name,color,batch){return {name,color,batch:batch||'dec26',share:true,joined:todayK(),routines:{weekday:defRoutine(false),weekend:defRoutine(true)},durs:{...DURS}}}
+function fresh(){return {v:3,order:[],people:{},logs:{},admin:null}}
+let S;
+try{S=JSON.parse(ls.get(STORE))}catch(e){S=null}
+if(!S||!S.people) S=fresh();
+if(S.v!==2&&S.v!==3){Object.values(S.people).forEach(P=>{P.durs={...DURS};Object.values(P.routines).forEach(r=>r.plan=null)})}
+if(S.v!==3){
+  S.order=S.order||Object.keys(S.people);
+  S.order.forEach((id,i)=>{const P=S.people[id];P.color=P.color||COLORS[i%COLORS.length];if(P.share==null)P.share=true;
+    if(!P.joined){const ks=Object.keys(S.logs[id]||{}).sort();P.joined=ks[0]||todayK()}});
+  if(S.people.a&&S.people.a.name==='Me') S.people.a.name='Radha Vallabh';
+  S.v=3;
+}
+Object.values(S.people).forEach(P=>{if(!P.batch)P.batch='dec26'});
+// drop the sample profiles from earlier test versions unless they hold entries or are signed in here
+{const signedIn=ls.get(STORE+'-me');['a','b'].forEach(id=>{if(S.people[id]&&id!==signedIn&&!Object.keys(S.logs[id]||{}).length&&['Radha Vallabh','Trisha','Me'].includes(S.people[id].name)){delete S.people[id];delete S.logs[id];S.order=S.order.filter(x=>x!==id)}})}
+// the admin sees app-wide tools such as the journey colour preview
+delete S.admin;
+function saveLocal(){ls.set(STORE,JSON.stringify(S))}
+function save(){saveLocal();if(typeof scheduleSync==='function')scheduleSync()}
+saveLocal();
+
+let ME=ls.get(STORE+'-me'); if(ME&&!S.people[ME]) ME=null;
+if(ME==='admin'&&ls.get(STORE+'-adminok')!=='1') ME=null;
+if(ME==='admin') ADMIN_TODAY=S.adminToday||null;
+const isAdmin=()=>CLOUD?!!(ME&&S.people[ME]&&S.people[ME].is_admin):ME==='admin';
+if(CLOUD){ME=null}
+let THEME=ls.get(STORE+'-theme')||'system';
+function applyTheme(){const r=document.documentElement;if(THEME==='system')r.removeAttribute('data-theme');else r.setAttribute('data-theme',THEME)}
+applyTheme();
+
+let V={tab:'today',sub:null,mid:null,day:todayK(),kind:isWeekend(todayK())?'weekend':'weekday',confirmReset:false,pview:'cal',sel:null,dirty:false,open:null,just:null,et:null,
+  ob:CLOUD?'loading':ME?null:'welcome',obEmail:'',obPw1:'',obPw2:'',pickId:null,obName:'',obColor:'sage',obBatch:'dec26',obWake:300,obSleep:1350,sim:null,playing:false,sd:{range:'30',pattern:'improving',gaps:true},prange:'7',sheet:false,pickFor:'today',listOpen:null};
+
+function norm(o){
+  o=o||{};const l=Object.assign({},DEF,o);
+  l.sits=Array.isArray(o.sits)?o.sits.slice():(o.sukha?[o.sukha]:[]);
+  if(typeof l.sanj!=='boolean') l.sanj=!!l.sanj;
+  if(typeof l.digital!=='number') l.digital=null;
+  delete l.sukha;delete l.stretch;return l;
+}
+const get=(p,k)=>norm(S.logs[p]&&S.logs[p][k]);
+const logged=(p,k)=>!!(S.logs[p]&&S.logs[p][k]);
+function mut(p,k){S.logs[p]=S.logs[p]||{};S.logs[p][k]=norm(S.logs[p][k]);return S.logs[p][k]}
+function isWeekend(k){const d=parse(k).getDay();return d===0||d===6}
+const routineFor=(p,k)=>S.people[p].routines[isWeekend(k)?'weekend':'weekday'];
+const sukT=l=>l.sits.reduce((a,b)=>a+b,0);
+const sukMax=l=>l.sits.length?Math.max(...l.sits):0;
+const initial=p=>(S.people[p].name||'?').trim().charAt(0).toUpperCase()||'?';
+const nm=p=>(S.people[p].name||'').trim();
+const firstName=p=>nm(p).split(' ')[0];
+const avInner=p=>S.people[p].photo?`<img src="${S.people[p].photo}" alt="">`:esc(initial(p));
+const avatar=(p,cls)=>`<span class="av c-${S.people[p].color||'teal'} ${cls||''}">${avInner(p)}</span>`;
+
+/* ---------- scoring & analytics ---------- */
+function score(l){
+  const scr=l.digital==null?0:l.digital<=SCREEN_MAX?1:Math.max(0,1-(l.digital-SCREEN_MAX)/SCREEN_MAX);
+  const parts=[[.5,+l.bhuta],[3,l.sck/2],[3,l.shoonya/2],[1,l.sk>0?1:0],[1,l.ss>0?1:0],[1,l.asCyc>0?1:0],
+    [1,l.shambhavi/2],[1.5,Math.min(1,sukT(l)/60)],[.5,sukMax(l)>=60?1:0],[.5,Math.min(1,l.ardha/90)],[.25,+l.patanga],[.25,+l.shishu],
+    [.5,+l.dNeg],[.5,+l.dStim],[.5,+l.dDairy],[.5,+l.dOut],[1,Math.min(1,(l.fruit+l.salad)/50)],
+    [.25,+l.sprouts],[.25,+l.peanuts],[.25,+l.sanj],[.5,scr],[.5,l.silence>0?1:0]];
+  let t=0,g=0;parts.forEach(([w,v])=>{t+=w;g+=w*v});return Math.round(g/t*100);
+}
+const nnOk=l=>l.sck>=1&&l.shoonya>=1;
+const nnFull=l=>l.sck>=2&&l.shoonya>=2;
+const suryaMet=l=>l.ss>=12||l.sk>=3;
+function streak(p){
+  let k=todayK(),n=0;
+  if(!(logged(p,k)&&nnOk(get(p,k)))) k=addD(k,-1);
+  while(logged(p,k)&&nnOk(get(p,k))){n++;k=addD(k,-1)}
+  return n;
+}
+function firstKey(p){const ks=Object.keys(S.logs[p]||{}).sort();return ks.length&&ks[0]<todayK()?ks[0]:todayK()}
+function rangeKeys(p){const out=[],end=todayK()<LAST?todayK():LAST;let k=firstKey(p);while(k<=end){out.push(k);k=addD(k,1)}return out}
+function bestStreak(p){let b=0,c=0;rangeKeys(p).forEach(k=>{if(logged(p,k)&&nnOk(get(p,k))){c++;b=Math.max(b,c)}else c=0});return b}
+
+/* ---------- plan builder ---------- */
+function buildPlan(p,kind){
+  const P=S.people[p],r=P.routines[kind],D=P.durs,sn=sun(todayK());
+  const occ=r.busy.filter(b=>b.e>b.s).map(b=>[b.s,b.e]);const out=[],kEnds=[],shoS=[];
+  const free=(s,e)=>s>=r.wake&&e<=r.sleep&&occ.every(([a,b])=>e+5<=a||s>=b+5);
+  const scan=(lo,d,ok)=>{for(let t=r5(lo);t+d<=r.sleep;t+=5) if(free(t,t+d)&&(!ok||ok(t))) return t;return null};
+  const find=(pref,d,ok)=>scan(Math.max(pref,r.wake),d,ok)??scan(r.wake,d,ok);
+  const place=(it,t)=>{out.push({id:it.id,label:it.label,s:t,d:it.d,prep:!!it.prep});
+    if(t!=null){occ.push([t,t+it.d]);if(it.kriya)kEnds.push(t+it.d);if(it.sho)shoS.push(t)}};
+  const seq=(items,pref,ok)=>{
+    const tot=items.reduce((a,x)=>a+x.d,0),t=find(pref,tot,ok?(s=>ok(s,tot)):null);
+    if(t!=null){let c=t;items.forEach(it=>{place(it,c);c+=it.d});return}
+    let pr=pref;items.forEach(it=>{const s=find(pr,it.d);place(it,s);if(s!=null)pr=s+it.d});
+  };
+  const PREP=n=>({id:'prep'+n,label:n===2||n===4?'Preparatory asanas for Shambhavi':'Preparatory asanas',d:D.prep,prep:1});
+  seq([{id:'bs',label:'Bhuta Shuddhi',d:D.bhuta},PREP(1),{id:'surya',label:'Surya Kriya + Surya Shakti',d:D.surya},
+       {id:'as',label:'Yogasanas',d:D.asanas},{id:'sck1',label:'Shakti Chalana Kriya',d:D.sck,kriya:1},PREP(2),
+       {id:'sha1',label:'Shambhavi',d:D.shambhavi,kriya:1}],r.wake);
+  let st=null;
+  for(const w of [sn.rise,sn.noon,sn.set]){for(let t=r5(w-20);t<=w+20&&st==null;t+=5) if(free(t,t+D.sukha)) st=t; if(st!=null)break}
+  if(st==null) st=find(r.wake,D.sukha);
+  place({id:'sukha',label:'Sukha Kriya',d:D.sukha},st);
+  const shoOk=t=>t>=660&&kEnds.every(e=>t<e||t>=e+SHOONYA_GAP);
+  const s1=find(660,D.shoonya,shoOk);place({id:'sho1',label:'Shoonya',d:D.shoonya,sho:1},s1);
+  const s2=find(Math.max(17*60,(s1??660)+D.shoonya+120),D.shoonya,t=>shoOk(t)&&(s1==null||t>=s1+D.shoonya+120));
+  place({id:'sho2',label:'Shoonya (2nd)',d:D.shoonya,sho:1},s2);
+  seq([{id:'sck2',label:'Shakti Chalana Kriya (2nd)',d:D.sck,kriya:1},PREP(4),{id:'sha2',label:'Shambhavi (2nd)',d:D.shambhavi,kriya:1}],
+      Math.max(sn.set+10,18*60),(t,tot)=>shoS.every(s=>s<t||s>=t+tot+SHOONYA_GAP));
+  const after=Math.max(...out.filter(x=>x.s!=null).map(x=>x.s+x.d),r.wake);
+  place({id:'aum',label:'AUM chanting',d:D.aum},find(Math.min(after,19*60),D.aum));
+  r.plan=out;save();
+}
+function planDone(id,l){return ({bs:l.bhuta,sck1:l.sck>=1,sck2:l.sck>=2,sho1:l.shoonya>=1,sho2:l.shoonya>=2,sha1:l.shambhavi>=1,sha2:l.shambhavi>=2,
+  surya:l.sk>0&&l.ss>0,as:l.asCyc>0,sukha:sukT(l)>=60,aum:l.aum>0})[id]}
+const isNN=id=>/^(sck|sho)/.test(id);
+const planIll=id=>({bs:'bhuta',surya:'sk',as:'as',sck1:'sck',sck2:'sck',sha1:'shambhavi',sha2:'shambhavi',sho1:'shoonya',sho2:'shoonya',sukha:'sukha',aum:'aum'})[id]||'prep';
+const planTile=id=>({bs:'sage',surya:'peach',as:'rose',sck1:'night',sck2:'night',sha1:'dusk',sha2:'dusk',sho1:'sand',sho2:'sand',sukha:'peach',aum:'night'})[id]||'sand';
+function sortedPlan(r){return (r.plan||[]).map((x,i)=>({...x,i})).sort((a,b)=>(a.s??9999)-(b.s??9999))}
+
+/* ---------- coach ---------- */
+function coach(p,k){
+  const l=get(p,k),sc=score(l),today=k===todayK(),now=nowMin(),r=routineFor(p,k),D=S.people[p].durs,ph=phaseOf(k);
+  const st=sukT(l),mx=sukMax(l);
+  const pend=[];
+  if(l.sck<2) pend.push({t:l.sck?'Shakti Chalana Kriya, 2nd':'Shakti Chalana Kriya',m:D.sck,nn:1,key:'sck',ill:'sck',tile:'night'});
+  if(l.shoonya<2) pend.push({t:l.shoonya?'Shoonya, 2nd':'Shoonya',m:D.shoonya,nn:1,key:'shoonya',ill:'shoonya',tile:'sand'});
+  if(!l.bhuta) pend.push({t:'Bhuta Shuddhi',m:D.bhuta,key:'bhuta',ill:'bhuta',tile:'sage'});
+  if(!l.sk||!l.ss) pend.push({t:'Surya Kriya + Shakti',m:D.surya+D.prep,key:l.sk?'ss':'sk',ill:'sk',tile:'peach'});
+  if(!l.asCyc) pend.push({t:'Yogasanas',m:D.asanas,key:'as',ill:'as',tile:'rose'});
+  if(l.shambhavi<2) pend.push({t:l.shambhavi?'Shambhavi, 2nd':'Shambhavi',m:D.shambhavi+D.prep,key:'shambhavi',ill:'shambhavi',tile:'dusk'});
+  if(st<60) pend.push({t:st?'Sukha Kriya, '+(60-st)+'m more':'Sukha Kriya',m:Math.max(20,60-st),key:'sukha',ill:'sukha',tile:'peach'});
+  const nnPend=pend.filter(x=>x.nn);
+  const chips=[];
+  const sk=streak(p); if(sk>=2) chips.push(sk+'-day must-do streak');
+  if(nnFull(l)) chips.push('Both must-do practices twice');
+  if(mx>=60) chips.push('Sukha Kriya: full hour in one stretch');
+  if(l.fruit+l.salad>=50) chips.push((l.fruit+l.salad)+'% natural food');
+  if(l.digital!=null&&l.digital<=SCREEN_IDEAL) chips.push('Screens under 1.5h');
+  const y=addD(k,-1); if(logged(p,y)){const d=sc-score(get(p,y)); if(d>0) chips.push('+'+d+'% vs yesterday')}
+
+  let title,sub='',todo=pend,todoLabel='Left to do today',note='',next=null,alert='';
+  if(l.digital!=null&&l.digital>SCREEN_MAX) alert='Screen time is '+dur(l.digital)+', above the 2-hour limit.';
+  if(!today){
+    title=logged(p,k)?(nnOk(l)?'Must-do practices were kept':'A must-do practice was missed'):'Nothing logged for this day';
+    sub=pretty(k);todoLabel='Not done this day';
+  } else if(!pend.length){
+    title='Every practice is complete';sub='Keep the evening quiet and sleep on time.';
+  } else if(now>=17*60){
+    const left=Math.max(0,r.sleep-now);
+    title=nnPend.length?'Evening. Must-dos come first':'Evening. There is still time';
+    let acc=0;const fit=[];for(const x of pend){if(acc+x.m<=left){fit.push(x);acc+=x.m}}
+    if(left<=0){sub='It is past your planned bedtime.';todoLabel='Still pending'}
+    else{sub=dur(left)+' before bed at '+fmt(r.sleep)+'.';if(fit.length){todo=fit;todoLabel='These fit before bed'}else todoLabel='Do the shortest one you can'}
+    if(nnPend.some(x=>x.key==='shoonya')&&nnPend.some(x=>x.key==='sck')) note='Do Shoonya first. It should not come straight after a kriya.';
+  } else {
+    title=ph.kind==='build'?'Build-up day':ph.kind==='full'?'Day '+ph.n+' of 60':'Samyama';
+    sub=pend.length+' practice'+(pend.length>1?'s':'')+' left'+(nnPend.length?', '+nnPend.length+' of them must-do':'')+'.';
+  }
+  if(today){
+    const pl=sortedPlan(r).filter(x=>x.s!=null&&!x.prep&&!planDone(x.id,l)&&x.s+x.d>=now);
+    if(pl.length) next=pl[0];
+  }
+  const quote=QUOTES[(diff('2026-01-01',k)%QUOTES.length+QUOTES.length)%QUOTES.length];
+  return {title,sub,todo,todoLabel,note,chips,next,quote,now,alert,sc};
+}
+
+/* ---------- sky ---------- */
+function skySVG(k,force,marks){
+  const sn=sun(k),today=k===todayK(),now=today?nowMin():sn.noon+60,T=Date.now()/1000;
+  let mode=force||'day';
+  if(!force){if(now<sn.rise-40||now>sn.set+40) mode='night';else if(Math.abs(now-sn.rise)<=60) mode='dawn';else if(Math.abs(now-sn.set)<=60) mode='dusk'}
+  const SKY={night:['#17202E','#33405C','#0F1820','#1A2632'],dawn:['#8B97BE','#F4C49A','#2F5655','#1F3D3E'],
+    day:['#A9D0DB','#F1F2E6','#3D7C78','#24585A'],dusk:['#5D608F','#EFA77F','#3A3F5A','#262A40']}[mode];
+  const t=force==='dawn'?.1:(now-sn.rise)/(sn.set-sn.rise),P=x=>{const a=(1-x)*(1-x),b=2*x*(1-x),c=x*x;return [a*28+b*180+c*332,a*150+b*10+c*150]};
+  const dl=(p)=>`style="animation-delay:-${(T%p).toFixed(1)}s"`;
+  const cloud=(y,s,o,slow)=>`<g class="anim-cloud${slow?' slow':''}" ${dl(slow?170:120)}><g transform="translate(0 ${y}) scale(${s})" fill="#FFFDF8" opacity="${o}"><ellipse cx="0" cy="0" rx="20" ry="6"/><ellipse cx="-7" cy="-4" rx="10" ry="7"/><ellipse cx="6" cy="-6" rx="11" ry="8.5"/><ellipse cx="15" cy="-1" rx="8" ry="5"/></g></g>`;
+  let body='';
+  if(mode==='night'){
+    body=`<g fill="#F6EBCB">${[[60,40,1.2],[110,70,1],[210,30,1.3],[250,80,1],[160,58,.9],[90,100,.9],[330,104,1],[40,90,.8],[290,20,1]].map(([x,y,r],i)=>`<circle class="anim-twinkle" style="animation-delay:${(i*.7)%2.8}s" cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>
+      <circle cx="312" cy="48" r="26" fill="#F6E3B4" opacity=".12" class="anim-halo"/><path d="M306 34 a16 16 0 1 0 12 28 a13 13 0 1 1 -12 -28Z" fill="#F6E3B4"/>${cloud(70,.9,.1,1)}`;
+  } else {
+    const [x,y]=P(Math.max(-.02,Math.min(1.02,t)));
+    body=`${cloud(58,1,.55)}${cloud(96,.7,.45,1)}<g class="${force?'anim-rise':''}"><circle class="anim-halo" cx="${x}" cy="${y}" r="26" fill="#FFE7A8" opacity=".4"/><circle cx="${x}" cy="${y}" r="13" fill="#F6BC4A"/></g>
+      <g class="anim-birds" ${dl(30)}><g stroke="#2A3540" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".7"><path class="anim-flap" d="M0 0q3-3 6 0q3-3 6 0"/><path class="anim-flap" style="animation-delay:.15s" d="M16 -6q2.4-2.4 4.8 0q2.4-2.4 4.8 0"/><path class="anim-flap" style="animation-delay:.3s" d="M10 8q2.2-2.2 4.4 0q2.2-2.2 4.4 0"/></g></g>`;
+  }
+  const mk=marks?[[0,sn.rise,'Sunrise'],[.5,sn.noon,'Noon'],[1,sn.set,'Sunset']].map(([u,m,n],i)=>{const [x,y]=P(u);
+    const on=today&&Math.abs(now-m)<=20;
+    return `<circle cx="${x}" cy="${y}" r="${on?5:3.5}" fill="${on?'#F6BC4A':'#FFFDF8'}" opacity="${on?1:.85}"/>
+      <text x="${[16,180,344][i]}" y="188" text-anchor="${['start','middle','end'][i]}" fill="#FFFDF8" font-size="11.5" font-family="Mukta, sans-serif" font-weight="${on?700:500}" opacity=".95">${n} ${fmt(m).replace(' ','')}</text>`}).join(''):'';
+  const gid='skyg'+(force||'');
+  return {mode,svg:`<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SKY[0]}"/><stop offset="1" stop-color="${SKY[1]}"/></linearGradient></defs>
+      <rect width="360" height="200" fill="url(#${gid})"/>
+      <path d="M28 150 Q180 10 332 150" fill="none" stroke="#FFFDF8" stroke-width="1.2" stroke-dasharray="2 5" opacity=".6"/>
+      ${body}
+      <path d="M0 158 Q70 136 150 154 T300 146 T360 150 V200 H0Z" fill="${SKY[2]}"/>
+      <path d="M0 170 Q60 154 130 166 T260 160 T360 168 V200 H0Z" fill="${SKY[3]}"/>
+      <g transform="translate(236 120) scale(.62)"><g class="anim-breathe" fill="${SKY[3]}"><path d="M10.5 50.6C10.5 45.6 19 43.2 32 43.2S53.5 45.6 53.5 50.6C53.5 54.2 44.5 55.8 32 55.8S10.5 54.2 10.5 50.6Z"/><path d="M32 27.6C28.3 27.6 25.4 28.5 23.5 30.5 21.3 32.9 20.5 36.7 19.9 40.6 19.5 43.3 20.4 45.7 23 46.9 25.8 48.1 29 48.3 32 48.3S38.2 48.1 41 46.9C43.6 45.7 44.5 43.3 44.1 40.6 43.5 36.7 42.7 32.9 40.5 30.5 38.6 28.5 35.7 27.6 32 27.6Z"/><path d="M24.2 30.4C20.6 32 18.6 37.2 17.1 44 16.7 46 17.9 47.6 19.7 47.4 21.3 47.2 21.9 45.8 22.3 44.2 23.3 39.6 24.5 36 26.1 33.5ZM39.8 30.4C43.4 32 45.4 37.2 46.9 44 47.3 46 46.1 47.6 44.3 47.4 42.7 47.2 42.1 45.8 41.7 44.2 40.7 39.6 39.5 36 37.9 33.5Z"/><path d="M29.9 24h4.2v4.4h-4.2Z"/><ellipse cx="32" cy="19.6" rx="5.3" ry="6.1"/><circle cx="32" cy="11.6" r="2.6"/></g></g>
+      ${mk}
+    </svg>`};
+}
+function hero(k){
+  const today=k===todayK(),ph=phaseOf(k),s=skySVG(k,null,true);
+  const eb=ph.kind==='build'?'Build-up · '+ph.toDay1+' day'+(ph.toDay1>1?'s':'')+' to Day 1':ph.kind==='full'?'Day '+ph.n+' of 60 · Samyama in '+ph.toSam+' days':'Samyama';
+  return `<section class="hero ${s.mode==='day'?'dk':'lt'}" aria-label="Sky over Bengaluru">${s.svg}
+    <div class="ov"><small>${eb}</small><b>${prettyL(k)}</b></div>
+  </section>`;
+}
+
+
+/* ---------- journey colours: earth brown → turmeric gold at halfway → new-leaf green at Samyama ---------- */
+const JPAL={
+  light:[{bg:'#F2EBE1',sand:'#E9DDCC',line:'#E2D6C6',track:'#E7DBCB',acc:'#8A5A3B',accs:'#EFE0D3'},
+         {bg:'#F6EFDA',sand:'#EFE3BD',line:'#E8DCB8',track:'#ECE1C0',acc:'#8C640C',accs:'#F4E8C5'},
+         {bg:'#EEF2E4',sand:'#DDE7CD',line:'#D8E1CA',track:'#DFE7D1',acc:'#3E7849',accs:'#DCEBD9'}],
+  dark:[{bg:'#17130F',sand:'#2B241D',line:'#33291F',track:'#2E261F',acc:'#CB966C',accs:'#3A2B20'},
+        {bg:'#16140C',sand:'#2C2817',line:'#353020',track:'#2F2A19',acc:'#DDB247',accs:'#3A3218'},
+        {bg:'#10160F',sand:'#222C20',line:'#2B3729',track:'#263123',acc:'#7DBE88',accs:'#1F3322'}]};
+const hx=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));
+const mixc=(a,b,t)=>'#'+hx(a).map((v,i)=>Math.round(v+(hx(b)[i]-v)*t).toString(16).padStart(2,'0')).join('');
+const ease=t=>t*t*(3-2*t);
+function journeyT(k){if(k<DAY1)return 0;return Math.max(0,Math.min(1,diff(DAY1,k)/diff(DAY1,SAMYAMA)))}
+function isDark(){return THEME==='dark'||(THEME==='system'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function palAt(t,dark){const P=JPAL[dark?'dark':'light'],[a,b,u]=t<.5?[P[0],P[1],ease(t*2)]:[P[1],P[2],ease((t-.5)*2)];
+  const o={};for(const key in a)o[key]=mixc(a[key],b[key],u);return o}
+function applyJourney(){
+  const c=palAt(journeyT(V.sim||todayK()),isDark()),r=document.documentElement.style;
+  r.setProperty('--bg',c.bg);r.setProperty('--sand',c.sand);r.setProperty('--line',c.line);r.setProperty('--track',c.track);
+  r.setProperty('--teal',c.acc);r.setProperty('--teal-soft',c.accs);
+}
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyJourney)}catch(e){}
+const phaseName=t=>t<.2?'Earth':t<.42?'Ripening':t<.62?'Turmeric':t<.85?'Sprouting':'New leaf';
+function dayLabel(k){const ph=phaseOf(k);return ph.kind==='build'?'Build-up · '+short(k):ph.kind==='full'?'Day '+ph.n+' · '+short(k):'Samyama · '+short(k)}
+
+/* ---------- render helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const UNITS={silence:'h',fruit:'%',salad:'%'};
+const unitOf=k=>UNITS[k]??(['sk','ss','asCyc'].includes(k)?'':'m');
+function showV(k,v){if(v==null)return '—';const u=unitOf(k);return u==='m'?dur(v):v+u}
+function getV(l,k){return k.startsWith('sit:')?l.sits[+k.slice(4)]:l[k]}
+function setV(l,k,v){if(k.startsWith('sit:'))l.sits[+k.slice(4)]=v;else l[k]=v}
+const oid=k=>'o-'+k.replace(':','-');
+const stepper=(k,v,step,max,a)=>`<div class="step"><button data-a="${a||'inc'}" data-k="${k}" data-d="${-step}" data-max="${max}" aria-label="Less">−</button><output id="${oid(k)}" class="num">${a?dur(v):showV(k,v)}</output><button data-a="${a||'inc'}" data-k="${k}" data-d="${step}" data-max="${max}" aria-label="More">+</button></div>`;
+const slider=(k,v,step,max,label)=>`<input type="range" min="0" max="${max}" step="${step}" value="${v??0}" style="--p:${(v??0)/max*100}%" data-f="rng" data-k="${k}" aria-label="${label}">`;
+const rds=(n,max)=>Array.from({length:max},(_,i)=>`<span class="rd${i<n?' on':''}">${i<n?CHECK:''}</span>`).join('');
+const ring=pct=>{const r=26,c=2*Math.PI*r;return `<div class="ring"><svg viewBox="0 0 62 62"><circle class="rt" cx="31" cy="31" r="${r}"/><circle class="rp" cx="31" cy="31" r="${r}" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct/100)}"/></svg><span>${pct}%</span></div>`};
+const scallop='<svg class="scallop" aria-hidden="true"><rect width="100%" height="14"/></svg>';
+
+function prow(o){
+  const open=V.open===o.key;
+  return `<div class="prow${open?' open':''}${o.state==='done'?' done':''}${V.just===o.key?' pop':''}" id="r-${o.key}">
+    <button class="pmain" data-a="${o.act||'open'}" data-k="${o.k||o.key}" ${o.max?`data-max="${o.max}"`:''} ${o.body?`aria-expanded="${open}"`:''}>
+      <span class="chk${o.state==='part'?' part':''}">${o.state==='done'?CHECK:''}</span>
+      <span class="thumb t-${o.tile}">${svg(o.ill)}</span>
+      <span class="pname"><b>${o.name}${o.must?'<span class="tag">must</span>':''}</b>${o.sub?`<small class="${o.subc||''}">${o.sub}</small>`:''}</span>
+      <span class="pval">${o.right||''}${o.body?CHEV:''}</span>
+    </button>
+    ${open&&o.body?`<div class="pbody">${o.body}</div>`:''}
+  </div>`;
+}
+const ctl=(label,k,v,step,max,noSlider)=>`<div class="ctrl"><span>${label}</span>${stepper(k,v,step,max)}</div>${noSlider?'':slider(k,v,step,max,label)}`;
+const sech=(t,s)=>`<div class="sech"><h3>${t}</h3>${s?`<span>${s}</span>`:''}</div>`;
+
+/* ---------- header & nav ---------- */
+const colorVar=c=>({terra:'--terra',sage:'--f-leaf',dusk:'--ink'})[c]||'--teal';
+function renderHeader(){
+  const top=$('#top'),tabs=$('#tabs');
+  if(V.ob){top.innerHTML='';top.hidden=true;tabs.hidden=true;return}
+  top.hidden=false;tabs.hidden=false;
+  const c=S.people[ME].color;
+  const meAv=`<button class="av c-${c} ring2" data-a="tab" data-t="profile" aria-label="Profile" style="color:var(${colorVar(c)})">${avInner(ME)}</button>`;
+  const subTitles={import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
+  const titles={plan:'My day',progress:'Progress',profile:'Profile'};
+  if(V.tab==='today') top.innerHTML=`<div class="greet"><small>${isAdmin()?'Admin sandbox'+(ADMIN_TODAY?' · pretend today '+short(ADMIN_TODAY):''):'Namaskaram'}</small><b>${esc(nm(ME))}</b></div>${meAv}`;
+  else if(V.tab==='profile'&&V.sub) top.innerHTML=`<div class="ptitle"><button class="back" data-a="back" aria-label="Back">${BACK}</button>${esc(subTitles[V.sub])}</div>`;
+  else top.innerHTML=`<div class="ptitle">${titles[V.tab]}</div>${V.tab==='profile'?'':meAv}`;
+  const ic={today:'<circle class="fl" cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+    plan:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path class="fl" d="M3.5 8a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v2h-17z"/><path d="M8 3v4M16 3v4M8 14h3M8 17h6"/>',
+    progress:'<path d="M4 20.5h16"/><rect class="fl" x="5" y="11" width="3.4" height="8" rx="1"/><rect class="fl" x="10.3" y="5" width="3.4" height="14" rx="1"/><rect class="fl" x="15.6" y="13" width="3.4" height="6" rx="1"/>',
+    profile:'<circle class="fl" cx="12" cy="8.5" r="3.6"/><path d="M4.5 20.5c.9-4.2 3.9-6.4 7.5-6.4s6.6 2.2 7.5 6.4"/>'};
+  const names={today:'Today',plan:'My day',progress:'Progress',profile:'Profile'};
+  tabs.innerHTML=Object.keys(names).map(t=>`<button class="${V.tab===t?'on':''}" data-a="tab" data-t="${t}"><svg viewBox="0 0 24 24">${ic[t]}</svg>${names[t]}</button>`).join('');
+}
+
+/* ---------- Today ---------- */
+function renderToday(){
+  const p=ME,k=V.day,l=get(p,k),c=coach(p,k);
+  const nat=l.fruit+l.salad,st=sukT(l),mx=sukMax(l);
+  const scrState=l.digital==null?['Phone + TV · keep under 2 hours','',''] :l.digital<=SCREEN_IDEAL?['Within 1.5 hours','met','done']:l.digital<=SCREEN_MAX?['Within the 2-hour limit','met','done']:['Over the 2-hour limit','over','part'];
+  const C=2*Math.PI*44,fa=Math.min(l.fruit,100)/100*C,sa=Math.min(l.salad,100-Math.min(l.fruit,100))/100*C;
+  const rounds=n=>['Not yet today','1 of 2 rounds','Both rounds done'][n];
+
+  const hatha=[
+    prow({key:'bhuta',name:'Bhuta Shuddhi',sub:l.bhuta?'Done':'First, before everything',subc:l.bhuta?'met':'',ill:'bhuta',tile:'sage',act:'tog',state:l.bhuta?'done':''}),
+    prow({key:'sk',name:'Surya Kriya',sub:l.sk?l.sk+' cycle'+(l.sk>1?'s':''):'Tap to log cycles',ill:'sk',tile:'peach',state:l.sk?'done':'',right:l.sk?l.sk+'×':'',
+      body:ctl('Cycles','sk',l.sk,1,50,true)}),
+    prow({key:'ss',name:'Surya Shakti',sub:l.ss?l.ss+' cycle'+(l.ss>1?'s':''):'Tap to log cycles',ill:'ss',tile:'peach',state:l.ss?'done':'',right:l.ss?l.ss+'×':'',
+      body:ctl('Cycles','ss',l.ss,1,108,true)}),
+    prow({key:'as',name:'Yogasanas',sub:l.asCyc?l.asCyc+' cycles · '+secLabel(l.asSec)+' each':'Tap to log cycles',ill:'as',tile:'rose',state:l.asCyc?'done':'',right:l.asCyc?l.asCyc+'×':'',
+      body:ctl('Cycles','asCyc',l.asCyc,1,30,true)+`<div class="ctrl"><span>Time per cycle</span></div><div class="seg">${[15,30,45,60,90].map(s=>`<button class="pill${l.asSec===s?' on':''}" data-a="set" data-k="asSec" data-v="${s}">${secLabel(s)}</button>`).join('')}</div>`})
+  ].join('');
+
+  const kriyas=[
+    prow({key:'sck',name:'Shakti Chalana Kriya',must:1,sub:rounds(l.sck)+' · tap after each',ill:'sck',tile:'night',act:'cyc',max:2,state:l.sck>=2?'done':l.sck?'part':'',right:`<span class="dots">${rds(l.sck,2)}</span>`}),
+    prow({key:'shambhavi',name:'Shambhavi',sub:rounds(l.shambhavi)+' · tap after each',ill:'shambhavi',tile:'dusk',act:'cyc',max:2,state:l.shambhavi>=2?'done':l.shambhavi?'part':'',right:`<span class="dots">${rds(l.shambhavi,2)}</span>`})
+  ].join('');
+
+  const sits=l.sits.map((v,i)=>`<div class="sit"><div class="ctrl"><span>Sitting ${i+1}${v>=60?' · full hour':''}</span><div style="display:flex;align-items:center">${stepper('sit:'+i,v,1,180)}<button class="x" data-a="sdel" data-i="${i}" aria-label="Remove sitting ${i+1}">×</button></div></div>${slider('sit:'+i,v,1,180,'Sitting '+(i+1)+' minutes')}</div>`).join('');
+  const balancing=[
+    prow({key:'sukha',name:'Sukha Kriya',sub:mx>=60?'Full hour in one stretch':st?dur(st)+' so far · aim for one 60-min stretch':'Aim for one 60-minute stretch',subc:mx>=60?'met':'',ill:'sukha',tile:'peach',
+      state:mx>=60?'done':st?'part':'',right:st?dur(st):'',
+      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}<button class="btn ghost" data-a="sadd">${l.sits.length?'Add another sitting':'Add a sitting'}</button>`}),
+    prow({key:'aum',name:'AUM chanting',sub:l.aum?dur(l.aum):'Log minutes',ill:'aum',tile:'night',state:l.aum?'done':'',right:l.aum?dur(l.aum):'',body:ctl('Minutes','aum',l.aum,1,120)})
+  ].join('');
+
+  const sitting=[
+    prow({key:'patanga',name:'Patangasana',sub:'Butterfly',ill:'patanga',tile:'rose',act:'tog',state:l.patanga?'done':''}),
+    prow({key:'shishu',name:'Shishupalasana',sub:'Rock the baby',ill:'shishu',tile:'sand',act:'tog',state:l.shishu?'done':''}),
+    prow({key:'ardha',name:'Ardha Siddhasana',sub:l.ardha>=90?'Hour and a half reached':l.ardha?'Longest sit '+dur(l.ardha)+' · goal 90m':'Longest sit · goal 90 minutes',subc:l.ardha>=90?'met':'',ill:'ardha',tile:'sage',
+      state:l.ardha>=90?'done':l.ardha?'part':'',right:l.ardha?dur(l.ardha):'',body:ctl('Longest sit','ardha',l.ardha,1,180)})
+  ].join('');
+
+  const lifestyle=[
+    prow({key:'digital',name:'Screen time',sub:l.digital==null?scrState[0]:dur(l.digital)+' · '+scrState[0].toLowerCase(),subc:scrState[1],ill:'screen',tile:'dusk',state:scrState[2],right:l.digital!=null?dur(l.digital):'',
+      body:ctl('Phone + TV','digital',l.digital,1,360)}),
+    prow({key:'silence',name:'Silence',sub:l.silence?l.silence+' hours in silence':'Hours spent in silence',ill:'silence',tile:'night',state:l.silence?'done':'',right:l.silence?l.silence+'h':'',
+      body:ctl('Hours','silence',l.silence,.5,16)})
+  ].join('');
+
+  const pledge=(k,b,s)=>`<button class="pledge${l[k]?' on':''}" data-a="tog" data-k="${k}" aria-pressed="${l[k]}"><span class="chk">${l[k]?CHECK:''}</span><span><b>${b}</b><small>${s}</small></span></button>`;
+  const xt=(k,n,ill,tile)=>`<button class="xt t-${tile}${l[k]?' on':''}" data-a="tog" data-k="${k}" aria-pressed="${l[k]}">${svg(ill)}${n}<span class="rd${l[k]?' on':''}">${l[k]?CHECK:''}</span></button>`;
+  const shoBtn=i=>`<button class="rbtn${l.shoonya>i?' on':''}" data-a="sho" data-i="${i}">${l.shoonya>i?CHECK:''}${i?'2nd round':'1st round'}</button>`;
+
+  return `
+  ${dayStrip()}
+  ${k!==todayK()?`<div class="pastbar"><span>Editing <b>${pretty(k)}</b>. Changes save to that day.</span><button data-a="today">Back to today</button></div>`:''}
+  ${hero(k)}
+
+  <section class="coach">
+    <div class="tophead">${ring(c.sc)}<div><h2>${esc(c.title)}</h2>${c.sub?`<div class="hsub">${esc(c.sub)}</div>`:''}</div></div>
+    ${scallop}
+    <figure class="quote"><span class="qm"><svg viewBox="0 0 24 24"><path d="M10 6c-3.6 1.2-6 4-6 7.6V18h6v-6H7.2c.3-2 1.6-3.4 3.4-4.2zm10 0c-3.6 1.2-6 4-6 7.6V18h6v-6h-2.8c.3-2 1.6-3.4 3.4-4.2z"/></svg></span>
+      <blockquote>${esc(c.quote)}</blockquote><figcaption>Sadhguru</figcaption></figure>
+    ${scallop}
+    ${c.todo.length?`<div class="todoh"><b>${c.todoLabel}</b><span>Tap to log</span></div>
+      <div class="todos">${c.todo.map(x=>`<button class="todo${x.nn?' must':''}" data-a="jump" data-k="${x.key}"><span class="tb t-${x.tile}">${svg(x.ill)}</span>${esc(x.t)}</button>`).join('')}</div>`
+      :`<div class="alldone"><span class="rd on">${CHECK}</span>Nothing left. Every practice is logged.</div>`}
+    ${c.note?`<div class="cnote">${esc(c.note)}</div>`:''}
+    ${c.next?`<button class="nextbtn" data-a="tab" data-t="plan"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg>${c.next.s<=c.now?'Now':'Next'}: ${esc(c.next.label)} · <b>${fmt(c.next.s)}</b></button>`:''}
+    ${c.alert?`<div class="alert">${esc(c.alert)}</div>`:''}
+    ${c.chips.length?`<div class="chips">${c.chips.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>`:''}
+  </section>
+
+  <section class="sec">${sech('Hatha yoga','In practice order')}<div class="list">${hatha}</div></section>
+  <section class="sec">${sech('Kriyas','Tap after each round')}<div class="list">${kriyas}</div></section>
+
+  <section class="shoonya t-sand${V.just==='shoonya'?' pop':''}" id="r-shoonya">
+    <div><div class="eb">Must not miss</div><h3>Shoonya</h3><p>${rounds(l.shoonya)}. After 11 am, never straight after a kriya.</p></div>
+    ${svg('shoonya','ill')}
+    <div class="rbtns">${shoBtn(0)}${shoBtn(1)}</div>
+  </section>
+
+  <section class="sec">${sech('Balancing sadhana')}<div class="list">${balancing}</div></section>
+  <section class="sec">${sech('Sitting','Toward 1.5 hours')}<div class="list">${sitting}</div></section>
+
+  <section class="sec">
+    ${sech('Food','Natural food 50%+')}
+    <div class="food">
+      <div class="plate">
+        <svg viewBox="0 0 118 118" aria-label="Natural food ${nat}%">
+          <g transform="rotate(-90 59 59)">
+            <circle class="pt" cx="59" cy="59" r="44"/>
+            ${fa?`<circle class="pf" cx="59" cy="59" r="44" stroke-dasharray="${fa} ${C}"/>`:''}
+            ${sa?`<circle class="ps" cx="59" cy="59" r="44" stroke-dasharray="${sa} ${C}" stroke-dashoffset="${-fa}"/>`:''}
+          </g>
+          <line class="tick" x1="59" y1="96" x2="59" y2="110"/>
+          <text x="59" y="62" text-anchor="middle">${nat}%</text><text class="sub" x="59" y="77" text-anchor="middle">natural</text>
+        </svg>
+        <div class="sl">
+          <label><span><i style="background:var(--f-mango)"></i>Fruits</span><output id="${oid('fruit')}" class="num">${l.fruit}%</output></label>
+          ${slider('fruit',l.fruit,5,100,'Fruits percent')}
+          <label><span><i style="background:var(--f-green)"></i>Salad</span><output id="${oid('salad')}" class="num">${l.salad}%</output></label>
+          ${slider('salad',l.salad,5,100,'Salad percent')}
+          <div class="note2">${nat>=50?'The 50% mark is met.':'The line at the bottom marks 50%.'}</div>
+        </div>
+      </div>
+      <div class="pledges">
+        ${pledge('dNeg','No negative-pranic food','Garlic, onion, chilli, brinjal, hing')}
+        ${pledge('dStim','No stimulants','Coffee, tea, alcohol')}
+        ${pledge('dDairy','No dairy','Watch for hidden whey and casein')}
+        ${pledge('dOut','No outside food','Home-cooked only')}
+      </div>
+      <div class="extras">
+        ${xt('sprouts','Sprouts','sprouts','sage')}
+        ${xt('peanuts','Soaked peanuts','peanuts','sand')}
+        ${xt('sanj','Sanjeevini','sanj','peach')}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">${sech('Lifestyle','Keep it in check')}<div class="list">${lifestyle}</div></section>
+
+  <section class="sec">
+    ${sech('Reflection')}
+    <textarea id="note" data-f="note" placeholder="How did the sadhana feel today?" aria-label="Note for the day">${esc(l.note)}</textarea>
+  </section>`;
+}
+
+
+const CALI='<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h2M12 14h2M16 14h0M8 17h2M12 17h2"/></svg>';
+function stripStart(){const tk=todayK(),f=firstKey(ME),a=addD(tk,-20);return f<a?f:a}
+function dayStrip(){
+  const tk=todayK();let k=stripStart();const out=[];
+  while(k<=tk){const lg=logged(ME,k),s=lg?score(get(ME,k)):0,d=parse(k);
+    out.push(`<button class="dchip${k===V.day?' on':''}${k===tk?' tdy':''}" data-a="goday" data-k="${k}" aria-label="${pretty(k)}${lg?', '+s+'%':''}"><small>${k===tk?'Today':DOW[d.getDay()]}</small><b>${d.getDate()}</b><i class="${lg?'':'no'}" style="--s:${s}%"></i></button>`);k=addD(k,1)}
+  return `<div class="dayrow"><div class="dstrip" id="dstrip">${out.join('')}</div><button class="calbtn" data-a="sheet" data-for="today" aria-label="Go to any day">${CALI}</button></div>`;
+}
+function renderSheet(){
+  let el=document.getElementById('sheet');
+  if(!V.sheet){if(el)el.remove();return}
+  if(!el){el=document.createElement('div');el.id='sheet';document.body.appendChild(el)}
+  const tk=todayK(),f=firstKey(ME),lo=f<addD(tk,-45)?f:addD(tk,-45);
+  let y=parse(lo).getFullYear(),m=parse(lo).getMonth();const ty=parse(tk).getFullYear(),tm=parse(tk).getMonth();const months=[];
+  while(y<ty||(y===ty&&m<=tm)){
+    const mk=y+'-'+pad(m+1),days=new Date(y,m+1,0).getDate(),lead=(new Date(y,m,1).getDay()+6)%7;let cells='';
+    for(let i=0;i<lead;i++)cells+='<div class="cell blank"></div>';
+    for(let d=1;d<=days;d++){const c=mk+'-'+pad(d),lg=logged(ME,c),s=lg?score(get(ME,c)):0;
+      const cls='cell'+(c===tk?' today':'')+(c===V.day&&V.pickFor==='today'?' sel':'')+(c===DAY1?' d1':'');
+      cells+=c>tk?`<div class="${cls} fut"><span>${d}</span></div>`:`<button class="${cls}" data-a="pickday" data-k="${c}" style="background-color:color-mix(in srgb,var(--teal) ${lg?Math.max(14,s):0}%,var(--track));${s>55?'color:var(--on-teal)':''}"><span>${d}</span>${lg?`<span class="ml2" style="color:inherit;opacity:.8">${s}%</span>`:''}</button>`}
+    months.push(`<div class="month"><h3 style="font-size:18px;margin:4px 0 6px">${MONL[m]}${y!==2026?' '+y:''}</h3><div class="cal">${['M','T','W','T','F','S','S'].map(x=>`<div class="h">${x}</div>`).join('')}${cells}</div></div>`);
+    m++;if(m>11){m=0;y++}}
+  const q=[[tk,'Today'],[addD(tk,-1),'Yesterday']];if(DAY1<=tk)q.push([DAY1,'Day 1']);
+  el.innerHTML=`<div class="sheet-bg" data-a="sheetclose"></div><div class="sheet" role="dialog" aria-label="Go to a day"><div class="grab"></div>
+    <h3>${V.pickFor==='list'?'Open a day':'Go to a day'}<button class="back" data-a="sheetclose" aria-label="Close" style="box-shadow:none">✕</button></h3>
+    <div class="quick">${q.map(([k,n])=>`<button class="pill" data-a="pickday" data-k="${k}">${n}</button>`).join('')}</div>
+    <div class="hint">Shaded days have entries. Tap any day to ${V.pickFor==='list'?'see what you logged':'view or edit it'}.</div>
+    ${months.join('')}</div>`;
+  const sh=el.querySelector('.sheet');if(sh)sh.scrollTop=sh.scrollHeight;
+}
+
+/* ---------- My day ---------- */
+function renderPlan(){
+  const p=ME,P=S.people[p],r=P.routines[V.kind],sn=sun(todayK());
+  const todayKind=isWeekend(todayK())?'weekend':'weekday',l=get(p,todayK()),isToday=V.kind===todayKind;
+  const items=[];
+  const blocks=[...(r.plan||[]).filter(x=>x.s!=null).map(x=>({s:x.s,e:x.s+x.d,l:x.label})),...r.busy.map(b=>({s:b.s,e:b.e,l:b.l||'Busy'}))];
+  r.busy.forEach(b=>items.push({t:b.s,html:`<div class="tline busyrow"><span class="tt">${fmt(b.s)}</span><span>${esc(b.l||'Busy')} · until ${fmt(b.e)}</span></div>`}));
+  [['Sunrise',sn.rise],['Noon',sn.noon],['Sunset',sn.set]].forEach(([n,m])=>items.push({t:m-20,html:`<div class="tline sandhya"><span class="tt">${fmt(m-20)}</span><span>${n} sandhya kala · until ${fmt(m+20)}</span></div>`}));
+  sortedPlan(r).forEach(x=>{
+    const done=isToday&&!x.prep&&planDone(x.id,l);
+    const clash=x.s==null?null:blocks.find(b=>b.l!==x.label&&x.s<b.e&&x.s+x.d>b.s);
+    const ed=V.et===x.i;
+    items.push({t:x.s??9999,html:`<div class="tli${x.prep?' prep':''}">
+      ${x.s==null?'<span class="tchip">—</span>':`<button class="tchip${ed?' ed':''}" data-a="et" data-i="${x.i}" aria-label="Change start time for ${esc(x.label)}">${fmt(x.s)}</button>`}
+      <span class="mini t-${planTile(x.id)}">${svg(planIll(x.id))}</span>
+      <div class="nm">${esc(x.label)}${isNN(x.id)?'<span class="tag">must</span>':''}<small class="${clash?'over':''}">${x.s==null?'No free slot. Shorten a busy time or rebuild.':clash?'Overlaps with '+esc(clash.l):dur(x.d)+' · until '+fmt(x.s+x.d)}</small></div>
+      ${isToday&&!x.prep?`<div class="tick${done?' on':''}">${done?CHECK:''}</div>`:'<div></div>'}</div>
+      ${ed?`<div class="tedit"><input type="time" value="${toHM(x.s)}" data-f="pt" data-i="${x.i}" aria-label="Start time"><button class="btn" data-a="etdone">Done</button></div>`:''}`});
+  });
+  items.sort((a,b)=>a.t-b.t);
+  return `
+  <div class="segtabs">${['weekday','weekend'].map(x=>`<button class="${V.kind===x?'on':''}" data-a="kind" data-v="${x}">${x==='weekday'?'Weekdays':'Weekends'}</button>`).join('')}</div>
+  <section class="card">
+    <h2>Your ${V.kind==='weekday'?'weekday':'weekend'} <span>Routine</span></h2>
+    <div class="grid2">
+      <label class="field">Wake up<input type="time" value="${toHM(r.wake)}" data-f="wake"></label>
+      <label class="field">Bedtime<input type="time" value="${toHM(r.sleep)}" data-f="sleep"></label>
+    </div>
+    <div class="hint">Busy times: work, commute, meals, family time.</div>
+    ${r.busy.map((b,i)=>`<div class="busy">
+      <div class="bh"><label class="field">What<input value="${esc(b.l)}" data-f="bl" data-i="${i}" placeholder="Work"></label><button class="x" data-a="delbusy" data-i="${i}" aria-label="Remove busy time">×</button></div>
+      <div class="grid2"><label class="field">From<input type="time" value="${toHM(b.s)}" data-f="bs" data-i="${i}"></label>
+      <label class="field">To<input type="time" value="${toHM(b.e)}" data-f="be" data-i="${i}"></label></div></div>`).join('')}
+    <button class="btn ghost" data-a="addbusy">Add a busy time</button>
+    <button class="btn" data-a="build">${r.plan?'Rebuild my sadhana plan':'Build my sadhana plan'}</button>
+    <button class="linkbtn" data-a="gosub" data-s="durs">Practice durations are in Profile ›</button>
+  </section>
+  <section class="card">
+    <h2>Sadhana plan <span>${isToday?'Today':V.kind==='weekday'?'Weekdays':'Weekends'}</span></h2>
+    ${r.plan?`<div class="tl">${items.map(x=>x.html).join('')}</div><div class="hint">Tap a time to change it. Ticks fill in as you log on the Today tab.</div>`
+      :`<div class="empty">${svg('sukha')}Set your wake-up time, bedtime and busy times above, then tap <b>Build my sadhana plan</b>. Sandhya times are for Bengaluru.</div>`}
+  </section>
+  <div class="hint" style="padding:0 6px">Mornings start with Bhuta Shuddhi, then hatha yoga, then the kriyas. Shoonya goes after 11 am and never straight after a kriya. Sukha Kriya gets a full hour in a sandhya kala when one is free.</div>`;
+}
+
+/* ---------- Progress ---------- */
+function dayLines(l){
+  const st=sukT(l),mx=sukMax(l),j=a=>a.filter(Boolean).join(', ');
+  return [
+    ['Bhuta Shuddhi',l.bhuta?'Done':'—',l.bhuta||null],
+    ['Surya Kriya',l.sk?l.sk+' cycle'+(l.sk>1?'s':''):'—',l.sk?true:null],
+    ['Surya Shakti',l.ss?l.ss+' cycle'+(l.ss>1?'s':''):'—',l.ss?true:null],
+    ['Yogasanas',l.asCyc?l.asCyc+' × '+secLabel(l.asSec):'—',l.asCyc?true:null],
+    ['Shakti Chalana Kriya',l.sck+'/2',l.sck>=1],
+    ['Shambhavi',l.shambhavi+'/2',l.shambhavi?true:null],
+    ['Shoonya',l.shoonya+'/2',l.shoonya>=1],
+    ['Sukha Kriya',st?dur(st)+(l.sits.length>1?' ('+l.sits.map(dur).join(' + ')+')':'')+(mx>=60?' · full hour':''):'—',mx>=60?true:null],
+    ['AUM chanting',l.aum?dur(l.aum):'—',null],
+    ['Sitting',j([l.patanga&&'Patangasana',l.shishu&&'Shishupalasana',l.ardha&&'Ardha Siddhasana '+dur(l.ardha)])||'—',null],
+    ['Food kept',j([l.dNeg&&'No negative-pranic',l.dStim&&'No stimulants',l.dDairy&&'No dairy',l.dOut&&'No outside food'])||'—',(l.dNeg&&l.dStim&&l.dDairy&&l.dOut)||null],
+    ['Natural food','Fruits '+l.fruit+'% · Salad '+l.salad+'%',l.fruit+l.salad>=50?true:null],
+    ['Also had',j([l.sprouts&&'Sprouts',l.peanuts&&'Soaked peanuts',l.sanj&&'Sanjeevini'])||'—',null],
+    ['Screen time',l.digital==null?'—':dur(l.digital),l.digital==null?null:l.digital<=SCREEN_MAX],
+    ['Silence',l.silence?l.silence+'h':'—',null]];
+}
+const dlHTML=l=>`<dl class="dl">${dayLines(l).map(([a,b,ok])=>`<dt>${a}</dt><dd class="${ok===true?'y':ok===false?'n':''}">${esc(b)}</dd>`).join('')}</dl>${l.note?`<div class="note"><b>Note:</b> ${esc(l.note)}</div>`:''}`;
+
+function journey(p,ro){
+  const k=todayK(),ph=phaseOf(k),start=firstKey(p)<DAY1?firstKey(p):addD(DAY1,-14);
+  let h,s;
+  if(ph.kind==='build'){h=ph.toDay1+' day'+(ph.toDay1>1?'s':'')+' until Day 1';s=ro?'In the build-up.':'Build up gently. Every day of practice now makes Day 1 easier.'}
+  else if(ph.kind==='full'){const n=ph.n;
+    if(n<30){h='Day '+n+' of 60';s=(30-n)+' day'+(30-n>1?'s':'')+' to the halfway mark.'}
+    else if(n===30){h='Halfway there';s='30 days done, 30 to go.'}
+    else if(n<54){h='Past halfway';s=(60-n)+' days of preparation left.'}
+    else if(n<60){h='The final week';s=(60-n)+' day'+(60-n>1?'s':'')+' left. Samyama begins '+short(SAMYAMA)+'.'}
+    else{h='Last day of preparation';s='Samyama begins tomorrow.'}}
+  else{h=ph.toSam===0?'Samyama begins today':ph.toSam>0?'Samyama in '+ph.toSam+' day'+(ph.toSam>1?'s':''):'Samyama';s='The preparation is complete.'}
+  // four evenly spaced milestones; today sits proportionally within its segment
+  const M=[[start,'Build-up',short(start)],[DAY1,'Day 1',short(DAY1)],[HALF,'Halfway',short(HALF)],[SAMYAMA,'Samyama',short(SAMYAMA)]];
+  let pos=0;for(let i=0;i<3;i++){const a=M[i][0],b=M[i+1][0];if(k>=a&&k<=b){pos=(i+diff(a,k)/Math.max(1,diff(a,b)))/3;break}else if(k>b)pos=(i+1)/3}
+  pos=Math.max(0,Math.min(1,pos));
+  const P=x=>(x*100).toFixed(2)+'%';
+  return `<section class="card journey">
+    <h2>The journey <span>${ph.kind==='build'?'Build-up':ph.kind==='full'?'Day '+ph.n:'Samyama'}</span></h2>
+    <div><div class="jh">${h}</div><div class="js">${s}</div></div>
+    <div class="jtrack">
+      <div class="ln"></div><div class="fill" style="width:${P(pos)}"></div>
+      ${M.map((m,i)=>`<span class="ms${k>=m[0]&&i<3?' past':''}${i===3?' sam':''}" style="left:${P(i/3)}">${i===3?STAR:''}</span>
+        <span class="lb${i===0?' l':i===3?' r':''}" style="left:${P(i/3)}"><b>${m[1]}</b>${m[2]}</span>`).join('')}
+      <span class="me av c-${S.people[p].color}" style="left:${P(pos)}">${avInner(p)}</span>
+    </div>
+  </section>`;
+}
+
+function months(p,ro){
+  const start=firstKey(p),tk=todayK();
+  const first=parse(start<DAY1?start:DAY1);let y=first.getFullYear(),m=first.getMonth();
+  const endD=parse(SEND),eY=endD.getFullYear(),eM=endD.getMonth();
+  const out=[];
+  while(y<eY||(y===eY&&m<=eM)){
+    const mk=y+'-'+pad(m+1);const days=new Date(y,m+1,0).getDate();const lead=(new Date(y,m,1).getDay()+6)%7;
+    let cells='';for(let i=0;i<lead;i++)cells+='<div class="cell blank"></div>';
+    let cnt=0;const tags=[];
+    for(let d=1;d<=days;d++){
+      const c=mk+'-'+pad(d);const lg=logged(p,c),l=get(p,c),s=lg?score(l):0;if(lg)cnt++;
+      const inSam=c>=SAMYAMA&&c<=SEND;
+      const ms=c===DAY1?'Day 1':c===HALF?'Half':c===LAST?'Day 60':c===SAMYAMA?'✦':'';
+      if(c===DAY1)tags.push('Day 1 on the '+d+'th');if(c===HALF)tags.push('Halfway on the '+d+'th');if(c===SAMYAMA)tags.push('Samyama from the '+d+'th');
+      const cls='cell'+(c===DAY1?' d1':'')+(c===HALF?' half':'')+(inSam?' sam':'')+(c===tk?' today':'')+(V.sel===c?' sel':'');
+      const lab=`<span>${d}</span>${ms?`<span class="ml2">${ms}</span>`:''}`;
+      if(inSam||c>tk) cells+=`<div class="${cls}${inSam?'':' fut'}">${lab}</div>`;
+      else if(c<start&&!lg) cells+=`<div class="${cls} pre">${lab}</div>`;
+      else cells+=`<button class="${cls}" data-a="sel" data-k="${c}" style="background-color:color-mix(in srgb,var(--teal) ${lg?Math.max(12,s):0}%,var(--track));${s>55?'color:var(--on-teal)':''}" aria-label="${pretty(c)} ${s}%">${lab}${lg&&!nnOk(l)?'<span class="miss"></span>':''}</button>`;
+    }
+    const tag=cnt?cnt+' day'+(cnt>1?'s':'')+' logged':(tags[0]||'');
+    out.push(`<section class="card month"><h3>${MONL[m]}${y!==2026?' '+y:''}<span>${tag}</span></h3>
+      <div class="cal">${['M','T','W','T','F','S','S'].map(x=>`<div class="h">${x}</div>`).join('')}${cells}</div></section>`);
+    m++;if(m>11){m=0;y++}
+  }
+  const sel=V.sel&&V.sel<=tk?V.sel:null,sl=sel?get(p,sel):null;
+  return out.join('')+`<div class="legend" style="padding:0 6px"><span><i style="background:var(--track)"></i>Low</span><span><i style="background:var(--teal)"></i>Full day</span><span><i style="background:var(--warn);border-radius:50%"></i>Must-do missed</span><span><i style="box-shadow:inset 0 0 0 2px var(--terra)"></i>Day 1</span><span><i style="background:var(--night)"></i>Samyama</span></div>
+    ${sel?`<section class="card"><h2>${pretty(sel)} <span>${logged(p,sel)?score(sl)+'%':'Not logged'}</span></h2>${dlHTML(sl)}${ro?'':`<button class="btn ghost" data-a="goto" data-k="${sel}">Edit this day</button>`}</section>`:''}`;
+}
+
+/* ---------- charts ---------- */
+function niceMax(v,steps){for(const s of steps)if(v<=s)return s;return Math.ceil(v/60)*60}
+function xLabels(keys,W,L,R){
+  const n=keys.length,bw=(W-L-R)/n,idx=n<=7?keys.map((_,i)=>i):[0,Math.floor((n-1)/2),n-1];
+  return idx.map(i=>{const d=parse(keys[i]);return `<text class="ax" x="${L+bw*(i+.5)}" y="146" text-anchor="${n<=7?'middle':i===0?'start':i===n-1?'end':'middle'}">${n<=7?DOW[d.getDay()].slice(0,2):d.getDate()+' '+MON[d.getMonth()]}</text>`}).join('');
+}
+function barChart(o){
+  const W=320,H=150,L=30,R=6,T=10,B=20,n=o.keys.length,bw=(W-L-R)/n;
+  const vals=o.vals,dots=o.dots||[],all=[...vals,...dots].filter(v=>v!=null);
+  const mx=niceMax(Math.max(o.target||0,...all,1),o.steps||[30,60,90,120,180,240,360]);
+  const y=v=>T+(H-T-B)*(1-v/mx);
+  const grid=[0,mx/2,mx].map(v=>`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L-4}" y="${y(v)+3}" text-anchor="end">${o.fmt(v)}</text>`).join('');
+  let bars='',hits='',dd='';
+  vals.forEach((v,i)=>{const x=L+i*bw,w=Math.max(1.6,bw*.62),bx=x+(bw-w)/2;
+    if(v){const yt=y(v),yb=y(0),r=Math.min(3,w/2,(yb-yt));bars+=`<path class="bar" data-b="${i}" d="M${bx} ${yb}V${yt+r}Q${bx} ${yt} ${bx+r} ${yt}H${bx+w-r}Q${bx+w} ${yt} ${bx+w} ${yt+r}V${yb}Z"/>`}
+    if(dots[i]) dd+=`<circle class="dt" cx="${x+bw/2}" cy="${y(dots[i])}" r="${Math.min(3.6,Math.max(2.4,bw*.3))}"/>`;
+    hits+=`<rect class="hit" data-a="tip" data-i="${i}" data-t="${esc(o.tip(i))}" x="${x}" y="${T}" width="${bw}" height="${H-T-B}"/>`});
+  const tg=o.target?`<line class="tgt" x1="${L}" x2="${W-R}" y1="${y(o.target)}" y2="${y(o.target)}"/><text class="ax" x="${W-R}" y="${y(o.target)-4}" text-anchor="end">${o.tlabel}</text>`:'';
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.label)}">${grid}${bars}${dd}${tg}${xLabels(o.keys,W,L,R)}${hits}</svg><div class="tipline">${o.hint||'Tap a day to see its value'}</div></div>`;
+}
+function lineChart(o){
+  const W=320,H=150,L=30,R=6,T=10,B=20,n=o.keys.length,bw=(W-L-R)/n;
+  const vals=o.vals,mx=niceMax(Math.max(o.target||0,...vals.filter(v=>v!=null),1),o.steps||[30,60,90,120,180]);
+  const y=v=>T+(H-T-B)*(1-v/mx),x=i=>L+bw*(i+.5);
+  const grid=[0,mx/2,mx].map(v=>`<line class="gridl" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L-4}" y="${y(v)+3}" text-anchor="end">${o.fmt(v)}</text>`).join('');
+  const pts=vals.map((v,i)=>v==null?null:[x(i),y(v)]).filter(Boolean);
+  const line=pts.length?'M'+pts.map(p=>p.join(' ')).join('L'):'';
+  const area=pts.length>1&&o.area?`<path class="ar" d="${line}L${pts[pts.length-1][0]} ${y(0)}L${pts[0][0]} ${y(0)}Z"/>`:'';
+  let dots='',hits='';vals.forEach((v,i)=>{if(v!=null&&(n<=40||i===n-1))dots+=`<circle class="pt" data-b="${i}" cx="${x(i)}" cy="${y(v)}" r="${n<=14?3.6:2.6}"/>`;
+    hits+=`<rect class="hit" data-a="tip" data-i="${i}" data-t="${esc(o.tip(i))}" x="${L+i*bw}" y="${T}" width="${bw}" height="${H-T-B}"/>`});
+  const tg=o.target?`<line class="tgt" x1="${L}" x2="${W-R}" y1="${y(o.target)}" y2="${y(o.target)}"/><text class="ax" x="${W-R}" y="${y(o.target)-4}" text-anchor="end">${o.tlabel}</text>`:'';
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.label)}">${grid}${area}<path class="ln" d="${line}"/>${dots}${tg}${xLabels(o.keys,W,L,R)}${hits}</svg><div class="tipline">${o.hint||'Tap a day to see its value'}</div></div>`;
+}
+const CROWS=[
+  ['Bhuta Shuddhi',l=>+l.bhuta],['Surya Kriya',l=>l.sk>0?1:0],['Surya Shakti',l=>l.ss>0?1:0],['Yogasanas',l=>l.asCyc>0?1:0],
+  ['Shakti Chalana',l=>l.sck/2],['Shambhavi',l=>l.shambhavi/2],['Shoonya',l=>l.shoonya/2],
+  ['Sukha Kriya',l=>sukMax(l)>=60?1:sukT(l)>0?.5:0],['AUM chanting',l=>l.aum>0?1:0],['Sitting',l=>(l.ardha>0)+(+l.patanga)+(+l.shishu)>=3?1:(l.ardha>0||l.patanga||l.shishu)?.5:0],
+  ['Food rules',l=>{const c=l.dNeg+l.dStim+l.dDairy+l.dOut;return c===4?1:c?.5:0}],['Natural food',l=>l.fruit+l.salad>=50?1:l.fruit+l.salad>0?.5:0],
+  ['Screens',l=>l.digital==null?0:l.digital<=SCREEN_MAX?1:0],['Silence',l=>l.silence>0?1:0]];
+
+function hathaTrends(keys,L,LL,tipD){
+  const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length*10)/10:0;
+  const block=(il,tile,name,stats,chart)=>`<div style="display:flex;flex-direction:column;gap:6px;padding-top:6px;border-top:1px solid var(--line)">
+    <div style="display:flex;gap:10px;align-items:center"><span class="thumb t-${tile}" style="width:40px;height:40px;border-radius:11px">${svg(il)}</span><b style="font-weight:600;font-size:16px">${name}</b></div>
+    <div class="kpis">${stats.map(([v,l])=>`<div class="kpi"><b>${v}</b><small>${l}</small></div>`).join('')}</div>${chart||''}</div>`;
+  const days=f=>LL.filter(f).length;
+  const bh=LL.filter(l=>l.bhuta).length;
+  const bhRow=`<div class="cgrid" style="grid-template-columns:repeat(${Math.min(keys.length,31)},minmax(0,1fr))">${keys.slice(-31).map(k=>{const l=L[keys.indexOf(k)];return `<div class="cg${!l?' nl':l.bhuta?' f':''}" title="${pretty(k)}"></div>`}).join('')}</div>`;
+  const sk=LL.map(l=>l.sk).filter(v=>v>0),ss=LL.map(l=>l.ss).filter(v=>v>0),as=LL.filter(l=>l.asCyc>0);
+  const asMin=l=>Math.round(l.asCyc*l.asSec/60);
+  return [
+    block('bhuta','sage','Bhuta Shuddhi',[[bh+'/'+LL.length,'logged days done'],[Math.round(bh/Math.max(1,LL.length)*100)+'%','consistency'],[streakOf(keys,L,l=>l.bhuta),'day streak']],bhRow),
+    block('sk','peach','Surya Kriya',[[days(l=>l.sk>0),'days practised'],[avg(sk)||'—','avg cycles'],[sk.length?Math.max(...sk):'—','most cycles']],
+      barChart({keys,vals:L.map(l=>l?l.sk:null),target:3,tlabel:'3 cycles',steps:[3,6,12,24,50],fmt:v=>Math.round(v)+'',label:'Surya Kriya cycles',tip:i=>L[i]?tipD(i,L[i].sk+' Surya Kriya cycle'+(L[i].sk===1?'':'s')):tipD(i,'not logged')})),
+    block('ss','peach','Surya Shakti',[[days(l=>l.ss>0),'days practised'],[avg(ss)||'—','avg cycles'],[ss.length?Math.max(...ss):'—','most cycles']],
+      barChart({keys,vals:L.map(l=>l?l.ss:null),target:12,tlabel:'12 cycles',steps:[12,24,36,54,108],fmt:v=>Math.round(v)+'',label:'Surya Shakti cycles',tip:i=>L[i]?tipD(i,L[i].ss+' Surya Shakti cycle'+(L[i].ss===1?'':'s')):tipD(i,'not logged')})),
+    block('as','rose','Yogasanas',[[as.length,'days practised'],[avg(as.map(l=>l.asCyc))||'—','avg cycles'],[as.length?dur(Math.max(...as.map(asMin))):'—','longest hold time']],
+      barChart({keys,vals:L.map(l=>l&&l.asCyc?l.asCyc:null),steps:[10,20,30],fmt:v=>Math.round(v)+'',label:'Yogasana cycles',tip:i=>L[i]&&L[i].asCyc?tipD(i,L[i].asCyc+' cycles · '+secLabel(L[i].asSec)+' each (about '+dur(asMin(L[i]))+')'):tipD(i,L[i]?'no asanas':'not logged')}))
+  ].join('');
+}
+function streakOf(keys,L,f){let n=0;for(let i=keys.length-1;i>=0;i--){if(L[i]&&f(L[i]))n++;else if(i===keys.length-1&&!L[i])continue;else break}return n}
+function renderProgress(p,ro){
+  p=p||ME;
+  const tk=todayK(),end=tk<LAST?tk:LAST,first=firstKey(p);
+  const len=V.prange==='7'?7:V.prange==='30'?30:Math.max(1,diff(first,end)+1);
+  const keys=Array.from({length:len},(_,i)=>addD(end,i-len+1));
+  const lk=keys.filter(k=>logged(p,k)),L=keys.map(k=>logged(p,k)?get(p,k):null);
+  const range=`<div class="segtabs">${[['7','7 days'],['30','30 days'],['all','All']].map(([v,t])=>`<button class="${V.prange===v?'on':''}" data-a="prange" data-v="${v}">${t}</button>`).join('')}</div>`;
+  if(!Object.keys(S.logs[p]||{}).length) return `${journey(p,ro)}<section class="card"><div class="empty">${svg('shoonya')}${ro?esc(firstName(p))+' has not logged anything yet.':'Nothing logged yet. Log today’s practices on the Today tab and your trends will appear here.'}</div></section>`;
+  const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;
+  const LL=L.filter(Boolean);
+  const sc=avg(LL.map(score));
+  // previous window for trend
+  const prevKeys=Array.from({length:len},(_,i)=>addD(keys[0],i-len)),prevL=prevKeys.filter(k=>logged(p,k)).map(k=>get(p,k));
+  const prevSc=prevL.length?avg(prevL.map(score)):null,delta=prevSc==null?null:sc-prevSc;
+  const nnDays=LL.filter(nnOk).length;
+  const st=streak(p);
+  const tipD=(i,txt)=>`<b>${pretty(keys[i])}</b> · ${txt}`;
+  // insights
+  const ins=[];
+  const suk=LL.map(sukT),sukAvg=avg(suk),prevSuk=prevL.length?avg(prevL.map(sukT)):null;
+  if(LL.length) ins.push(['sukha','peach',`Sukha Kriya averaged <b>${dur(sukAvg)}</b> a day`+(prevSuk!=null&&prevSuk!==sukAvg?`, ${sukAvg>prevSuk?'up':'down'} ${dur(Math.abs(sukAvg-prevSuk))} from the period before.`:'.')+` A full hour in one sitting on <b>${LL.filter(l=>sukMax(l)>=60).length}</b> day${LL.filter(l=>sukMax(l)>=60).length===1?'':'s'}.`]);
+  const ard=L.map(l=>l&&l.ardha?l.ardha:null).filter(v=>v!=null);
+  if(ard.length) ins.push(['ardha','sage',ard.length>1?`Longest Ardha Siddhasana went from <b>${dur(ard[0])}</b> to <b>${dur(ard[ard.length-1])}</b>. Best so far <b>${dur(Math.max(...ard))}</b> of the 90-minute goal.`:`Longest Ardha Siddhasana so far: <b>${dur(ard[0])}</b> of the 90-minute goal.`]);
+  if(LL.length) ins.push(['shoonya','sand',`Shakti Chalana Kriya and Shoonya were both done on <b>${nnDays} of ${LL.length}</b> logged days, twice each on <b>${LL.filter(nnFull).length}</b>.`]);
+  const nat=LL.map(l=>l.fruit+l.salad);if(LL.length) ins.push(['fruits','peach',`Natural food averaged <b>${avg(nat)}%</b>, reaching 50% on <b>${nat.filter(v=>v>=50).length}</b> day${nat.filter(v=>v>=50).length===1?'':'s'}.`]);
+  const weakest=CROWS.map(([n,f])=>[n,LL.length?LL.reduce((a,l)=>a+f(l),0)/LL.length:0]).sort((a,b)=>a[1]-b[1])[0];
+  if(LL.length>=3&&weakest[1]<.6) ins.push(['prep','sand',`Most often skipped: <b>${weakest[0]}</b> (${Math.round(weakest[1]*100)}% of days). A small daily slot for it would lift your score the most.`]);
+  // consistency grid: last up to 14 days of range
+  const gk=keys.slice(-14),gw=gk.length;
+  const cg=`<div class="cgrid" style="grid-template-columns:92px repeat(${gw},minmax(0,1fr)) 38px"><div></div>${gk.map((k,i)=>`<div class="hd">${gw<=10||(gw-1-i)%2===0?parse(k).getDate():''}</div>`).join('')}<div class="hd">${len>14?'range':''}</div>
+    ${CROWS.map(([n,f])=>{const pct=LL.length?Math.round(LL.reduce((a,l)=>a+f(l),0)/LL.length*100):0;
+      return `<div class="rl">${n}</div>${gk.map(k=>{if(!logged(p,k))return '<div class="cg nl"></div>';const v=f(get(p,k));return `<div class="cg${v>=1?' f':v>0?' h':''}" title="${n} · ${pretty(k)}"></div>`}).join('')}<div class="pc">${pct}%</div>`}).join('')}</div>`;
+  const view=V.pview==='cal'?months(p,ro):dayList(p,ro);
+  return `
+  ${journey(p,ro)}
+  ${range}
+  <section class="card">
+    <h2>${ro?esc(firstName(p))+'’s':'Your'} practice <span>${V.prange==='all'?'Since '+short(first):'Last '+len+' days'}</span></h2>
+    <div class="ovw">${ring(sc).replace('<span>'+sc+'%</span>',`<span>${sc}%<small>avg score</small></span>`)}
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><b>${lk.length}<small style="display:inline;font-size:13px">/${len}</small></b><small>days logged</small></div>
+        <div class="kpi"><b>${st}</b><small>day must-do streak</small></div>
+        <div class="kpi"><b>${nnDays}</b><small>days both must-dos kept</small></div>
+        <div class="kpi"><b class="${delta==null?'':delta>=0?'up':'down'}">${delta==null?'—':(delta>=0?'▲ ':'▼ ')+Math.abs(delta)}</b><small>${delta==null?'no earlier data':'pts vs previous '+(V.prange==='all'?'period':len+' days')}</small></div>
+      </div></div>
+    ${lineChart({keys,vals:L.map(l=>l?score(l):null),area:1,steps:[100],fmt:v=>v+'%',label:'Daily score',tip:i=>L[i]?tipD(i,score(L[i])+'% of the day’s sadhana'):tipD(i,'not logged'),hint:'Daily score. Tap a day to see it.'})}
+  </section>
+  ${ins.length?`<section class="card"><h2>Highlights <span>Insights</span></h2><ul class="insights">${ins.map(([il,t,txt])=>`<li><span class="tb t-${t}">${svg(il)}</span><span>${txt}</span></li>`).join('')}</ul></section>`:''}
+  <section class="card">
+    <h2>Sukha Kriya <span>Target 60m in one stretch</span></h2>
+    <div class="lgd"><span><i style="background:var(--teal)"></i>Total for the day</span><span><i style="background:var(--ink);border-radius:50%"></i>Longest sitting</span></div>
+    ${barChart({keys,vals:L.map(l=>l?sukT(l):null),dots:L.map(l=>l&&l.sits.length>1?sukMax(l):null),target:60,tlabel:'60m',fmt:v=>v?dur(v):'0',label:'Sukha Kriya minutes per day',tip:i=>L[i]?tipD(i,dur(sukT(L[i]))+(L[i].sits.length>1?' in '+L[i].sits.length+' sittings, longest '+dur(sukMax(L[i])):'')):tipD(i,'not logged')})}
+  </section>
+  <section class="card">
+    <h2>Ardha Siddhasana <span>Goal 90m</span></h2>
+    ${lineChart({keys,vals:L.map(l=>l&&l.ardha?l.ardha:null),target:90,tlabel:'90m goal',fmt:v=>v?dur(v):'0',label:'Longest Ardha Siddhasana sit',tip:i=>L[i]&&L[i].ardha?tipD(i,'longest sit '+dur(L[i].ardha)):tipD(i,'no sit logged')})}
+  </section>
+  <section class="card">
+    <h2>Consistency <span>Each practice, day by day</span></h2>
+    ${cg}
+    <div class="legend"><span><i style="background:var(--teal)"></i>Done</span><span><i style="background:linear-gradient(135deg,var(--teal) 50%,var(--track) 50%)"></i>Partly</span><span><i style="background:var(--track)"></i>Missed</span><span><i style="box-shadow:inset 0 0 0 1px var(--line)"></i>Not logged</span></div>
+  </section>
+  <section class="card">
+    <h2>Hatha yoga <span>Each practice</span></h2>
+    ${hathaTrends(keys,L,LL,tipD)}
+    <div class="hint">Guideline minimum: 12 Surya Shakti or 3 Surya Kriya on a day, alternating with asanas.</div>
+  </section>
+  <section class="card">
+    <h2>Food &amp; lifestyle</h2>
+    <div class="lgd"><span><i style="background:var(--teal)"></i>Natural food, % of the day</span></div>
+    ${barChart({keys,vals:L.map(l=>l?l.fruit+l.salad:null),target:50,tlabel:'50%',steps:[100],fmt:v=>v+'%',label:'Natural food percent',tip:i=>L[i]?tipD(i,'fruits '+L[i].fruit+'% · salad '+L[i].salad+'%'):tipD(i,'not logged')})}
+    <div class="lgd"><span><i style="background:var(--teal)"></i>Screen time, phone + TV</span></div>
+    ${barChart({keys,vals:L.map(l=>l&&l.digital!=null?l.digital:null),target:SCREEN_MAX,tlabel:'2h limit',fmt:v=>v?dur(v):'0',label:'Screen time',tip:i=>L[i]&&L[i].digital!=null?tipD(i,dur(L[i].digital)+(L[i].digital>SCREEN_MAX?', over the limit':'')):tipD(i,'not logged')})}
+  </section>
+  <div class="segtabs">${[['cal','Calendar'],['list','Day by day']].map(([v,t])=>`<button class="${V.pview===v?'on':''}" data-a="pview" data-v="${v}">${t}</button>`).join('')}</div>
+  ${view}`;
+}
+function dayList(p,ro){
+  const ks=Object.keys(S.logs[p]||{}).filter(k=>k<=todayK()).sort().reverse();let lastM='';
+  return `<div class="listtools"><button class="btn ghost" style="flex:1" data-a="sheet" data-for="list">Jump to a day</button>${ro?'':'<button class="btn ghost" style="flex:1" data-a="sheet" data-for="today">Edit any day</button>'}</div>
+  <div class="daylist">${ks.map(k=>{const l=get(p,k),d=parse(k),mh=MONL[d.getMonth()]+' '+d.getFullYear();const head=mh!==lastM?`<div class="mhead">${MONL[d.getMonth()]}</div>`:'';lastM=mh;
+    return `${head}<details id="d-${k}" ${V.listOpen===k?'open':''}><summary><span><b>${pretty(k)}</b><small>SCK ${l.sck}/2 · Shoonya ${l.shoonya}/2 · Sukha ${dur(sukT(l))}</small></span><b class="sc">${score(l)}%</b></summary>
+      <div class="inner">${dlHTML(l)}${ro?'':`<button class="btn ghost" data-a="goto" data-k="${k}">Edit this day</button>`}</div></details>`}).join('')}</div>`;
+}
+
+/* ---------- Profile ---------- */
+const srow=(attrs,icon,tile,b,s,right,extra)=>`<button class="srow${extra||''}" ${attrs}><span class="sico t-${tile}">${ico(icon)}</span><span><b>${b}</b>${s?`<small>${s}</small>`:''}</span>${right??CHEV}</button>`;
+function renderProfile(){
+  const P=S.people[ME],others=S.order.filter(id=>id!==ME);
+  return `
+  <div class="phead"><div class="avwrap">${avatar(ME,'lg')}<button class="aved" data-a="gosub" data-s="edit" aria-label="Edit profile">${ico('pen')}</button></div><b>${esc(nm(ME))}</b><small>Practising since ${short(firstKey(ME))} · ${streak(ME)}-day must-do streak</small><button class="pill" data-a="gosub" data-s="edit">Edit profile</button></div>
+  ${isAdmin()?`<div class="sgroup">Admin tools</div>
+  <div class="slist">
+    ${srow('data-a="gosub" data-s="simdata"','cal','sage','Simulate data','Fill sample days and set a pretend date'+(ADMIN_TODAY?' · today is '+short(ADMIN_TODAY):''))}
+    ${srow('data-a="gosub" data-s="journey"','moon','peach','Journey colours','Preview the colour shift toward Samyama')}
+  </div>`:''}
+  <div class="sgroup">Practice</div>
+  <div class="slist">
+    ${srow('data-a="gosub" data-s="durs"','clock','peach','Practice durations','Used to build your sadhana plan')}
+    ${srow('data-a="gosub" data-s="sangha"','people','sage','Sangha',others.length?others.length+' other practitioner'+(others.length>1?'s':'')+' · you are '+(P.share?'sharing':'private'):'Practise alongside others')}
+  </div>
+  <div class="sgroup">Your Samyama</div>
+  <div class="slist">
+    <div><div class="srow" style="cursor:default"><span class="sico t-sand">${ico('cal')}</span><span><b>Samyama batch</b><small>Isha Yoga Center, Coimbatore</small></span><span></span></div>
+    <div style="padding:0 14px 12px"><div class="segtabs">${Object.entries(BATCHES).map(([id,B])=>`<button class="${P.batch===id?'on':''}" data-a="batch" data-v="${id}">${B.label.replace(/ 20\d\d/g,'').split(' – ')[0]}</button>`).join('')}</div>
+    <div class="hint" style="margin-top:8px">${BATCHES[P.batch].label}. Day 1 · ${short(DAY1)} · Halfway · ${short(HALF)} · Day 60 · ${short(LAST)}.</div></div></div>
+  </div>
+  <div class="sgroup">App</div>
+  <div class="slist">
+    <div><div class="srow" style="cursor:default"><span class="sico t-dusk">${ico('moon')}</span><span><b>Appearance</b></span><span></span></div>
+    <div style="padding:0 14px 14px"><div class="segtabs">${[['system','Automatic'],['light','Light'],['dark','Dark']].map(([v,t])=>`<button class="${THEME===v?'on':''}" data-a="theme" data-v="${v}">${t}</button>`).join('')}</div></div></div>
+    
+  </div>
+  <div class="sgroup">Data</div>
+  <div class="slist">
+    ${srow('data-a="copy"','copy','sand','Copy a backup','<span id="copymsg">All entries as text you can paste into a note</span>','')}
+    ${CLOUD?srow('data-a="gosub" data-s="import"','copy','sage','Import earlier entries','Paste a backup from the test version'):''}
+    ${isAdmin()?'':srow('data-a="gosub" data-s="mypw"','pen','rose',CLOUD?'Change password':'Password',CLOUD?'For '+esc(V.email||'your account'):S.people[ME].pwHash?'On · tap to change':'Off · protect your profile on this phone')}
+    ${srow('data-a="signout"','out','sand',CLOUD?'Sign out':'Switch practitioner',CLOUD?'Your entries stay safe in your account':'Sign out on this phone','')}
+    ${V.confirmReset?`<div style="padding:12px 14px;display:flex;flex-direction:column;gap:10px"><div class="hint">${CLOUD?'This deletes all your logged days from your account. It cannot be undone.':'This clears every entry and plan for everyone on this phone.'}</div><div class="grid2"><button class="btn ghost" data-a="reset0">Keep data</button><button class="btn warn" data-a="reset1">Clear everything</button></div></div>`
+      :srow('data-a="reset"','trash','rose',CLOUD?'Delete all my entries':'Clear all data','','',' danger')}
+  </div>
+  <p class="hint" style="text-align:center;margin:4px 0 0">${CLOUD?syncLine():'Test version. Entries are saved on this phone until the shared account is connected.'}</p>`;
+}
+function renderDurs(){
+  const D=S.people[ME].durs;
+  return `<p class="note" style="margin:0 4px">How long each practice usually takes you. Type hours and minutes, or slide. Your plan on My day is rebuilt with these.</p>
+  <div class="slist">${Object.keys(DURS).map(k=>{const [n,s,ill,tile]=DUR_META[k],v=D[k];return `<div class="dur2">
+    <div class="dtop"><span class="mini t-${tile}">${svg(ill)}</span><span><b>${n}</b><small>${s}</small></span>
+      <span class="hm"><input type="number" inputmode="numeric" min="0" max="4" value="${Math.floor(v/60)}" data-f="dh" data-k="${k}" id="dh-${k}" aria-label="${n} hours">h<input type="number" inputmode="numeric" min="0" max="59" value="${v%60}" data-f="dm" data-k="${k}" id="dm-${k}" aria-label="${n} minutes">m</span></div>
+    <input type="range" min="1" max="180" step="1" value="${Math.min(180,v)}" style="--p:${Math.min(180,v)/180*100}%" data-f="dsl" data-k="${k}" id="dsl-${k}" aria-label="${n} duration">
+  </div>`}).join('')}</div>
+  <button class="btn ghost" data-a="dreset">Reset to the usual times</button>`;
+}
+function setDur(k,v,from){
+  v=Math.max(1,Math.min(240,Math.round(v)||1));S.people[ME].durs[k]=v;save();
+  const h=$('#dh-'+k),m=$('#dm-'+k),sl=$('#dsl-'+k);
+  if(h&&from!=='h'&&from!=='m')h.value=Math.floor(v/60);if(m&&from!=='h'&&from!=='m')m.value=v%60;
+  if(sl&&from!=='s'){sl.value=Math.min(180,v);sl.style.setProperty('--p',Math.min(180,v)/180*100+'%')}
+}
+function rebuildPlans(){const R=S.people[ME].routines;['weekday','weekend'].forEach(kd=>{if(R[kd].plan)buildPlan(ME,kd)})}
+function renderJourneySim(){
+  const start=addD(DAY1,-14),total=diff(start,SAMYAMA),cur=V.sim||todayK(),idx=Math.max(0,Math.min(total,diff(start,cur)));
+  const dark=isDark(),stops=Array.from({length:11},(_,i)=>{const k=addD(start,Math.round(total*i/10));return palAt(journeyT(k),dark).acc+' '+(i*10)+'%'}).join(',');
+  const pos=k=>(diff(start,k)/total*100).toFixed(2)+'%';
+  const t=journeyT(cur);
+  return `<p class="note" style="margin:0 4px">The app’s colour follows your sadhana. Earth brown through the build-up, turmeric gold by halfway, new-leaf green at Samyama. It moves a little each day, so you never see a sudden change.</p>
+  <section class="card">
+    <h2>Preview <span>${phaseName(t)}</span></h2>
+    <div class="simday" id="simday">${dayLabel(cur)}</div>
+    <div class="jstrip" style="background:linear-gradient(90deg,${stops})">
+      ${[[DAY1,'Day 1'],[HALF,'Halfway'],[SAMYAMA,'Samyama']].map(([k,n],i)=>`<span class="mk" style="left:${pos(k)}"></span><span class="ml3${i===2?' r':''}" style="left:${pos(k)}">${n}</span>`).join('')}
+      <span class="cur" id="simcur" style="left:${(idx/total*100).toFixed(2)}%"></span>
+    </div>
+    <input type="range" id="simrng" min="0" max="${total}" step="1" value="${idx}" style="--p:${(idx/total*100).toFixed(1)}%" data-f="sim" aria-label="Day in the journey">
+    <div class="grid2"><button class="btn" data-a="simplay">${V.playing?'Pause':'Play the journey'}</button><button class="btn ghost" data-a="simreset">Back to today</button></div>
+    <div class="swatches">${ring(Math.round(t*100))}<span class="chip">Sample chip</span><button class="pill on">Selected</button><span class="rd on">${CHECK}</span></div>
+  </section>
+  <button class="btn ghost" data-a="simbrowse">Browse the app in this colour</button>
+  <p class="hint" style="margin:0 6px">The preview only changes colours. Your entries and dates stay as they are.</p>`;
+}
+function renderEdit(){
+  const P=S.people[ME];
+  return `<div class="card">
+    <div class="photo">${avatar(ME)}<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+      <label class="btn ghost" style="padding:9px 14px;cursor:pointer">${P.photo?'Change photo':'Add a photo'}<input type="file" accept="image/*" data-f="photo"></label>
+      ${P.photo?'<button class="linkbtn" data-a="rmphoto">Remove photo</button>':''}<span class="hint" id="photomsg"></span></div></div>
+    <label class="field">Your name<input value="${esc(P.name)}" data-f="name" data-p="${ME}"></label>
+    <div class="field">Colour<div class="colors">${COLORS.map(c=>`<button class="c-${c}${P.color===c?' on':''}" data-a="color" data-v="${c}" aria-label="${c}"></button>`).join('')}</div></div>
+  </div>`;
+}
+function loadPhoto(file,done){
+  const rd=new FileReader();rd.onload=()=>{const img=new Image();img.onload=()=>{
+    const z=240,c=document.createElement('canvas');c.width=c.height=z;const x=c.getContext('2d');
+    const m=Math.min(img.width,img.height);x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,z,z);
+    done(c.toDataURL('image/jpeg',.82))};img.onerror=()=>done(null);img.src=rd.result};rd.onerror=()=>done(null);rd.readAsDataURL(file);
+}
+function renderSangha(){
+  const P=S.people[ME],others=S.order.filter(id=>id!==ME);
+  const row=id=>{const Q=S.people[id],l=get(id,todayK()),lg=logged(id,todayK());
+    if(!Q.share) return `<div class="member">${avatar(id)}<span><b>${esc(nm(id))}</b><small>Keeps progress private</small></span><span></span></div>`;
+    return `<button class="member" data-a="member" data-k="${id}">${avatar(id)}<span><b>${esc(nm(id))}</b><small>${streak(id)}-day must-do streak · ${lg?'SCK '+l.sck+'/2 · Shoonya '+l.shoonya+'/2':'nothing logged today'}</small></span>${ring(lg?score(l):0)}</button>`};
+  return `
+  <div class="banner">${svg('sangha')}<span>Practise alongside others. Progress is shared only by those who choose to, and only streaks and daily summaries are shown. Reflections stay private.</span></div>
+  <div class="slist"><div class="srow" style="cursor:default"><span class="sico t-sage">${ico('people')}</span><span><b>Share my progress</b><small>${P.share?'Your sangha can see your summary':'Your progress is private'}</small></span>
+    <button class="tog${P.share?' on':''}" data-a="share" role="switch" aria-checked="${P.share}" aria-label="Share my progress"></button></div></div>
+  <div class="sgroup">Your sangha</div>
+  <div class="slist">${others.length?others.map(row).join(''):'<div class="empty">No one else has joined yet.</div>'}</div>
+  <p class="hint" style="margin:0 6px">Once the shared account is connected, anyone you invite can join with their own sign-in.</p>`;
+}
+
+/* ---------- Onboarding ---------- */
+function renderOnboarding(){
+  const step=V.ob,dots=n=>`<div class="dotsrow">${[0,1,2,3].map(i=>`<i class="${i===n?'on':''}"></i>`).join('')}</div>`;
+  if(step==='welcome'){const s=skySVG(todayK(),'dawn',false);
+    return `<div class="ob"><div class="sky anim-in">${s.svg}</div>
+      <div class="eb anim-in">60 days to Samyama</div><h1 class="anim-in d1">Samyama Sadhana</h1>
+      <p class="anim-in d2">A quiet companion for your preparation. Log each practice, follow a plan built around your day, and watch your journey to Samyama unfold.</p>
+      <div class="grow"></div>${dots(0)}<button class="btn big" data-a="ob" data-v="name">${CLOUD?'Create my account':'Begin'}</button>${CLOUD?'<button class="btn big ghost" data-a="ob" data-v="signin">I already have an account</button>':''}${!CLOUD&&S.order.length?'<button class="linkbtn" style="text-align:center" data-a="ob" data-v="who">Already set up on this phone? Sign in</button>':''}<button class="linkbtn" style="text-align:center;color:var(--muted);font-weight:500;font-size:13px" data-a="ob" data-v="${CLOUD?'signin':'admin'}">Admin sign-in</button></div>`}
+  if(step==='signin'){
+    return `<div class="ob"><div class="eb">Sign in</div><h2>Welcome back</h2>
+      <label class="field">Email<input id="siem" type="email" inputmode="email" autocomplete="username" autocapitalize="none" placeholder="you@example.com"></label>
+      <label class="field">Password<input type="password" id="sipw" autocomplete="current-password"></label>
+      <div class="alert" id="simsg2"></div>
+      <button class="linkbtn" data-a="forgot">Forgot password?</button>
+      <div class="grow"></div><button class="btn big" data-a="cloudsignin">Sign in</button><button class="linkbtn" data-a="ob" data-v="welcome">‹ Back</button></div>`}
+  if(step==='newpw'){
+    return `<div class="ob"><div class="eb">Reset password</div><h2>Choose a new password</h2>
+      <label class="field">New password<input type="password" id="npw1" autocomplete="new-password"></label>
+      <label class="field">Repeat<input type="password" id="npw2" autocomplete="new-password"></label>
+      <div class="alert" id="npwmsg"></div>
+      <div class="grow"></div><button class="btn big" data-a="setnewpw">Save and continue</button></div>`}
+  if(step==='loading'){
+    return `<div class="ob" style="justify-content:center;align-items:center;text-align:center"><div class="sky anim-in" style="width:100%">${skySVG(todayK(),'dawn',false).svg}</div><p>Opening your sadhana…</p></div>`}
+  if(step==='admin'){
+    return `<div class="ob"><div class="eb">Admin</div><h2>Admin sign-in</h2>
+      <p>For the app owner only. Opens the admin sandbox with simulated data, a pretend date and the journey colour preview.</p>
+      <label class="field">Username<input id="aun" autocomplete="username" autocapitalize="none"></label>
+      <label class="field">Password<input type="password" id="apw1" autocomplete="current-password"></label>
+      <div class="alert" id="apwmsg"></div>
+      <div class="grow"></div><button class="btn big" data-a="adminlogin">Sign in</button><button class="linkbtn" data-a="ob" data-v="welcome">‹ Back</button></div>`}
+  if(step==='pw'){const id=V.pickId;
+    return `<div class="ob"><div class="eb">Sign in</div><div style="display:flex;align-items:center;gap:14px">${avatar(id,'lg')}<h2>${esc(nm(id))}</h2></div>
+      <label class="field">Password<input type="password" id="upw" autocomplete="current-password"></label>
+      <div class="alert" id="upwmsg"></div>
+      <div class="grow"></div><button class="btn big" data-a="userlogin">Sign in</button><button class="linkbtn" data-a="ob" data-v="who">‹ Back</button></div>`}
+  if(step==='who'){
+    return `<div class="ob"><div class="eb">Sign in</div><h2>Welcome back</h2><p>Choose your profile to continue.</p>
+      <div class="pick">${S.order.map(id=>`<button class="pickrow" data-a="obpick" data-k="${id}">${avatar(id)}<span><b>${esc(nm(id))}</b><small>${S.people[id].pwHash?'Password protected':Object.keys(S.logs[id]||{}).length?'Continue your sadhana':'Continue'}</small></span>${CHEV}</button>`).join('')}
+        <button class="pickrow" data-a="ob" data-v="name"><span class="av c-dusk">+</span><span><b>I’m new here</b><small>Create your profile</small></span>${CHEV}</button></div>
+      <p class="hint">When the shared account is connected, everyone signs in with their own email.</p>
+      <div class="grow"></div><button class="linkbtn" data-a="ob" data-v="welcome">‹ Back</button></div>`}
+  if(step==='name'){
+    return `<div class="ob"><div class="eb">Your profile</div><h2>What should we call you?</h2>
+      <input class="big-input" id="obname" data-f="obname" value="${esc(V.obName)}" placeholder="Your name" autocomplete="given-name">
+      <div class="field">Pick a colour<div class="colors">${COLORS.map(c=>`<button class="c-${c}${V.obColor===c?' on':''}" data-a="obcolor" data-v="${c}" aria-label="${c}"></button>`).join('')}</div></div>
+      ${CLOUD?`<label class="field">Email<input type="email" inputmode="email" data-f="obemail" value="${esc(V.obEmail)}" autocomplete="email" autocapitalize="none" placeholder="you@example.com"></label>
+      <div class="field">Create a password <span style="font-weight:400">(at least 6 characters)</span>`:`<div class="field">Create a password <span style="font-weight:400">(optional, keeps others on this phone out of your profile)</span>`}
+        <div class="grid2" style="margin-top:4px"><input type="password" data-f="obpw1" value="${esc(V.obPw1)}" placeholder="Password" autocomplete="new-password"><input type="password" data-f="obpw2" value="${esc(V.obPw2)}" placeholder="Repeat" autocomplete="new-password"></div></div>
+      <div class="alert" id="obmsg"></div>
+      <div class="grow"></div>${dots(1)}<button class="btn big" data-a="ob" data-v="batch">Continue</button><button class="linkbtn" data-a="ob" data-v="welcome">‹ Back</button></div>`}
+  if(step==='batch'){
+    return `<div class="ob"><div class="eb">Your Samyama</div><h2>Which Samyama are you preparing for?</h2>
+      <p>Both are held at Isha Yoga Center, Coimbatore. Your 60 days are counted back from the start date.</p>
+      <div class="pick">${Object.entries(BATCHES).map(([id,B])=>{syncProg(id);const r=`<button class="pickrow${V.obBatch===id?' on':''}" data-a="obbatch" data-v="${id}"><span class="av c-${id==='dec26'?'terra':'sage'}">${parse(B.start).getDate()}</span><span><b>${B.label}</b><small>Day 1 · ${prettyL(DAY1)}</small></span>${V.obBatch===id?`<span class="rd on">${CHECK}</span>`:'<span class="rd"></span>'}</button>`;return r}).join('')}</div>
+      <div class="grow"></div>${dots(2)}<button class="btn big" data-a="ob" data-v="routine">Continue</button><button class="linkbtn" data-a="ob" data-v="name">‹ Back</button></div>`}
+  if(step==='routine'){
+    return `<div class="ob"><div class="eb">Your day</div><h2>When does your day begin and end?</h2>
+      <p>The plan puts Bhuta Shuddhi and hatha yoga after you wake, and keeps everything before bedtime. You can add work hours later on My day.</p>
+      <div class="grid2"><label class="field">Wake up<input type="time" value="${toHM(V.obWake)}" data-f="obwake"></label><label class="field">Bedtime<input type="time" value="${toHM(V.obSleep)}" data-f="obsleep"></label></div>
+      <div class="grow"></div>${dots(3)}<button class="btn big" data-a="ob" data-v="ready">Continue</button><button class="linkbtn" data-a="ob" data-v="batch">‹ Back</button></div>`}
+  return `<div class="ob"><div class="eb">You are set</div><h2>The road to Samyama</h2>
+      <div class="facts">
+        <div class="fact"><span class="mini t-sage">${svg('bhuta')}</span><span><b>Build-up, from today</b><small>Practise gently and find your rhythm.</small></span></div>
+        <div class="fact"><span class="mini t-peach">${svg('sk')}</span><span><b>Day 1 · ${prettyL(DAY1).split(', ')[1]}</b><small>Full sadhana for 60 days.</small></span></div>
+        <div class="fact"><span class="mini t-sand">${svg('shoonya')}</span><span><b>Must not miss</b><small>Shakti Chalana Kriya and Shoonya, twice a day.</small></span></div>
+        <div class="fact"><span class="mini t-night">${svg('aum')}</span><span><b>Samyama · ${BATCHES[V.obBatch].label}</b><small>Sandhya times are set for Bengaluru.</small></span></div>
+      </div>
+      <div class="alert" id="obdmsg"></div><div class="grow"></div><button class="btn big" data-a="obdone">Start my sadhana</button></div>`;
+}
+
+function render(){
+  if(!V.ob&&(!ME||!S.people[ME])){V.ob=CLOUD?'welcome':'welcome'}
+  syncProg(V.ob?V.obBatch:S.people[ME].batch);
+  applyJourney();
+  renderHeader();
+  renderSimbar();
+  if(V.ob){$('#main').innerHTML=renderOnboarding();syncProg(V.obBatch);return}
+  let h;
+  if(V.tab==='today') h=renderToday();
+  else if(V.tab==='plan') h=renderPlan();
+  else if(V.tab==='progress') h=renderProgress();
+  else if(V.sub==='durs') h=renderDurs();
+  else if(V.sub==='sangha'){h=renderSangha();if(CLOUD&&!V.sanghaFresh){V.sanghaFresh=true;fetchSangha().then(()=>{if(V.sub==='sangha')render()})}}
+  else if(V.sub==='edit') h=renderEdit();
+  else if(V.sub==='journey'&&isAdmin()) h=renderJourneySim();
+  else if(V.sub==='simdata'&&isAdmin()) h=renderSimData();
+  else if(V.sub==='mypw'&&(CLOUD||!isAdmin())) h=CLOUD?renderCloudPw():renderMyPw();
+  else if(V.sub==='import'&&CLOUD) h=renderImport();
+  else if(V.sub==='member'){syncProg(S.people[V.mid].batch);h=renderProgress(V.mid,true);syncProg(S.people[ME].batch)}
+  else h=renderProfile();
+  $('#main').innerHTML=h;
+  V.just=null;
+  renderSheet();
+  const ds=document.getElementById('dstrip');if(ds){const on=ds.querySelector('.on');if(on)ds.scrollLeft=on.offsetLeft-ds.clientWidth+on.offsetWidth+4}
+}
+
+function renderSimbar(){
+  let bar=document.getElementById('simbar');
+  const show=V.sim&&!V.ob&&!(V.tab==='profile'&&V.sub==='journey');
+  if(!show){if(bar)bar.remove();return}
+  if(!bar){bar=document.createElement('div');bar.id='simbar';bar.className='simbar';document.body.appendChild(bar)}
+  bar.innerHTML=`<span>Colour preview · ${dayLabel(V.sim)}</span><button data-a="simstep" data-d="-3" aria-label="Back three days">‹</button><button data-a="simstep" data-d="3" aria-label="Forward three days">›</button><button data-a="simreset">End</button>`;
+}
+let simTimer=null;
+function simTick(){
+  const start=addD(DAY1,-14),total=diff(start,SAMYAMA);
+  let idx=diff(start,V.sim||start)+1;if(idx>total){V.playing=false;clearInterval(simTimer);simTimer=null;render();return}
+  V.sim=addD(start,idx);applyJourney();
+  const d=document.getElementById('simday'),c=document.getElementById('simcur'),r=document.getElementById('simrng');
+  if(d)d.textContent=dayLabel(V.sim);if(c)c.style.left=(idx/total*100)+'%';if(r){r.value=idx;r.style.setProperty('--p',(idx/total*100)+'%')}
+  renderSimbar();
+}
+
+
+/* ---------- cloud: accounts and sync ---------- */
+let syncTimer=null,syncing=false,syncState='idle',lastSync=null;
+function scheduleSync(){if(!CLOUD||!ME)return;clearTimeout(syncTimer);syncTimer=setTimeout(pushNow,1200)}
+function syncLine(){return syncState==='offline'?'Offline. Your changes are saved on this phone and will sync when you are back online.':syncState==='error'?'Could not sync just now. Will retry automatically.':lastSync?'Synced to your account · '+new Date(lastSync).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):'Signed in. Your entries sync to your account.'}
+const pfOf=P=>({name:P.name||'',color:P.color||'teal',photo:P.photo||null,batch:P.batch||'dec26',share:!!P.share,durs:P.durs||null,routines:P.routines||null});
+async function pushNow(){
+  if(!CLOUD||!ME||syncing)return;syncing=true;
+  S.synced=S.synced||{};const snap=S.synced[ME]||(S.synced[ME]={p:null,d:{}});const mine=S.logs[ME]||{};
+  const ups=[],nts=[],dels=[],js={};
+  for(const k in mine){const l=norm(mine[k]),j=JSON.stringify(l);if(snap.d[k]!==j){const {note,...data}=l;ups.push({user_id:ME,day:k,data,updated_at:new Date().toISOString()});nts.push({user_id:ME,day:k,text:note||'',updated_at:new Date().toISOString()});js[k]=j}}
+  for(const k in snap.d) if(!mine[k]) dels.push(k);
+  const pf=pfOf(S.people[ME]),pj=JSON.stringify(pf);
+  try{
+    for(let i=0;i<ups.length;i+=200){const r=await sb.from('logs').upsert(ups.slice(i,i+200),{onConflict:'user_id,day'});if(r.error)throw r.error;
+      const r2=await sb.from('notes').upsert(nts.slice(i,i+200),{onConflict:'user_id,day'});if(r2.error)throw r2.error}
+    if(dels.length){const r=await sb.from('logs').delete().eq('user_id',ME).in('day',dels);if(r.error)throw r.error;await sb.from('notes').delete().eq('user_id',ME).in('day',dels)}
+    if(snap.p!==pj){const r=await sb.from('profiles').update({...pf,updated_at:new Date().toISOString()}).eq('id',ME);if(r.error)throw r.error}
+    Object.assign(snap.d,js);dels.forEach(k=>delete snap.d[k]);snap.p=pj;syncState='ok';lastSync=Date.now();
+  }catch(e){syncState=navigator.onLine===false?'offline':'error';console.warn('sync',e)}
+  finally{syncing=false;saveLocal()}
+}
+async function pullMine(){
+  const [pr,lg,nt]=await Promise.all([sb.from('profiles').select('*').eq('id',ME).single(),sb.from('logs').select('day,data').eq('user_id',ME),sb.from('notes').select('day,text').eq('user_id',ME)]);
+  if(pr.error)throw pr.error;
+  const P=S.people[ME]||(S.people[ME]=defPerson('',COLORS[0])),row=pr.data;
+  S.synced=S.synced||{};const snap=S.synced[ME]||(S.synced[ME]={p:null,d:{}});
+  const localP=JSON.stringify(pfOf(P)),dirtyP=snap.p&&snap.p!==localP;
+  if(!dirtyP){P.name=row.name||P.name;P.color=row.color||P.color;P.photo=row.photo||undefined;P.batch=row.batch||P.batch;P.share=row.share;
+    if(row.durs)P.durs={...DURS,...row.durs};if(row.routines)P.routines=row.routines}
+  P.is_admin=!!row.is_admin;
+  if(row.durs&&row.routines&&!dirtyP)snap.p=JSON.stringify(pfOf(P));
+  const notes={};(nt.data||[]).forEach(n=>notes[n.day]=n.text);
+  S.logs[ME]=S.logs[ME]||{};
+  (lg.data||[]).forEach(r=>{const local=S.logs[ME][r.day],lj=local?JSON.stringify(norm(local)):null;
+    if(!local||lj===snap.d[r.day]){const l=norm({...r.data,note:notes[r.day]||''});S.logs[ME][r.day]=l;snap.d[r.day]=JSON.stringify(l)}});
+  saveLocal();
+}
+async function fetchSangha(){
+  if(!CLOUD||!ME)return;
+  try{
+    const {data:ps,error}=await sb.from('profiles').select('id,name,color,photo,batch,share').neq('id',ME).eq('share',true);if(error)throw error;
+    const ids=(ps||[]).map(p=>p.id);
+    S.order=[ME,...ids];
+    ps.forEach(p=>{const Q=S.people[p.id]||(S.people[p.id]=defPerson(p.name,p.color));Object.assign(Q,{name:p.name,color:p.color||'teal',photo:p.photo||undefined,batch:p.batch||'dec26',share:true})});
+    if(ids.length){const {data:ls}=await sb.from('logs').select('user_id,day,data').in('user_id',ids).gte('day',addD(keyOf(new Date()),-150));
+      ids.forEach(id=>S.logs[id]={});(ls||[]).forEach(r=>{S.logs[r.user_id][r.day]=norm(r.data)})}
+    saveLocal();
+  }catch(e){console.warn('sangha',e)}
+}
+async function afterSignIn(){
+  const {data:{session}}=await sb.auth.getSession();if(!session){V.ob='welcome';render();return}
+  ME=session.user.id;V.email=session.user.email;
+  if(!S.people[ME]){S.people[ME]=defPerson((session.user.user_metadata||{}).name||'',COLORS[0])}
+  if(!S.order.includes(ME))S.order=[ME,...S.order.filter(x=>x!==ME)];
+  V.ob=null;V.tab=V.tab||'today';V.day=todayK();render();
+  try{await pullMine();ADMIN_TODAY=isAdmin()?(S.adminToday||null):null;V.day=todayK();syncState='ok';lastSync=Date.now()}catch(e){syncState=navigator.onLine===false?'offline':'error'}
+  render();pushNow();fetchSangha().then(()=>{if(V.tab==='profile')render()});
+}
+async function cloudSignIn(){
+  const raw=(($('#siem')||{}).value||'').trim(),pw=($('#sipw')||{}).value||'',m=$('#simsg2');
+  const email=raw.toLowerCase()==='admin'?ADMIN_EMAIL:raw;
+  if(!email||!pw){m.textContent='Enter your email and password.';return}
+  m.style.color='var(--muted)';m.textContent='Signing in…';
+  const {error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error){m.style.color='';m.textContent=/invalid/i.test(error.message)?'Email or password is not right.':error.message;return}
+  await afterSignIn();if(isAdmin()){V.tab='profile';V.sub='simdata';render()}
+}
+async function cloudSignUp(b){
+  const m=$('#obdmsg');b.disabled=true;m.style.color='var(--muted)';m.textContent='Creating your account…';
+  const {data,error}=await sb.auth.signUp({email:V.obEmail.trim(),password:V.obPw1,options:{data:{name:V.obName.trim()}}});
+  b.disabled=false;
+  if(error){m.style.color='';m.textContent=/registered|exists/i.test(error.message)?'This email already has an account. Go back and choose "I already have an account".':error.message;return}
+  if(!data.session){m.style.color='';m.textContent='Account created. Please confirm from the email we sent, then sign in.';return}
+  const id=data.user.id,P=defPerson(V.obName.trim()||'Practitioner',V.obColor);
+  P.batch=V.obBatch;P.routines.weekday.wake=P.routines.weekend.wake=V.obWake;P.routines.weekday.sleep=P.routines.weekend.sleep=V.obSleep;
+  S.people[id]=P;S.logs[id]=S.logs[id]||{};S.synced=S.synced||{};S.synced[id]={p:null,d:{}};ME=id;V.obPw1=V.obPw2='';saveLocal();
+  await pushNow();await afterSignIn();scrollTo(0,0);
+}
+async function cloudSignOut(){
+  try{await pushNow()}catch(e){}
+  await sb.auth.signOut();
+  Object.keys(S.people).forEach(id=>{if(id!=='admin'){delete S.people[id];delete S.logs[id]}});S.order=[];S.synced={};
+  ME=null;ADMIN_TODAY=null;V.sim=null;V.ob='welcome';V.tab='today';V.sub=null;saveLocal();render();scrollTo(0,0);
+}
+function renderCloudPw(){
+  return `<div class="card"><p class="note" style="margin:0">Choose a new password for ${esc(V.email||'your account')}.</p>
+    <label class="field">New password<input type="password" id="cpw1" autocomplete="new-password"></label>
+    <label class="field">Repeat new password<input type="password" id="cpw2" autocomplete="new-password"></label>
+    <div class="alert" id="cpwmsg"></div><button class="btn" data-a="cloudpw">Change password</button></div>`;
+}
+function renderImport(){
+  return `<div class="card"><p class="note" style="margin:0">In the earlier test version, go to Profile → Copy a backup. Paste that text here to bring your days into your account. Days you already logged here are kept.</p>
+    <textarea id="imptxt" style="min-height:140px" placeholder="Paste the backup text"></textarea>
+    <div class="alert" id="impmsg"></div><button class="btn" data-a="doimport">Import</button></div>`;
+}
+function importBackup(txt){
+  const B=JSON.parse(txt);if(!B||!B.logs)throw new Error('bad');
+  const ids=Object.keys(B.logs).filter(id=>id!=='admin').sort((a,b)=>Object.keys(B.logs[b]).length-Object.keys(B.logs[a]).length);
+  if(!ids.length)return 0;const src=B.logs[ids[0]],mine=S.logs[ME]=S.logs[ME]||{};let n=0;
+  for(const k in src){if(!mine[k]){mine[k]=norm(src[k]);n++}}
+  const SP=B.people&&B.people[ids[0]];if(SP&&SP.photo&&!S.people[ME].photo)S.people[ME].photo=SP.photo;
+  save();return n;
+}
+async function bootCloud(){
+  sb.auth.onAuthStateChange((ev)=>{if(ev==='PASSWORD_RECOVERY'){V.ob='newpw';render()}});
+  const {data:{session}}=await sb.auth.getSession();
+  if(V.ob==='newpw')return;
+  if(session)await afterSignIn();else{V.ob='welcome';render()}
+  window.addEventListener('online',()=>{syncState='idle';pushNow()});
+  setInterval(()=>{if(ME)pushNow()},60000);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')pushNow();else if(ME){pullMine().then(render).catch(()=>{})}});
+}
+
+/* ---------- admin sandbox ---------- */
+const ADMIN_H=['70ca5e63697e3ea0f2f006015f09dfd8d09c23766832101967ca031d731a17f2','f236d1c27'];
+async function hashPw(pw){
+  const txt='samyama:'+pw;
+  try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(txt));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+  catch(e){let h=5381;for(const c of txt)h=((h<<5)+h+c.charCodeAt(0))|0;return 'f'+(h>>>0).toString(16)}
+}
+const SANDBOX=()=>CLOUD?ME:'admin';
+function ensureAdmin(){
+  if(!S.people.admin){S.people.admin=defPerson('Admin','dusk');S.people.admin.share=false;S.logs[SANDBOX()]={}}
+  if(!S.logs.admin)S.logs.admin={};save();
+}
+function renderMyPw(){
+  const has=!!S.people[ME].pwHash;
+  return `<div class="card"><p class="note" style="margin:0">${has?'Change or remove the password for your profile on this phone.':'Add a password so others using this phone cannot open your profile.'}</p>
+    ${has?'<label class="field">Current password<input type="password" id="mpw0" autocomplete="current-password"></label>':''}
+    <label class="field">New password<input type="password" id="mpw1" autocomplete="new-password"></label>
+    <label class="field">Repeat new password<input type="password" id="mpw2" autocomplete="new-password"></label>
+    <div class="alert" id="mpwmsg"></div><button class="btn" data-a="mypwset">${has?'Change password':'Set password'}</button>
+    ${has?'<button class="btn ghost" data-a="mypwdel">Remove password</button>':''}</div>`;
+}
+function renderAdminPw(){
+  return `<div class="card"><p class="note" style="margin:0">Set a new admin password.</p>
+    <label class="field">New password<input type="password" id="apw1" autocomplete="new-password"></label>
+    <label class="field">Repeat password<input type="password" id="apw2" autocomplete="new-password"></label>
+    <div class="alert" id="apwmsg"></div><button class="btn" data-a="adminpwset">Save password</button></div>`;
+}
+const SIMPAT={steady:'Steady',improving:'Improving',mixed:'Mixed',struggling:'Struggling'};
+function renderSimData(){
+  const sd=V.sd,tk=todayK(),real=keyOf(new Date());
+  const jumps=[[real,'Real today'],[addD(DAY1,-7),'Build-up'],[DAY1,'Day 1'],[addD(DAY1,14),'Day 15'],[HALF,'Halfway'],[addD(DAY1,49),'Day 50'],[LAST,'Day 60']];
+  const n=Object.keys(S.logs[SANDBOX()]||{}).length;
+  return `<p class="note" style="margin:0 4px">Everything here only affects the admin sandbox. Real profiles are never touched.</p>
+  <section class="card">
+    <h2>Pretend today is <span>${dayLabel(tk)}</span></h2>
+    <div class="seg">${jumps.map(([k,t])=>`<button class="pill${tk===k?' on':''}" data-a="adate" data-k="${k}">${t}</button>`).join('')}</div>
+    <label class="field">Or pick a date<input type="date" value="${tk}" min="2026-09-01" max="${SEND}" data-f="adate"></label>
+    <div class="hint">The day strip, coach, journey and colours all behave as if this were today.</div>
+  </section>
+  <section class="card">
+    <h2>Fill sample data <span>${n} day${n===1?'':'s'} in sandbox</span></h2>
+    <div class="field">How far back<div class="seg" style="margin-top:4px">${[['7','7 days'],['14','14 days'],['30','30 days'],['all','From build-up']].map(([v,t])=>`<button class="pill${sd.range===v?' on':''}" data-a="sdset" data-k="range" data-v="${v}">${t}</button>`).join('')}</div></div>
+    <div class="field">Pattern<div class="seg" style="margin-top:4px">${Object.entries(SIMPAT).map(([v,t])=>`<button class="pill${sd.pattern===v?' on':''}" data-a="sdset" data-k="pattern" data-v="${v}">${t}</button>`).join('')}</div></div>
+    <div class="ctrl"><span>Leave a few days unlogged</span><button class="tog${sd.gaps?' on':''}" data-a="sdgaps" role="switch" aria-checked="${sd.gaps}" aria-label="Leave gaps"></button></div>
+    <button class="btn" data-a="simfill">Fill sample data up to ${short(tk)}</button>
+    <div class="hint" id="simmsg">Existing sandbox days in that range are replaced.</div>
+    <button class="btn ghost" data-a="simclear">Clear sandbox data</button>
+  </section>`;
+}
+function simFill(){
+  const sd=V.sd,tk=todayK(),start=sd.range==='all'?addD(DAY1,-14):addD(tk,-(+sd.range)+1);
+  const total=Math.max(1,diff(start,tk)+1),r=Math.random,ch=(p)=>r()<p,rnd=(a,b)=>Math.round(a+r()*(b-a));
+  let k=start,i=0,made=0;S.logs[SANDBOX()]=S.logs[SANDBOX()]||{};
+  while(k<=tk){
+    const prog=i/Math.max(1,total-1);
+    let q={steady:.85,improving:.3+.65*prog,mixed:.35+.55*r(),struggling:.38}[sd.pattern];
+    q=Math.max(.05,Math.min(.98,q+(r()-.5)*.12));
+    if(sd.gaps&&ch(.12)&&k!==tk){delete S.logs[SANDBOX()][k]}
+    else{
+      const l=norm({});
+      l.bhuta=ch(q);l.sk=ch(q)?rnd(2,4):0;l.ss=ch(q)?rnd(10,18):0;l.asCyc=ch(q*.9)?rnd(6,16):0;l.asSec=[30,45,60,90][rnd(0,3)];
+      l.sck=ch(q)?(ch(q)?2:1):(ch(.5)?1:0);l.shoonya=ch(q)?(ch(q*.95)?2:1):0;l.shambhavi=ch(q)?(ch(q)?2:1):0;
+      l.sits=ch(q)?(ch(q)?[rnd(55,75)]:[rnd(25,45),rnd(10,25)]):(ch(.5)?[rnd(10,30)]:[]);
+      l.aum=ch(q*.8)?rnd(5,25):0;l.ardha=Math.max(0,Math.round(15+prog*55*(.6+q*.4)+rnd(-6,6)));
+      l.patanga=ch(q);l.shishu=ch(q*.9);
+      l.dNeg=ch(q+.1);l.dStim=ch(q+.15);l.dDairy=ch(q);l.dOut=ch(q+.05);
+      l.fruit=Math.round((q*35+rnd(-5,10))/5)*5;l.salad=Math.round((q*25+rnd(-5,10))/5)*5;l.fruit=Math.max(0,l.fruit);l.salad=Math.max(0,l.salad);
+      l.sprouts=ch(q);l.peanuts=ch(q*.8);l.sanj=ch(q*.7);
+      l.digital=Math.max(15,Math.round(220-150*q+rnd(-20,30)));l.silence=Math.round(q*4*2)/2;
+      if(ch(.15))l.note=['Steady sitting today.','Mind was restless in Shoonya.','Long Sukha Kriya at sunset.','Felt light after the kanji.'][rnd(0,3)];
+      S.logs[SANDBOX()][k]=l;made++;
+    }
+    k=addD(k,1);i++;
+  }
+  save();return made;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a;
+  if(a==='ob'){if(V.ob==='name'&&b.dataset.v==='batch'){const m=$('#obmsg');if(!V.obName.trim()){const i=$('#obname');if(i)i.focus();if(m)m.textContent='Please enter your name.';return}
+    if(CLOUD){if(!/^\S+@\S+\.\S+$/.test(V.obEmail.trim())){m.textContent='Please enter a valid email.';return}if(V.obPw1.length<6){m.textContent='Use at least 6 characters for the password.';return}if(V.obPw1!==V.obPw2){m.textContent='The two passwords do not match.';return}}
+    else if(V.obPw1||V.obPw2){if(V.obPw1.length<4){m.textContent='Use at least 4 characters for the password.';return}if(V.obPw1!==V.obPw2){m.textContent='The two passwords do not match.';return}}}V.ob=b.dataset.v;render();scrollTo(0,0);return}
+  if(a==='obcolor'){V.obColor=b.dataset.v;render();return}
+  if(a==='obbatch'){V.obBatch=b.dataset.v;render();return}
+  if(a==='batch'){S.people[ME].batch=b.dataset.v;save();V.sim=null;render();return}
+  if(a==='simplay'){if(V.playing){V.playing=false;clearInterval(simTimer);simTimer=null}else{const st=addD(DAY1,-14);if(!V.sim||V.sim>=SAMYAMA)V.sim=st;V.playing=true;simTimer=setInterval(simTick,140)}render();return}
+  if(a==='simreset'){V.playing=false;clearInterval(simTimer);simTimer=null;V.sim=null;render();return}
+  if(a==='simbrowse'){if(!V.sim)V.sim=todayK();V.playing=false;clearInterval(simTimer);simTimer=null;V.tab='today';V.sub=null;render();scrollTo(0,0);return}
+  if(a==='simstep'){V.sim=addD(V.sim,+b.dataset.d);if(V.sim<addD(DAY1,-14))V.sim=addD(DAY1,-14);if(V.sim>SAMYAMA)V.sim=SAMYAMA;render();return}
+  if(a==='obpick'&&S.people[b.dataset.k].pwHash){V.pickId=b.dataset.k;V.ob='pw';render();return}
+  if(a==='obpick'){ME=b.dataset.k;ls.set(STORE+'-me',ME);V.ob=null;V.tab='today';V.day=todayK();render();scrollTo(0,0);return}
+  if(a==='obdone'&&CLOUD){cloudSignUp(b);return}
+  if(a==='obdone'){(async()=>{
+    const id='p'+Date.now().toString(36),P=defPerson(V.obName.trim()||'Practitioner',V.obColor);
+    if(V.obPw1)P.pwHash=await hashPw(id+':'+V.obPw1);V.obPw1=V.obPw2='';
+    P.batch=V.obBatch;P.routines.weekday.wake=P.routines.weekend.wake=V.obWake;P.routines.weekday.sleep=P.routines.weekend.sleep=V.obSleep;
+    S.people[id]=P;S.order.push(id);S.logs[id]={};save();ME=id;ls.set(STORE+'-me',ME);V.ob=null;V.tab='today';render();scrollTo(0,0)})();return}
+  if(a==='tab'){V.tab=b.dataset.t;V.sub=null;V.et=null;V.confirmReset=false;render();scrollTo(0,0);return}
+  if(a==='gosub'){V.tab='profile';V.sub=b.dataset.s;render();scrollTo(0,0);return}
+  if(a==='back'){V.sub=V.sub==='member'?'sangha':null;V.sel=null;render();scrollTo(0,0);return}
+  if(a==='member'){V.mid=b.dataset.k;V.sub='member';V.sel=null;render();scrollTo(0,0);return}
+  if(a==='adminlogin'){(async()=>{const u=(($('#aun')||{}).value||'').trim().toLowerCase(),p1=($('#apw1')||{}).value||'',m=$('#apwmsg');
+    if(u!=='admin'||!ADMIN_H.includes(await hashPw(p1))){m.textContent='Username or password is not right.';return}
+    ensureAdmin();ME='admin';ls.set(STORE+'-me','admin');ls.set(STORE+'-adminok','1');ADMIN_TODAY=S.adminToday||null;V.ob=null;V.tab='profile';V.sub='simdata';V.day=todayK();render();scrollTo(0,0)})();return}
+  if(a==='userlogin'){(async()=>{const id=V.pickId,m=$('#upwmsg'),pw=($('#upw')||{}).value||'';
+    if(await hashPw(id+':'+pw)!==S.people[id].pwHash){m.textContent='That password is not right. Try again.';return}
+    ME=id;ls.set(STORE+'-me',ME);V.ob=null;V.tab='today';V.day=todayK();render();scrollTo(0,0)})();return}
+  if(a==='mypwset'){(async()=>{const P=S.people[ME],m=$('#mpwmsg'),cur=($('#mpw0')||{}).value||'',p1=$('#mpw1').value,p2=$('#mpw2').value;
+    if(P.pwHash&&await hashPw(ME+':'+cur)!==P.pwHash){m.textContent='Your current password is not right.';return}
+    if(p1.length<4){m.textContent='Use at least 4 characters.';return}if(p1!==p2){m.textContent='The two new passwords do not match.';return}
+    P.pwHash=await hashPw(ME+':'+p1);save();V.sub=null;render()})();return}
+  if(a==='mypwdel'){(async()=>{const P=S.people[ME],m=$('#mpwmsg'),cur=($('#mpw0')||{}).value||'';
+    if(await hashPw(ME+':'+cur)!==P.pwHash){m.textContent='Enter your current password to remove it.';return}
+    delete P.pwHash;save();V.sub=null;render()})();return}
+  if(a==='adminpwset'){(async()=>{const p1=$('#apw1').value,p2=$('#apw2').value,m=$('#apwmsg');if(p1.length<4){m.textContent='Use at least 4 characters.';return}if(p1!==p2){m.textContent='The two passwords do not match.';return}
+    S.adminHash=await hashPw(p1);save();m.style.color='var(--teal)';m.textContent='Password saved.'})();return}
+  if(a==='adate'){ADMIN_TODAY=b.dataset.k===keyOf(new Date())?null:b.dataset.k;S.adminToday=ADMIN_TODAY;save();V.day=todayK();V.sim=null;render();return}
+  if(a==='sdset'){V.sd[b.dataset.k]=b.dataset.v;render();return}
+  if(a==='sdgaps'){V.sd.gaps=!V.sd.gaps;render();return}
+  if(a==='simfill'){const n=simFill();render();const m=$('#simmsg');if(m)m.textContent='Filled '+n+' day'+(n===1?'':'s')+'. Open Today or Progress to see them.';return}
+  if(a==='simclear'){S.logs[SANDBOX()]={};save();render();return}
+  if(a==='cloudsignin'){cloudSignIn();return}
+  if(a==='forgot'){(async()=>{const e=(($('#siem')||{}).value||'').trim(),m=$('#simsg2');if(!/@/.test(e)){m.textContent='Type your email above first.';return}
+    const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});m.style.color=error?'':'var(--teal)';m.textContent=error?'Could not send the email: '+error.message:'Check your email for a reset link. It can take a few minutes.'})();return}
+  if(a==='setnewpw'){(async()=>{const p1=$('#npw1').value,p2=$('#npw2').value,m=$('#npwmsg');if(p1.length<6){m.textContent='Use at least 6 characters.';return}if(p1!==p2){m.textContent='The two passwords do not match.';return}
+    const {error}=await sb.auth.updateUser({password:p1});if(error){m.textContent=error.message;return}V.ob=null;await afterSignIn()})();return}
+  if(a==='cloudpw'){(async()=>{const p1=$('#cpw1').value,p2=$('#cpw2').value,m=$('#cpwmsg');if(p1.length<6){m.textContent='Use at least 6 characters.';return}if(p1!==p2){m.textContent='The two passwords do not match.';return}
+    const {error}=await sb.auth.updateUser({password:p1});m.style.color=error?'':'var(--teal)';m.textContent=error?error.message:'Password changed.'})();return}
+  if(a==='doimport'){const m=$('#impmsg');try{const n=importBackup($('#imptxt').value);m.style.color='var(--teal)';m.textContent='Imported '+n+' day'+(n===1?'':'s')+'. They will sync to your account.'}catch(err){m.style.color='';m.textContent='That text is not a backup from this app. Use "Copy a backup" in the test version and paste it here.'}return}
+  if(a==='goday'){V.day=b.dataset.k;V.open=null;render();return}
+  if(a==='sheet'){V.sheet=true;V.pickFor=b.dataset.for||'today';renderSheet();return}
+  if(a==='sheetclose'){V.sheet=false;renderSheet();return}
+  if(a==='pickday'){const k=b.dataset.k;V.sheet=false;
+    if(V.pickFor==='list'&&logged(V.sub==='member'?V.mid:ME,k)){V.listOpen=k;V.pview='list';render();const el=document.getElementById('d-'+k);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return}
+    V.day=k;V.open=null;V.tab='today';V.sub=null;render();scrollTo(0,0);return}
+  if(a==='prange'){V.prange=b.dataset.v;render();return}
+  if(a==='tip'){const c=b.closest('.chart');c.querySelector('.tipline').innerHTML=b.dataset.t;c.querySelectorAll('.hl').forEach(x=>x.classList.remove('hl'));const m=c.querySelector('[data-b="'+b.dataset.i+'"]');if(m)m.classList.add('hl');return}
+  if(a==='rmphoto'){delete S.people[ME].photo;save();render();return}
+  if(a==='day'){const n=addD(V.day,+b.dataset.d);if(n<=todayK()){V.day=n;V.open=null}render();return}
+  if(a==='today'){V.day=todayK();V.open=null;render();return}
+  if(a==='open'){V.open=V.open===b.dataset.k?null:b.dataset.k;render();return}
+  if(a==='jump'){const k=b.dataset.k;V.open=['sk','ss','as','sukha'].includes(k)?k:null;render();
+    const el=document.getElementById('r-'+k);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('pop')}return}
+  if(a==='goto'){V.day=b.dataset.k;V.tab='today';V.sub=null;render();scrollTo(0,0);return}
+  if(a==='sel'){V.sel=V.sel===b.dataset.k?null:b.dataset.k;render();return}
+  if(a==='pview'){V.pview=b.dataset.v;render();return}
+  if(a==='kind'){V.kind=b.dataset.v;V.et=null;render();return}
+  if(a==='et'){V.et=V.et===+b.dataset.i?null:+b.dataset.i;render();return}
+  if(a==='etdone'){V.et=null;V.dirty=false;render();return}
+  if(a==='theme'){THEME=b.dataset.v;ls.set(STORE+'-theme',THEME);applyTheme();render();return}
+  if(a==='share'){S.people[ME].share=!S.people[ME].share;save();render();return}
+  if(a==='color'){S.people[ME].color=b.dataset.v;save();render();return}
+  if(a==='dinc'){const k=b.dataset.k.slice(4),R=S.people[ME].routines,D=S.people[ME].durs;D[k]=Math.max(5,Math.min(180,D[k]+ +b.dataset.d));save();
+    ['weekday','weekend'].forEach(kd=>{if(R[kd].plan)buildPlan(ME,kd)});render();return}
+  if(a==='dreset'){S.people[ME].durs={...DURS};save();rebuildPlans();render();return}
+  if(a==='signout'&&CLOUD){cloudSignOut();return}
+  if(a==='signout'){ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.ob=S.order.length?'who':'welcome';V.tab='today';V.sub=null;render();scrollTo(0,0);return}
+  if(['inc','cyc','tog','set','sadd','sdel','sho'].includes(a)){
+    const l=mut(ME,V.day),k=b.dataset.k;
+    if(a==='inc'){const v=Math.round(((getV(l,k)??0)+ +b.dataset.d)*10)/10;setV(l,k,Math.max(0,Math.min(+b.dataset.max,v)))}
+    if(a==='cyc'){const m=+b.dataset.max;l[k]=(l[k]+1)%(m+1);if(l[k])V.just=k}
+    if(a==='sho'){const i=+b.dataset.i;l.shoonya=l.shoonya>i?i:i+1;if(l.shoonya)V.just='shoonya'}
+    if(a==='tog') l[k]=!l[k];
+    if(a==='set') l[k]=+b.dataset.v;
+    if(a==='sadd') l.sits.push(l.sits.length?20:60);
+    if(a==='sdel') l.sits.splice(+b.dataset.i,1);
+    save();render();return;
+  }
+  const r=ME&&S.people[ME].routines[V.kind];
+  if(a==='addbusy'){r.busy.push({l:'',s:780,e:840});save();render();return}
+  if(a==='delbusy'){r.busy.splice(+b.dataset.i,1);save();render();return}
+  if(a==='build'){buildPlan(ME,V.kind);V.et=null;render();return}
+  if(a==='copy'){const t=JSON.stringify(S),m=$('#copymsg');
+    const fallback=()=>{if(m)m.textContent='Copy is blocked here. Select the text below.';b.insertAdjacentHTML('afterend',`<div style="padding:0 14px 14px"><textarea readonly>${esc(t)}</textarea></div>`)};
+    try{navigator.clipboard.writeText(t).then(()=>{if(m)m.textContent='Copied. Paste it somewhere safe.'},fallback)}catch(err){fallback()}
+    return}
+  if(a==='reset'){V.confirmReset=true;render();return}
+  if(a==='reset0'){V.confirmReset=false;render();return}
+  if(a==='reset1'&&CLOUD){(async()=>{V.confirmReset=false;S.logs[ME]={};save();await pushNow();render()})();return}
+  if(a==='reset1'){S=fresh();save();ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.confirmReset=false;V.ob='welcome';V.tab='today';V.sub=null;render();return}
+});
+document.addEventListener('input',e=>{
+  const t=e.target,f=t.dataset.f;
+  if(f==='rng'){const l=mut(ME,V.day),k=t.dataset.k,v=+t.value;setV(l,k,v);save();t.style.setProperty('--p',(v/+t.max*100)+'%');const o=document.getElementById(oid(k));if(o)o.textContent=showV(k,v);return}
+  if(f==='sim'){const start=addD(DAY1,-14),total=+t.max,idx=+t.value;V.sim=addD(start,idx);applyJourney();t.style.setProperty('--p',(idx/total*100)+'%');const d=$('#simday'),c=$('#simcur');if(d)d.textContent=dayLabel(V.sim);if(c)c.style.left=(idx/total*100)+'%';return}
+  if(f==='dsl'){setDur(t.dataset.k,+t.value,'s');t.style.setProperty('--p',(+t.value/180*100)+'%');const k=t.dataset.k,v=+t.value,h=$('#dh-'+k),m=$('#dm-'+k);if(h)h.value=Math.floor(v/60);if(m)m.value=v%60;return}
+  if(f==='dh'||f==='dm'){const k=t.dataset.k,h=+($('#dh-'+k).value||0),m=+($('#dm-'+k).value||0);if(h*60+m>0)setDur(k,h*60+m,f==='dh'?'h':'m');return}
+  if(f==='note'){mut(ME,V.day).note=t.value;save()}
+  if(f==='name'){S.people[t.dataset.p].name=t.value||'—';save()}
+  if(f==='obname'){V.obName=t.value}
+  if(f==='obpw1'){V.obPw1=t.value}
+  if(f==='obpw2'){V.obPw2=t.value}
+  if(f==='obemail'){V.obEmail=t.value}
+});
+// time fields save on change but redraw only after the field is left, so the phone's picker never closes mid-selection
+document.addEventListener('change',e=>{
+  const t=e.target,f=t.dataset.f;if(!f||f==='note'||f==='obname'||f==='obpw1'||f==='obpw2'||f==='obemail')return;
+  if(f==='name'){renderHeader();return}
+  if(f==='rng'||f==='sim'){render();return}
+  if(f==='adate'){if(!t.value)return;ADMIN_TODAY=t.value===keyOf(new Date())?null:t.value;S.adminToday=ADMIN_TODAY;save();V.day=todayK();render();return}
+  if(f==='dsl'||f==='dh'||f==='dm'){rebuildPlans();return}
+  if(f==='photo'){const file=t.files&&t.files[0];if(!file)return;const msg=$('#photomsg');if(msg)msg.textContent='Preparing photo…';loadPhoto(file,url=>{if(!url){if(msg)msg.textContent='That file could not be read as an image. Try a JPG or PNG.';return}S.people[ME].photo=url;save();render()});return}
+  if(!t.value&&t.type==='time')return;
+  if(f==='obwake'){V.obWake=fromHM(t.value);return}
+  if(f==='obsleep'){V.obSleep=fromHM(t.value)||1439;return}
+  const P=S.people[ME],r=P.routines[V.kind],i=+t.dataset.i;
+  if(f==='wake') r.wake=fromHM(t.value);
+  if(f==='sleep') r.sleep=fromHM(t.value)||1439;
+  if(f==='bl') r.busy[i].l=t.value;
+  if(f==='bs') r.busy[i].s=fromHM(t.value);
+  if(f==='be') r.busy[i].e=fromHM(t.value);
+  if(f==='pt'){r.plan[i].s=fromHM(t.value);save();return} // redrawn when Done is tapped
+  save();V.dirty=true;
+});
+document.addEventListener('focusout',()=>{
+  if(!V.dirty)return;
+  setTimeout(()=>{const a=document.activeElement;if(a&&a.matches('input:not([type=range]),textarea'))return;V.dirty=false;render()},250);
+});
+let sw=null;
+document.addEventListener('touchstart',e=>{const h=e.target.closest('.hero');sw=h?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null},{passive:true});
+document.addEventListener('touchend',e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sw.x,dy=t.clientY-sw.y;sw=null;
+  if(Math.abs(dx)>50&&Math.abs(dy)<40){const n=addD(V.day,dx<0?1:-1);if(n<=todayK()){V.day=n;V.open=null;render()}}},{passive:true});
+setInterval(()=>{const a=document.activeElement;if(!V.ob&&V.tab==='today'&&!(a&&a.matches('input,textarea')))render()},120000);
+if(CLOUD_CFG&&!CLOUD){document.getElementById('main').innerHTML='<div class="ob" style="justify-content:center;text-align:center"><h2>Can’t connect right now</h2><p>The app needs the internet the first time it opens. Check your connection and try again.</p><button class="btn big" onclick="location.reload()">Try again</button></div>';document.getElementById('tabs').hidden=true}
+else if(CLOUD){render();bootCloud()}else render();
+</script>
