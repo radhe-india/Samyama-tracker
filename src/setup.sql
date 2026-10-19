@@ -84,3 +84,15 @@ create trigger on_auth_user_created
 update public.profiles
    set is_admin = true, share = false, name = 'Admin'
  where id = (select id from auth.users where email = 'admin@samyama.app');
+
+-- 5. Admin can read everyone's data (for backups) ---------------------------
+create or replace function public.is_admin()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select is_admin from public.profiles where id = auth.uid()), false)
+$$;
+drop policy if exists "admin reads profiles" on public.profiles;
+create policy "admin reads profiles" on public.profiles for select to authenticated using (public.is_admin());
+drop policy if exists "admin reads logs" on public.logs;
+create policy "admin reads logs" on public.logs for select to authenticated using (public.is_admin());
+drop policy if exists "admin reads notes" on public.notes;
+create policy "admin reads notes" on public.notes for select to authenticated using (public.is_admin());

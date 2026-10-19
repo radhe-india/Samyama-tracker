@@ -1004,7 +1004,7 @@ function renderHeader(){
   top.hidden=false;tabs.hidden=false;
   const c=S.people[ME].color;
   const meAv=`<button class="av c-${c} ring2" data-a="tab" data-t="profile" aria-label="Profile" style="color:var(${colorVar(c)})">${avInner(ME)}</button>`;
-  const subTitles={import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
+  const subTitles={backup:'Backup',import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
   const titles={plan:'My day',progress:'Progress',profile:'Profile'};
   if(V.tab==='today') top.innerHTML=`<div class="greet"><small>${isAdmin()?'Admin sandbox'+(ADMIN_TODAY?' · pretend today '+short(ADMIN_TODAY):''):'Namaskaram'}</small><b>${esc(nm(ME))}</b></div>${meAv}`;
   else if(V.tab==='profile'&&V.sub) top.innerHTML=`<div class="ptitle"><button class="back" data-a="back" aria-label="Back">${BACK}</button>${esc(subTitles[V.sub])}</div>`;
@@ -1452,6 +1452,7 @@ function renderProfile(){
   <div class="phead"><div class="avwrap">${avatar(ME,'lg')}<button class="aved" data-a="gosub" data-s="edit" aria-label="Edit profile">${ico('pen')}</button></div><b>${esc(nm(ME))}</b><small>Practising since ${short(firstKey(ME))} · ${streak(ME)}-day must-do streak</small><button class="pill" data-a="gosub" data-s="edit">Edit profile</button></div>
   ${isAdmin()?`<div class="sgroup">Admin tools</div>
   <div class="slist">
+    ${CLOUD?srow('data-a="gosub" data-s="backup"','copy','sand','Backup everyone\'s data','Download all profiles, entries and reflections'+(S.lastBackup?' · last '+short(keyOf(new Date(S.lastBackup))):'')):''}
     ${srow('data-a="gosub" data-s="simdata"','cal','sage','Simulate data','Fill sample days and set a pretend date'+(ADMIN_TODAY?' · today is '+short(ADMIN_TODAY):''))}
     ${srow('data-a="gosub" data-s="journey"','moon','peach','Journey colours','Preview the colour shift toward Samyama')}
   </div>`:''}
@@ -1636,6 +1637,7 @@ function render(){
   else if(V.sub==='edit') h=renderEdit();
   else if(V.sub==='journey'&&isAdmin()) h=renderJourneySim();
   else if(V.sub==='simdata'&&isAdmin()) h=renderSimData();
+  else if(V.sub==='backup'&&isAdmin()&&CLOUD) h=renderBackup();
   else if(V.sub==='mypw'&&(CLOUD||!isAdmin())) h=CLOUD?renderCloudPw():renderMyPw();
   else if(V.sub==='import'&&CLOUD) h=renderImport();
   else if(V.sub==='member'){syncProg(S.people[V.mid].batch);h=renderProgress(V.mid,true);syncProg(S.people[ME].batch)}
@@ -1777,6 +1779,42 @@ async function bootCloud(){
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')pushNow();else if(ME){pullMine().then(render).catch(()=>{})}});
 }
 
+
+/* ---------- admin backup ---------- */
+function renderBackup(){
+  return `<p class="note" style="margin:0 4px">Downloads a copy of everyone’s profiles, logged days and reflections from the shared database. Keep it somewhere safe, such as Files or Google Drive. Weekly is plenty.</p>
+  <section class="card">
+    <h2>Download a backup <span>${S.lastBackup?'Last: '+pretty(keyOf(new Date(S.lastBackup))):'Not yet'}</span></h2>
+    <button class="btn" data-a="backup" data-v="json">Full backup (JSON)</button>
+    <button class="btn ghost" data-a="backup" data-v="csv">Logged days as a spreadsheet (CSV)</button>
+    <div class="hint" id="bkmsg">The JSON file holds everything and can be used to restore. The CSV opens in Excel or Google Sheets.</div>
+  </section>`;
+}
+async function fetchAll(table,cols){
+  const out=[];for(let from=0;;from+=1000){const {data,error}=await sb.from(table).select(cols).range(from,from+999);if(error)throw error;out.push(...data);if(data.length<1000)break}return out;
+}
+async function doBackup(kind){
+  const m=$('#bkmsg');m.style.color='var(--muted)';m.textContent='Collecting everyone’s data…';
+  try{
+    const [profiles,logs,notes]=await Promise.all([fetchAll('profiles','*'),fetchAll('logs','user_id,day,data,updated_at'),fetchAll('notes','user_id,day,text,updated_at')]);
+    const stamp=keyOf(new Date());let blob,name;
+    if(kind==='json'){blob=new Blob([JSON.stringify({app:'samyama-sadhana',exported:new Date().toISOString(),profiles,logs,notes},null,1)],{type:'application/json'});name='samyama-backup-'+stamp+'.json'}
+    else{
+      const pn={};profiles.forEach(p=>pn[p.id]=p.name);const nt={};notes.forEach(n=>nt[n.user_id+'|'+n.day]=n.text);
+      const F=['bhuta','sk','ss','asCyc','asSec','sck','shambhavi','shoonya','aum','ardha','patanga','shishu','dNeg','dStim','dDairy','dOut','fruit','salad','sprouts','peanuts','sanj','digital','silence'];
+      const q=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+      const rows=[['name','day',...F,'sukha_sittings','sukha_total','note'].join(',')];
+      logs.sort((a,b)=>(pn[a.user_id]||'').localeCompare(pn[b.user_id]||'')||a.day.localeCompare(b.day)).forEach(r=>{const d=r.data||{},sits=d.sits||[];
+        rows.push([pn[r.user_id]||r.user_id,r.day,...F.map(f=>d[f]),sits.join('+'),sits.reduce((a,b)=>a+b,0),nt[r.user_id+'|'+r.day]||''].map(q).join(','))});
+      blob=new Blob([rows.join('\n')],{type:'text/csv'});name='samyama-days-'+stamp+'.csv'}
+    const file=new File([blob],name,{type:blob.type});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:name})}catch(e){if(e.name!=='AbortError')throw e}}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+    S.lastBackup=Date.now();saveLocal();
+    m.style.color='var(--teal)';m.textContent=`Backup ready: ${profiles.length} profile${profiles.length===1?'':'s'}, ${logs.length} logged day${logs.length===1?'':'s'}, ${notes.filter(n=>n.text).length} reflection${notes.filter(n=>n.text).length===1?'':'s'}.`;
+  }catch(e){m.style.color='';m.textContent='Could not finish the backup: '+(e.message||e)+'. Check your connection and try again.'}
+}
+
 /* ---------- admin sandbox ---------- */
 const ADMIN_H=['70ca5e63697e3ea0f2f006015f09dfd8d09c23766832101967ca031d731a17f2','f236d1c27'];
 async function hashPw(pw){
@@ -1899,6 +1937,7 @@ document.addEventListener('click',e=>{
   if(a==='sdset'){V.sd[b.dataset.k]=b.dataset.v;render();return}
   if(a==='sdgaps'){V.sd.gaps=!V.sd.gaps;render();return}
   if(a==='simfill'){const n=simFill();render();const m=$('#simmsg');if(m)m.textContent='Filled '+n+' day'+(n===1?'':'s')+'. Open Today or Progress to see them.';return}
+  if(a==='backup'){doBackup(b.dataset.v);return}
   if(a==='simclear'){S.logs[SANDBOX()]={};save();render();return}
   if(a==='cloudsignin'){cloudSignIn();return}
   if(a==='forgot'){(async()=>{const e=(($('#siem')||{}).value||'').trim(),m=$('#simsg2');if(!/@/.test(e)){m.textContent='Type your email above first.';return}
