@@ -1060,7 +1060,6 @@ function coach(p,k){
   if(I.kriya2&&l.sck===1) pend.push({t:'SCK, 2nd',m:D.sck,key:'sck',ill:'sck',tile:'night'});
   if(I.kriya2&&l.shambhavi===1) pend.push({t:'Shambhavi, 2nd',m:D.shambhavi,key:'shambhavi',ill:'shambhavi',tile:'dusk'});
   if(A.aum&&!(l.aum>0||l.qd.aum)) pend.push({t:'AUM chanting',m:D.aum,key:'aum',ill:'aum',tile:'night'});
-  if(A.screen&&today&&now>=18*60&&!l.scrDone&&!l.qd.screen) pend.push({t:'Screen time',m:0,key:'scard',ill:'screen',tile:'dusk'});
   C.custom.forEach(c=>{if(custVal(c,l)<1)pend.push({t:c.name,m:c.kind==='time'?c.target||10:10,key:'c-'+c.id,ill:'prep',tile:'sage'})});
   const nnPend=pend.filter(x=>x.nn),met=mandMet(l);
   const chips=[];
@@ -1071,23 +1070,23 @@ function coach(p,k){
   if(A.screen&&l.digital!=null&&l.digital<=SCREEN_IDEAL) chips.push('Screens under 1.5h');
   const y=addD(k,-1); if(logged(p,y)){const d=sc-score(get(p,y),p); if(d>0) chips.push('+'+d+'% vs yesterday')}
 
-  let title,sub='',todo=pend,todoLabel='Left to do today',note='',next=null,alert='';
-  if(A.screen&&l.digital!=null&&l.digital>SCREEN_MAX) alert='Screen time is '+dur(l.digital)+', above the 2-hour limit.';
+  let title,sub='',todo=pend,todoLabel='Still to do',note='',next=null,alert='';
+  if(A.screen&&l.digital!=null&&l.digital>SCREEN_MAX) alert='Screen time is '+dur(l.digital)+', a little over the 2-hour limit.';
+  const dayName=ph.kind==='build'?'Build-up':ph.kind==='full'?'Day '+ph.n+' of 60':'Samyama';
+  const done=met+' of '+MAND_N+' done';
   if(!today){
-    title=logged(p,k)?(met===MAND_N?'All Isha mandatory was kept':'Isha mandatory · '+met+' of '+MAND_N+' met'):'Nothing logged for this day';
-    sub=pretty(k);todoLabel='Not done this day';
+    title=logged(p,k)?(met===MAND_N?'A full day of sadhana':'A day of practice'):'Nothing logged this day';
+    sub=pretty(k)+(logged(p,k)?' · '+done:'');todoLabel='Not logged this day';
   } else if(!pend.length){
-    title='Every practice is complete';sub='Keep the evening quiet and sleep on time.';
-  } else if(now>=17*60){
-    const left=Math.max(0,r.sleep-now);
-    title=nnPend.length?'Evening. Mandatory comes first':'Evening. There is still time';
-    let acc=0;const fit=[];for(const x of pend){if(acc+x.m<=left){fit.push(x);acc+=x.m}}
-    if(left<=0){sub='It is past your planned bedtime.';todoLabel='Still pending'}
-    else{sub=dur(left)+' before bed at '+fmt(r.sleep)+'.';if(fit.length){todo=fit;todoLabel='These fit before bed'}else todoLabel='Do the shortest one you can'}
-    if(nnPend.some(x=>x.key==='shoonya')&&nnPend.some(x=>x.key==='sck')) note='Do Shoonya first. It should not come straight after a kriya.';
+    title='Your sadhana is complete for today';sub=dayName+' · rest well tonight.';
   } else {
-    title=met+' of '+MAND_N+' Isha mandatory met';
-    sub=(ph.kind==='build'?'Build-up day':ph.kind==='full'?'Day '+ph.n+' of 60':'Samyama')+' · '+pend.length+' left'+(nnPend.length?', '+nnPend.length+' mandatory':'')+'.';
+    const h=now/60;
+    title=met===0?(h<12?'Good morning. Your sadhana awaits':h<17?'Your sadhana awaits':'A quiet evening for sadhana')
+      :h<12?'A good start to the day':h<17?'Keep the rhythm going':'A quiet evening for sadhana';
+    sub=dayName+' · '+done;
+    if(now>=17*60){const left=Math.max(0,r.sleep-now);let acc=0;const fit=[];for(const x of pend){if(acc+x.m<=left){fit.push(x);acc+=x.m}}
+      if(left>0&&fit.length&&fit.length<pend.length){todo=fit;todoLabel='Fits before bed'}}
+    if(nnPend.some(x=>x.key==='shoonya')&&nnPend.some(x=>x.key==='sck')&&now>=11*60) note='Tip: do Shoonya before the kriya, not straight after it.';
   }
   if(today){
     const pl=sortedPlan(r).filter(x=>x.s!=null&&!x.prep&&!planDone(x.id,l)&&x.s+x.d>=now);
@@ -1354,7 +1353,7 @@ function renderToday(){
     </div>
   </section>
 
-  ${lifeRows?`<section class="sec">${sech('Lifestyle','Keep it in check')}${A.screen&&!l.scrDone&&!l.qd.screen&&(k<todayK()||nowMin()>=18*60)?screenCard(l,k):''}<div class="list">${lifeRows}</div></section>`:''}
+  ${lifeRows?`<section class="sec">${sech('Lifestyle','Keep it in check')}<div class="list">${lifeRows}</div></section>`:''}
   ${own?`<section class="sec">${sech('My practices')}<div class="list">${own}</div></section>`:''}
 
   ${sadOf(p).intro?`<button class="linkbtn cpoint" data-a="gosub" data-s="sad">Add or remove practices in Profile → My sadhana</button>`:''}
