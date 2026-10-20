@@ -8,7 +8,8 @@ create table if not exists public.profiles (
   color      text default 'teal',
   photo      text,
   batch      text default 'dec26',
-  share      boolean not null default true,
+  share      boolean not null default false,
+  visible    boolean not null default false,
   is_admin   boolean not null default false,
   durs       jsonb,
   routines   jsonb,
@@ -20,6 +21,7 @@ create table if not exists public.logs (
   user_id    uuid not null references auth.users on delete cascade,
   day        date not null,
   data       jsonb not null default '{}',
+  summary    jsonb,
   updated_at timestamptz not null default now(),
   primary key (user_id, day)
 );
@@ -38,22 +40,21 @@ alter table public.logs     enable row level security;
 alter table public.notes    enable row level security;
 
 -- 2. Who can see and change what -----------------------------------------
--- Profiles: you see your own, plus anyone who chose to share.
+-- Profiles: you see only your own. The sangha comes from sangha_feed() in migrate_v1.sql.
 drop policy if exists "profiles read" on public.profiles;
 create policy "profiles read" on public.profiles for select to authenticated
-  using (id = auth.uid() or share = true);
+  using (id = auth.uid());
 drop policy if exists "profiles update own" on public.profiles;
 create policy "profiles update own" on public.profiles for update to authenticated
   using (id = auth.uid()) with check (id = auth.uid());
 -- Nobody can make themselves admin from the app.
 revoke insert, update, delete on public.profiles from authenticated, anon;
-grant update (name, color, photo, batch, share, durs, routines, sadhana, updated_at) on public.profiles to authenticated;
+grant update (name, color, photo, batch, share, visible, durs, routines, sadhana, updated_at) on public.profiles to authenticated;
 
--- Logs: you manage your own; you can read logs of people who share.
+-- Logs: only ever your own.
 drop policy if exists "logs read" on public.logs;
 create policy "logs read" on public.logs for select to authenticated
-  using (user_id = auth.uid()
-         or exists (select 1 from public.profiles p where p.id = logs.user_id and p.share));
+  using (user_id = auth.uid());
 drop policy if exists "logs write own" on public.logs;
 create policy "logs write own" on public.logs for all to authenticated
   using (user_id = auth.uid()) with check (user_id = auth.uid());
@@ -83,7 +84,7 @@ create trigger on_auth_user_created
 --   Email: admin@samyama.app   Password: admin@123   (tick "Auto Confirm User")
 -- Then run this line (select it and press Run):
 update public.profiles
-   set is_admin = true, share = false, name = 'Admin'
+   set is_admin = true, share = false, visible = false, name = 'Admin'
  where id = (select id from auth.users where email = 'admin@samyama.app');
 
 -- 5. Admin can read everyone's data (for backups) ---------------------------
