@@ -355,6 +355,17 @@ input[type=time]::-webkit-date-and-time-value{text-align:left}
 .srow .cv,.member .cv{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2}
 .srow.danger b{color:var(--warn)}
 .lock svg{width:20px;height:20px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block}
+.clegend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);padding:0 6px}
+.clegend > span{display:inline-flex;align-items:center;gap:6px}
+.clegend .lock svg{width:16px;height:16px}
+.tog.mini{width:28px;height:16px;display:inline-block;pointer-events:none}
+.tog.mini::after{width:12px;height:12px;top:2px;left:2px}
+.tog.mini.on::after{transform:translateX(12px)}
+.sadbar{position:fixed;z-index:8;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));max-width:560px;margin:0 auto;background:var(--night);color:var(--on-night);border-radius:16px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px var(--shadow);font-size:14.5px;font-weight:500;animation:fadein .2s ease}
+.sadbar span{flex:1;min-width:0}
+.sadbar button{border:0;border-radius:11px;padding:9px 14px;font-weight:600;background:color-mix(in srgb,var(--on-night) 14%,transparent);color:var(--on-night)}
+.sadbar button.on{background:var(--teal);color:var(--on-teal)}
+#sadsheet .sheet{z-index:31}#sadsheet .sheet-bg{z-index:30}
 .presets{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 .preset{position:relative;border:0;background:var(--surface);border-radius:18px;padding:14px 12px 12px;box-shadow:0 2px 10px var(--shadow);text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0}
 .preset.on{box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow)}
@@ -665,7 +676,7 @@ const COLORS=['teal','terra','sage','dusk'];
 
 /* ---------- the sadhana each person keeps ----------
    Isha mandatory comes from the Samyama practice and diet guidelines and cannot be switched off.
-   Intensified preparation is what the guidelines call best or ideal. Add-ons and own practices are personal. */
+   The rest is optional: what the guidelines call best or ideal (on by default), add-ons and own practices. */
 const SURYA={sk:{n:'Surya Kriya',min:3,ill:'sk',max:50},ss:{n:'Surya Shakti',min:12,ill:'ss',max:108},sn:{n:'Surya Namaskar',min:12,ill:'ss',max:108}};
 const INT=[
   {id:'hathaBoth',n:'Surya and Yogasanas every day',s:'Instead of alternating'},
@@ -691,6 +702,7 @@ const defRem=()=>({ardha:{on:false,every:120,from:540,to:1260},screen:{on:false,
 function defSad(){return {v:1,mode:'advanced',surya:['sk','ss'],hatha:'alt',int:Object.fromEntries(INT.map(x=>[x.id,true])),add:{prep:true},custom:[],rem:defRem()}}
 function fixSad(c){const d=defSad();c=Object.assign(d,c||{});c.int=Object.assign({},d.int,c.int||{});c.add=Object.assign({},c.add||{});
   if(!Array.isArray(c.surya)||!c.surya.length)c.surya=['sk','ss'];if(!Array.isArray(c.custom))c.custom=[];
+  c.hist=Array.isArray(c.hist)?c.hist.map(h=>({until:h.until,sad:h.sad&&h.sad.int&&h.sad.rem?h.sad:fixSad({...h.sad,hist:[]})})):[];
   const r=defRem();c.rem={...r,...(c.rem||{})};c.rem.ardha={...r.ardha,...(c.rem.ardha||{})};c.rem.screen={...r.screen,...(c.rem.screen||{})};return c}
 
 /* ---------- illustrations (original, drawn in a 64×64 box) ---------- */
@@ -858,8 +870,8 @@ let V={tab:'today',sub:null,mid:null,day:todayK(),kind:isWeekend(todayK())?'week
 
 // first time someone opens v1.0: walk them through setting up their sadhana
 function maybeUpgrade(){const P=ME&&S.people[ME];if(!P||isAdmin()||P.sad.seen)return;
-  V.obFlow='upgrade';V.obSad=P.sad;V.obVis=!!P.visible;V.obShare=!!P.share;V.ob='new'}
-function applyObChoices(P){P.sad=fixSad({...V.obSad,seen:1});P.visible=!!V.obVis;P.share=!!(V.obVis&&V.obShare);V.obSad={...defSad(),mode:'simple'};V.obVis=V.obShare=false}
+  V.obFlow='upgrade';V.obSad=fixSad(sadSnap(P.sad));V.obVis=!!P.visible;V.obShare=!!P.share;V.ob='new'}
+function applyObChoices(P){const nx={...sadSnap(V.obSad),seen:1};if(V.obFlow==='upgrade'&&P.sad)sadCommit(P,nx);else P.sad=fixSad(nx);P.visible=!!V.obVis;P.share=!!(V.obVis&&V.obShare);V.obSad={...defSad(),mode:'simple'};V.obVis=V.obShare=false}
 if(!CLOUD&&ME)maybeUpgrade();
 
 function norm(o){
@@ -874,7 +886,8 @@ function norm(o){
   l.qd={...(o.qd||{})};l.cust={...(o.cust||{})};
   delete l.sukha;delete l.stretch;return l;
 }
-const get=(p,k)=>norm(S.logs[p]&&S.logs[p][k]);
+const atK=(l,k)=>{Object.defineProperty(l,'_k',{value:k,enumerable:false,configurable:true});return l};
+const get=(p,k)=>atK(norm(S.logs[p]&&S.logs[p][k]),k);
 const logged=(p,k)=>!!(S.logs[p]&&S.logs[p][k]);
 function mut(p,k){S.logs[p]=S.logs[p]||{};S.logs[p][k]=norm(S.logs[p][k]);S.logs[p][k].v1=1;return S.logs[p][k]}
 function isWeekend(k){const d=parse(k).getDay();return d===0||d===6}
@@ -889,6 +902,12 @@ const avatar=(p,cls)=>`<span class="av c-${S.people[p].color||'teal'} ${cls||''}
 
 /* ---------- scoring & analytics ---------- */
 const sadOf=p=>(p&&S.people[p]&&S.people[p].sad)||defSad();
+// the checklist that applied on a given day: changes only ever take effect from the day they are saved
+function sadAt(p,k){const C=sadOf(p);if(!k||!C.hist||!C.hist.length)return C;for(const h of C.hist)if(k<=h.until)return h.sad;return C}
+const sadSnap=C=>{const o=JSON.parse(JSON.stringify(C));delete o.hist;return o};
+function sadCommit(P,next){const old=P.sad,until=addD(todayK(),-1),hist=(old.hist||[]).slice();
+  if(!hist.length||hist[hist.length-1].until<until)hist.push({until,sad:sadSnap(old)});
+  P.sad=fixSad({...next,hist})}
 const simpleMode=p=>sadOf(p||ME).mode==='simple';
 const suryaOk=l=>l.sk>=3||l.ss>=12||l.sn>=12||!!l.qd.surya;
 const asOk=l=>l.asCyc>0||!!l.qd.as;
@@ -912,7 +931,7 @@ function custVal(c,l){const v=l.cust[c.id];if(l.qd['c:'+c.id])return 1;
   return c.target?Math.min(1,(v||0)/c.target):(v>0?1:0)}
 // everything switched on beyond the mandatory: [name, credit 0..1]
 function extraList(l,p){
-  const C=sadOf(p),I=C.int,A=C.add,out=[];
+  const C=sadAt(p,l._k),I=C.int,A=C.add,out=[];
   if(I.hathaBoth)out.push(['Surya and Yogasanas',suryaOk(l)&&asOk(l)?1:hathaOk(l)?.5:0]);
   if(I.kriya2)out.push(['Both kriyas twice',(Math.min(2,l.sck)+Math.min(2,l.shambhavi))/4]);
   if(I.sukhaHour)out.push(['Sukha Kriya in one stretch',sukMax(l)>=60||l.qd.sukhaHour?1:0]);
@@ -940,7 +959,7 @@ function streak(p){
   return n;
 }
 // which hatha practice the guidelines' alternating pattern asks for on a given day
-function hathaFocus(k,p){const C=sadOf(p);if(C.int.hathaBoth||C.hatha==='both')return 'both';const d=parse(k).getDay();if(d===0)return 'both';
+function hathaFocus(k,p){const C=sadAt(p,k);if(C.int.hathaBoth||C.hatha==='both')return 'both';const d=parse(k).getDay();if(d===0)return 'both';
   const mwf=[1,3,5].includes(d);return C.hatha==='alt2'?(mwf?'surya':'as'):(mwf?'as':'surya')}
 const suryaName=p=>sadOf(p).surya.map(x=>SURYA[x].n).join(' or ');
 function firstKey(p){const ks=Object.keys(S.logs[p]||{}).sort();return ks.length&&ks[0]<todayK()?ks[0]:todayK()}
@@ -1009,7 +1028,7 @@ function sortedPlan(r){return (r.plan||[]).map((x,i)=>({...x,i})).sort((a,b)=>(a
 function coach(p,k){
   const l=get(p,k),sc=score(l,p),today=k===todayK(),now=nowMin(),r=routineFor(p,k),D=S.people[p].durs,ph=phaseOf(k);
   const st=sukT(l),mx=sukMax(l);
-  const C=sadOf(p),I=C.int,A=C.add,f=hathaFocus(k,p),pend=[];
+  const C=sadAt(p,k),I=C.int,A=C.add,f=hathaFocus(k,p),pend=[];
   // Isha mandatory first
   if(!hathaOk(l)) pend.push({t:f==='as'?'Yogasanas':f==='surya'?SURYA[C.surya[0]].n:'Surya or Yogasanas',m:f==='as'?D.asanas:D.surya+D.prep,nn:1,key:f==='as'?'as':'surya',ill:f==='as'?'as':'sk',tile:f==='as'?'rose':'peach'});
   if(l.sck<1) pend.push({t:'SCK',m:D.sck,nn:1,key:'sck',ill:'sck',tile:'night'});
@@ -1182,7 +1201,7 @@ function renderHeader(){
 
 /* ---------- Today ---------- */
 function renderToday(){
-  const p=ME,k=V.day,l=get(p,k),c=coach(p,k),C=sadOf(p),I=C.int,A=C.add,simple=C.mode==='simple',f=hathaFocus(k,p);
+  const p=ME,k=V.day,l=get(p,k),c=coach(p,k),C=sadAt(p,k),I=C.int,A=C.add,simple=sadOf(p).mode==='simple',f=hathaFocus(k,p);
   const nat=l.nat,st=sukT(l),mx=sukMax(l);
   const scrState=l.digital==null?['Phone + TV · keep under 2 hours','',''] :l.digital<=SCREEN_IDEAL?['Within 1.5 hours','met','done']:l.digital<=SCREEN_MAX?['Within the 2-hour limit','met','done']:['Over the 2-hour limit','over','part'];
   const rounds=n=>['Not yet today','1 of 2 rounds','Both rounds done'][n];
@@ -1205,7 +1224,7 @@ function renderToday(){
   }
 
   // kriyas: same in both modes
-  const kr=(key,name,ill,tile)=>{const v=l[key];return prow({key,name,must:1,sub:rounds(v)+(I.kriya2?' · twice is the intensified goal':' · once is mandatory'),ill,tile,act:'cyc',max:2,state:v>=(I.kriya2?2:1)?'done':v?'part':'',right:`<span class="dots">${rds(v,2)}</span>`})};
+  const kr=(key,name,ill,tile)=>{const v=l[key];return prow({key,name,must:1,sub:rounds(v)+(I.kriya2?' · twice a day on your checklist':' · once is mandatory'),ill,tile,act:'cyc',max:2,state:v>=(I.kriya2?2:1)?'done':v?'part':'',right:`<span class="dots">${rds(v,2)}</span>`})};
   const kriyas=kr('sck','Shakti Chalana Kriya','sck','night')+kr('shambhavi','Shambhavi','shambhavi','dusk');
 
   // Sukha Kriya: any sitting can be logged; 60 minutes in total is the mandatory
@@ -1238,7 +1257,7 @@ function renderToday(){
   const qp=(id,b,s,ok,must)=>`<button class="pledge${ok?' on':''}" data-a="qtog" data-k="${id}" aria-pressed="${ok}"><span class="chk">${ok?CHECK:''}</span><span><b>${b}${must?'<span class="tag">mandatory</span>':''}</b><small>${s}</small></span></button>`;
   const shoBtn=i=>`<button class="rbtn${l.shoonya>i?' on':''}" data-a="sho" data-i="${i}">${l.shoonya>i?CHECK:''}${i?'2nd round':'1st round'}</button>`;
   const C2=2*Math.PI*44,na=Math.min(nat,100)/100*C2;
-  const natBlock=simple?`<div class="pledges">${qp('nat','50%+ natural food','Fruits, salads, sprouts, nuts',natOk(l),1)}${I.nat100?qp('nat100','100% natural food','Intensified preparation',!!l.qd.nat100):''}</div>`
+  const natBlock=simple?`<div class="pledges">${qp('nat','50%+ natural food','Fruits, salads, sprouts, nuts',natOk(l),1)}${I.nat100?qp('nat100','100% natural food','The ideal in the guidelines',!!l.qd.nat100):''}</div>`
     :`<div class="plate">
         <svg viewBox="0 0 118 118" aria-label="Natural food ${nat}%">
           <g transform="rotate(-90 59 59)"><circle class="pt" cx="59" cy="59" r="44"/>${na?`<circle class="ps" cx="59" cy="59" r="44" stroke-dasharray="${na} ${C2}"/>`:''}</g>
@@ -1272,6 +1291,10 @@ function renderToday(){
 
   <section class="coach">
     <div class="tophead">${ring(c.sc)}<div><h2>${esc(c.title)}</h2>${c.sub?`<div class="hsub">${esc(c.sub)}</div>`:''}</div></div>
+    ${scallop}
+    <figure class="quote"><span class="qm"><svg viewBox="0 0 24 24"><path d="M10 6c-3.6 1.2-6 4-6 7.6V18h6v-6H7.2c.3-2 1.6-3.4 3.4-4.2zm10 0c-3.6 1.2-6 4-6 7.6V18h6v-6h-2.8c.3-2 1.6-3.4 3.4-4.2z"/></svg></span>
+      <blockquote>${esc(c.quote)}</blockquote><figcaption>Sadhguru</figcaption></figure>
+    ${scallop}
     ${c.todo.length?`<div class="todoh"><b>${c.todoLabel}</b><span class="key">mandatory</span></div>
       <div class="todos">${c.todo.map(x=>`<button class="todo${x.nn?' must':''}" data-a="jump" data-k="${x.key}">${esc(x.t)}</button>`).join('')}</div>`
       :`<div class="alldone"><span class="rd on">${CHECK}</span>Nothing left. Every practice is logged.</div>`}
@@ -1279,8 +1302,6 @@ function renderToday(){
     ${c.next?`<button class="nextbtn" data-a="tab" data-t="plan"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg>${c.next.s<=c.now?'Now':'Next'}: ${esc(c.next.label)} · <b>${fmt(c.next.s)}</b></button>`:''}
     ${c.alert?`<div class="alert">${esc(c.alert)}</div>`:''}
     ${c.chips.length?`<div class="chips">${c.chips.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>`:''}
-    <figure class="quote sm"><span class="qm"><svg viewBox="0 0 24 24"><path d="M10 6c-3.6 1.2-6 4-6 7.6V18h6v-6H7.2c.3-2 1.6-3.4 3.4-4.2zm10 0c-3.6 1.2-6 4-6 7.6V18h6v-6h-2.8c.3-2 1.6-3.4 3.4-4.2z"/></svg></span>
-      <div><blockquote>${esc(c.quote)}</blockquote><figcaption>Sadhguru</figcaption></div></figure>
   </section>
 
   <section class="sec">${sech('Hatha yoga',hm)}<div class="list">${hathaRows.join('')}</div></section>
@@ -1404,7 +1425,7 @@ function renderPlan(){
 
 /* ---------- Progress ---------- */
 function dayLines(l,p){
-  p=p||ME;const C=sadOf(p),st=sukT(l),mx=sukMax(l),j=a=>a.filter(Boolean).join(', '),dn=v=>v?'Done':'—';
+  p=p||ME;const C=sadAt(p,l._k),st=sukT(l),mx=sukMax(l),j=a=>a.filter(Boolean).join(', '),dn=v=>v?'Done':'—';
   const cyc=n=>n+' cycle'+(n>1?'s':'');
   const rows=[];
   if(C.add.bhuta||l.bhuta) rows.push(['Bhuta Shuddhi',l.bhuta?'Done':'—',l.bhuta||null]);
@@ -1656,7 +1677,7 @@ function renderProfile(){
   </div>`:''}
   <div class="sgroup">Practice</div>
   <div class="slist">
-    ${srow('data-a="gosub" data-s="sad"','pen','sage','My sadhana',(presetOf(sadOf(ME))==='intense'?'Intensified preparation':presetOf(sadOf(ME))==='mandatory'?'Isha mandatory':'Mandatory plus your choices')+' · '+(sadOf(ME).mode==='simple'?'simple':'advanced')+' logging')}
+    ${srow('data-a="gosub" data-s="sad"','pen','sage','My sadhana',sadSummary(sadOf(ME)))}
     ${srow('data-a="gosub" data-s="durs"','clock','peach','Practice durations','Used to build your sadhana plan')}
     ${srow('data-a="gosub" data-s="rem"','clock','sand','Reminders','Ardha Siddhasana, screen time and timer bells')}
     ${srow('data-a="tourstart"','moon','dusk','Take the tour','A one-minute look at the main screens')}
@@ -1688,12 +1709,10 @@ function renderProfile(){
 /* ---------- My sadhana: the checklist, edited the way it appears on Today ---------- */
 const LOCK='<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>';
 // the settings being edited: a draft during first-time setup, otherwise the signed-in person's own
-const sadT=()=>V.ob&&V.obSad?V.obSad:sadOf(ME);
-function presetOf(C){const on=INT.filter(x=>C.int[x.id]).length;return on===INT.length?'intense':on===0?'mandatory':'custom'}
+const sadT=()=>V.ob&&V.obSad?V.obSad:V.sadDraft||sadOf(ME);
+const allGuide=C=>INT.every(x=>C.int[x.id]);
 function checklistCount(C){return 7+(C.add.bhuta?1:0)+INT.filter(x=>C.int[x.id]).length+['aum','dOut','screen','silence'].filter(k=>C.add[k]).length+C.custom.length}
-function presetCards(C){const pr=presetOf(C);
-  const card=(v,b,s,n)=>`<button class="preset${pr===v?' on':''}" data-a="sadpreset" data-v="${v}" aria-pressed="${pr===v}"><span class="rd${pr===v?' on':''}">${pr===v?CHECK:''}</span><b>${b}</b><small>${s}</small><em>${n}</em></button>`;
-  return `<div class="presets">${card('mandatory','Isha mandatory','Only what the Samyama guidelines require','7 items')}${card('intense','Intensified preparation','Mandatory plus everything the guidelines call ideal','17 items')}</div>`}
+const sadSummary=C=>checklistCount(C)+' items · '+(C.mode==='simple'?'simple':'advanced')+' logging';
 function modeCards(C){const sm=C.mode==='simple';
   const demo=simple=>`<div class="mdemo"><span class="chk${simple?'':' part'}">${simple?CHECK:''}</span><span><b>Sukha Kriya</b><small>${simple?'60 minutes done':'40m + 25m'}</small></span></div>`;
   return `<div class="presets">
@@ -1705,38 +1724,40 @@ function checklistEditor(C){
   const tog=(a,k,on,label)=>`<button class="tog${on?' on':''}" data-a="${a}" data-k="${k}" role="switch" aria-checked="${!!on}" aria-label="${esc(label)}"></button>`;
   const I=C.int,A=C.add;
   const grp=(t,rows)=>`<div class="cgrp"><div class="cgh">${t}</div><div class="list">${rows.join('')}</div></div>`;
+  const G='Isha guidelines: best';
   const pills=`<div class="cextra"><div class="seg">${Object.entries(SURYA).map(([x,S2])=>`<button class="pill${C.surya.includes(x)?' on':''}" data-a="sadsurya" data-v="${x}">${S2.n} · ${S2.min}+</button>`).join('')}</div>
     ${I.hathaBoth?'':`<div class="seg">${[['alt','Asanas Mon Wed Fri'],['alt2','Surya Mon Wed Fri'],['both','Both daily']].map(([v,t])=>`<button class="pill${C.hatha===v?' on':''}" data-a="sadhatha" data-v="${v}">${t}</button>`).join('')}</div>`}
     <div class="hint">${I.hathaBoth||C.hatha==='both'?'Surya and Yogasanas every day.':C.hatha==='alt2'?'Surya Mon, Wed, Fri · Yogasanas Tue, Thu, Sat · both on Sunday.':'Yogasanas Mon, Wed, Fri · Surya Tue, Thu, Sat · both on Sunday.'}</div></div>`;
-  return [
+  return `<div class="clegend"><span><span class="lock">${LOCK}</span>Isha mandatory, always on</span><span><span class="tog on mini"></span>On your checklist</span></div>
+    ${allGuide(C)?'':`<button class="linkbtn" data-a="sadguide" style="padding:0 6px">Switch on everything the Isha guidelines recommend</button>`}`+[
     grp('Hatha yoga',[
-      row('bhuta','sage','Bhuta Shuddhi','Add-on · first thing each morning',tog('sadadd','bhuta',A.bhuta,'Bhuta Shuddhi')),
-      row('sk','peach','Surya or Yogasanas','Mandatory · alternating days. Your Surya practice:',lock,pills),
-      row('as','rose','Both every day','Intensified · instead of alternating',tog('sadint','hathaBoth',I.hathaBoth,'Both every day')),
-      row('prep','sand','Preparatory asanas','Add-on · placed in My day before Surya and Shambhavi',tog('sadadd','prep',A.prep,'Preparatory asanas'))]),
+      row('bhuta','sage','Bhuta Shuddhi','First thing each morning',tog('sadadd','bhuta',A.bhuta,'Bhuta Shuddhi')),
+      row('sk','peach','Surya or Yogasanas','Isha mandatory · alternating days. Your Surya practice:',lock,pills),
+      row('as','rose','Surya and Yogasanas every day',G+' · instead of alternating',tog('sadint','hathaBoth',I.hathaBoth,'Surya and Yogasanas every day')),
+      row('prep','sand','Preparatory asanas','Placed in My day before Surya and Shambhavi',tog('sadadd','prep',A.prep,'Preparatory asanas'))]),
     grp('Kriyas and Shoonya',[
-      row('sck','night','Shakti Chalana Kriya and Shambhavi','Mandatory · once a day each',lock),
-      row('shambhavi','dusk','Twice a day','Intensified · 2 rounds of each kriya',tog('sadint','kriya2',I.kriya2,'Kriyas twice a day')),
-      row('shoonya','sand','Shoonya','Mandatory · twice a day',lock)]),
+      row('sck','night','Shakti Chalana Kriya and Shambhavi','Isha mandatory · once a day each',lock),
+      row('shambhavi','dusk','Both kriyas twice a day',G+' · 2 rounds of each',tog('sadint','kriya2',I.kriya2,'Both kriyas twice a day')),
+      row('shoonya','sand','Shoonya','Isha mandatory · twice a day',lock)]),
     grp('Balancing and sitting',[
-      row('sukha','peach','Sukha Kriya','Mandatory · 60 minutes a day',lock),
-      row('sukha','peach','In one stretch','Intensified · a full hour in a sandhya kala',tog('sadint','sukhaHour',I.sukhaHour,'Sukha Kriya in one stretch')),
-      row('aum','night','AUM chanting','Add-on',tog('sadadd','aum',A.aum,'AUM chanting')),
-      row('ardha','sage','Ardha Siddhasana','Mandatory · build up to 1.5 hours at a stretch',lock),
-      row('patanga','rose','Patangasana','Intensified · supporting practice',tog('sadint','patanga',I.patanga,'Patangasana')),
-      row('shishu','sand','Shishupalasana','Intensified · supporting practice',tog('sadint','shishu',I.shishu,'Shishupalasana'))]),
+      row('sukha','peach','Sukha Kriya','Isha mandatory · 60 minutes a day, sittings of 20+ minutes recommended',lock),
+      row('sukha','peach','Sukha Kriya in one stretch',G+' · a full hour in a sandhya kala',tog('sadint','sukhaHour',I.sukhaHour,'Sukha Kriya in one stretch')),
+      row('aum','night','AUM chanting','Log minutes',tog('sadadd','aum',A.aum,'AUM chanting')),
+      row('ardha','sage','Ardha Siddhasana','Isha mandatory · build up to 1.5 hours at a stretch',lock),
+      row('patanga','rose','Patangasana','Butterfly · supporting practice in the guidelines',tog('sadint','patanga',I.patanga,'Patangasana')),
+      row('shishu','sand','Shishupalasana','Rock the baby · supporting practice in the guidelines',tog('sadint','shishu',I.shishu,'Shishupalasana'))]),
     grp('Food',[
-      row('sprouts','sage','Diet pledges','Mandatory · no negative-pranic food, stimulants, non-veg or dairy',lock),
-      row('fruits','peach','Natural food 50%+','Mandatory',lock),
-      row('fruits','peach','100% natural food','Intensified · the ideal',tog('sadint','nat100',I.nat100,'100% natural food')),
-      row('sprouts','sage','Sprouted green gram','Intensified',tog('sadint','sprouts',I.sprouts,'Sprouted green gram')),
-      row('peanuts','sand','Soaked groundnuts','Intensified',tog('sadint','peanuts',I.peanuts,'Soaked groundnuts')),
-      row('sanj','peach','Kanji','Intensified · Sanjeevini, ragi or bajra',tog('sadint','sanj',I.sanj,'Kanji')),
-      row('bhuta','sage','Sattvic day','Intensified · nothing fried, stale or packaged',tog('sadint','sattvic',I.sattvic,'Sattvic day')),
-      row('sanj','peach','No outside food','Add-on · home-cooked only',tog('sadadd','dOut',A.dOut,'No outside food'))]),
+      row('sprouts','sage','Diet pledges','Isha mandatory · no negative-pranic food, stimulants, non-veg or dairy',lock),
+      row('fruits','peach','Natural food 50%+','Isha mandatory',lock),
+      row('fruits','peach','100% natural food','Isha guidelines: the ideal',tog('sadint','nat100',I.nat100,'100% natural food')),
+      row('sprouts','sage','Sprouted green gram','Isha guidelines: as much as possible',tog('sadint','sprouts',I.sprouts,'Sprouted green gram')),
+      row('peanuts','sand','Soaked groundnuts','Isha guidelines: as much as possible',tog('sadint','peanuts',I.peanuts,'Soaked groundnuts')),
+      row('sanj','peach','Kanji','Sanjeevini, ragi or bajra porridge',tog('sadint','sanj',I.sanj,'Kanji')),
+      row('bhuta','sage','Sattvic day','Nothing fried, stale, overcooked or packaged',tog('sadint','sattvic',I.sattvic,'Sattvic day')),
+      row('sanj','peach','No outside food','Home-cooked only',tog('sadadd','dOut',A.dOut,'No outside food'))]),
     grp('Lifestyle',[
-      row('screen','dusk','Screen time','Add-on · phone + TV under 2 hours',tog('sadadd','screen',A.screen,'Screen time')),
-      row('silence','night','Silence','Add-on · hours spent in silence',tog('sadadd','silence',A.silence,'Silence'))]),
+      row('screen','dusk','Screen time','Phone + TV under 2 hours',tog('sadadd','screen',A.screen,'Screen time')),
+      row('silence','night','Silence','Hours spent in silence',tog('sadadd','silence',A.silence,'Silence'))]),
     grp('My practices',[
       ...C.custom.map((c,i)=>row('prep','sage',esc(c.name),KINDS[c.kind]+(c.kind==='rounds'?' · '+c.rounds+' a day':c.kind==='count'&&c.target?' · '+c.target+' '+esc(c.unit||''):c.kind==='time'&&c.target?' · '+dur(c.target):'')+(c.plan?' · in My day':''),`<button class="x" data-a="cdel" data-i="${i}" aria-label="Remove ${esc(c.name)}">×</button>`)),
       V.cf?customForm():`<button class="crow addrow" data-a="cadd"><span class="thumb t-sage plus">+</span><span class="pname"><b>Add a practice</b><small>Isha Kriya, Nadi Shuddhi, walking… or your own</small></span>${CHEV}</button>`])
@@ -1756,15 +1777,44 @@ function customForm(){const cf=V.cf;
       <div class="grid2"><button class="btn ghost" data-a="cfcancel">Cancel</button><button class="btn" data-a="cfsave">Add</button></div>
     </div>`}
 function renderSad(){
-  const C=sadOf(ME);
-  return `<p class="note" style="margin:0 4px">This is your Today checklist. Locked items are Isha mandatory. Switch the rest on or off.</p>
-  <div class="sgroup">Start from</div>${presetCards(C)}
-  <div class="sgroup">Logging</div>${modeCards(C)}
+  const C=sadT();
+  return `<p class="note" style="margin:0 4px">This is your Today checklist. Locked items are Isha mandatory. Switch anything else on or off, or add your own.</p>
+  <div class="sgroup">Logging</div>${modeCards(sadOf(ME))}
   <div class="sgroup" style="display:flex;justify-content:space-between"><span>Your checklist</span><span>${checklistCount(C)} items</span></div>
   ${checklistEditor(C)}
-  <div class="hint" style="padding:0 6px">Changes apply to Today straight away and rebuild My day. Nothing you have logged is lost.</div>`;
+  ${sadDirty()?'<div style="height:64px"></div>':''}`;
 }
-function sadChanged(){if(V.ob){render();return}save();rebuildPlans();render()}
+// what changed between the saved checklist and the draft, in plain words
+function sadDiff(A,B){
+  const items=C=>{const m={};INT.forEach(x=>{if(C.int[x.id])m['i'+x.id]=x.n});ADDS.forEach(x=>{if(C.add[x.id])m['a'+x.id]=x.n});C.custom.forEach(c=>m['c'+c.id]=c.name);return m};
+  const a=items(A),b=items(B),out=[];
+  Object.keys(b).forEach(k=>{if(!a[k])out.push(['Adding',b[k]])});
+  Object.keys(a).forEach(k=>{if(!b[k])out.push(['Removing',a[k]])});
+  if(A.surya.join()!==B.surya.join())out.push(['Surya practice',B.surya.map(x=>SURYA[x].n).join(' or ')]);
+  const hp=C=>C.int.hathaBoth?'both':C.hatha;
+  if(hp(A)!==hp(B)&&!B.int.hathaBoth)out.push(['Hatha pattern',{alt:'Yogasanas Mon, Wed, Fri',alt2:'Surya Mon, Wed, Fri',both:'Both daily'}[B.hatha]]);
+  return out}
+const sadDirty=()=>!!(V.sadDraft&&sadDiff(sadOf(ME),V.sadDraft).length);
+function renderSadBar(){
+  let bar=document.getElementById('sadbar'),sh=document.getElementById('sadsheet');
+  const on=V.tab==='profile'&&V.sub==='sad'&&!V.ob;
+  if(!on||!sadDirty()){if(bar)bar.remove()}
+  else{if(!bar){bar=document.createElement('div');bar.id='sadbar';bar.className='sadbar';document.body.appendChild(bar)}
+    const n=sadDiff(sadOf(ME),V.sadDraft).length;
+    bar.innerHTML=`<span>${n} change${n>1?'s':''} not saved</span><button data-a="saddiscard">Discard</button><button class="on" data-a="sadreview">Save</button>`}
+  if(!V.sadConfirm||!on){if(sh)sh.remove();return}
+  if(!sh){sh=document.createElement('div');sh.id='sadsheet';document.body.appendChild(sh)}
+  const d=sadDiff(sadOf(ME),V.sadDraft),leaving=!!V.sadLeave;
+  sh.innerHTML=`<div class="sheet-bg" data-a="sadkeep"></div><div class="sheet" role="dialog" aria-label="Save checklist changes"><div class="grab"></div>
+    <h3>${leaving?'Save your changes?':'Change your checklist?'}</h3>
+    <dl class="dl">${d.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
+    <div class="banner" style="font-size:14px"><span>The new checklist applies from <b>today</b>. Days you have already logged keep the checklist they had, so their scores and your streak do not change.</span></div>
+    <button class="btn" data-a="sadsave">Save from today</button>
+    ${leaving?'<button class="btn ghost" data-a="saddiscard">Discard changes</button>':''}
+    <button class="linkbtn" style="text-align:center" data-a="sadkeep">Keep editing</button></div>`;
+}
+function sadChanged(){render()}
+function leaveTo(g){V.cf=null;if(g.a==='tab'){V.tab=g.t;V.sub=null}else if(g.a==='back'){V.sub=null}else if(g.a==='gosub'){V.tab='profile';V.sub=g.s}else if(g.a==='tourstart'){V.tab='today';V.sub=null;V.day=todayK();V.tour=0}render();scrollTo(0,0)}
 
 function renderDurs(){
   const D=S.people[ME].durs;
@@ -1864,7 +1914,7 @@ function renderMember(id){
 
 /* ---------- Onboarding ---------- */
 function renderOnboarding(){
-  const step=V.ob,dots=n=>V.obFlow==='upgrade'?(n<4?'':`<div class="dotsrow">${[4,5,6,7].map(i=>`<i class="${i===n?'on':''}"></i>`).join('')}</div>`):`<div class="dotsrow">${[0,1,2,3,4,5,6,7].map(i=>`<i class="${i===n?'on':''}"></i>`).join('')}</div>`;
+  const step=V.ob,dots=n=>V.obFlow==='upgrade'?(n<4?'':`<div class="dotsrow">${[4,5,6].map(i=>`<i class="${i===n?'on':''}"></i>`).join('')}</div>`):`<div class="dotsrow">${[0,1,2,3,4,5,6,7].map(i=>`<i class="${i===n?'on':''}"></i>`).join('')}</div>`;
   if(step==='welcome'){const s=skySVG(todayK(),'dawn',false);
     return `<div class="ob"><div class="sky anim-in">${s.svg}</div>
       <div class="eb anim-in">60 days to Samyama</div><h1 class="anim-in d1">Samyama Sadhana</h1>
@@ -1921,7 +1971,7 @@ function renderOnboarding(){
     return `<div class="ob"><div class="eb">Your day</div><h2>When does your day begin and end?</h2>
       <p>The plan puts Bhuta Shuddhi and hatha yoga after you wake, and keeps everything before bedtime. You can add work hours later on My day.</p>
       <div class="grid2"><label class="field">Wake up<input type="time" value="${toHM(V.obWake)}" data-f="obwake"></label><label class="field">Bedtime<input type="time" value="${toHM(V.obSleep)}" data-f="obsleep"></label></div>
-      <div class="grow"></div>${dots(3)}<button class="btn big" data-a="ob" data-v="level">Continue</button><button class="linkbtn" data-a="ob" data-v="batch">‹ Back</button></div>`}
+      <div class="grow"></div>${dots(3)}<button class="btn big" data-a="ob" data-v="checklist">Continue</button><button class="linkbtn" data-a="ob" data-v="batch">‹ Back</button></div>`}
   // sadhana setup: shared by new sign-ups and by existing people seeing v1.0 for the first time
   const up=V.obFlow==='upgrade',back=(v)=>`<button class="linkbtn" data-a="ob" data-v="${v}">‹ Back</button>`;
   if(step==='new'){
@@ -1929,29 +1979,23 @@ function renderOnboarding(){
       <div class="eb">New in your sadhana app</div><h2>Make the checklist your own</h2>
       <div class="facts">
         <div class="fact"><span class="mini t-sand">${svg('shoonya')}</span><span><b>Isha mandatory, always there</b><small>Straight from the Samyama practice and diet guidelines.</small></span></div>
-        <div class="fact"><span class="mini t-peach">${svg('sukha')}</span><span><b>Choose the rest</b><small>Intensified practices, add-ons, and your own practices.</small></span></div>
+        <div class="fact"><span class="mini t-peach">${svg('sukha')}</span><span><b>Add or remove the rest</b><small>What the guidelines recommend, add-ons like Bhuta Shuddhi, and your own practices.</small></span></div>
         <div class="fact"><span class="mini t-sage">${svg('sangha')}</span><span><b>Sangha is now opt-in</b><small>Nobody sees you unless you choose to join.</small></span></div>
       </div>
       <p>Takes about a minute. Your logged days stay as they are.</p>
-      <div class="grow"></div><button class="btn big" data-a="ob" data-v="level">Set up my sadhana</button><button class="linkbtn" style="text-align:center" data-a="obskip">Later. Keep everything as it is</button></div>`}
-  if(step==='level'){const C=V.obSad;
-    return `<div class="ob"><div class="eb">Your sadhana · 1 of 4</div><h2>How do you want to prepare?</h2>
-      <p>Isha mandatory is always on your checklist. Intensified preparation adds everything the guidelines call ideal. You can fine-tune either one next.</p>
-      ${presetCards(C)}
-      <div class="slist"><div class="dur2"><small style="font-size:13px"><b style="display:inline;font-size:13px;font-weight:600">Isha mandatory:</b> Surya or Yogasanas, Shakti Chalana Kriya, Shambhavi, Shoonya twice, Sukha Kriya 60 minutes, Ardha Siddhasana, the diet pledges and 50% natural food.</small></div></div>
-      <div class="grow"></div>${dots(4)}<button class="btn big" data-a="ob" data-v="checklist">Continue</button>${back(up?'new':'routine')}</div>`}
+      <div class="grow"></div><button class="btn big" data-a="ob" data-v="checklist">Set up my sadhana</button><button class="linkbtn" style="text-align:center" data-a="obskip">Later. Keep everything as it is</button></div>`}
   if(step==='checklist'){const C=V.obSad;
-    return `<div class="ob"><div class="eb">Your sadhana · 2 of 4</div><h2>Your checklist</h2>
-      <p>This is what Today will show. Locked items are Isha mandatory. Switch the rest on or off, or add your own.</p>
+    return `<div class="ob"><div class="eb">Your sadhana · 1 of 3</div><h2>Your checklist</h2>
+      <p>This is what Today will show. It starts with what the Isha guidelines recommend. Locked items are mandatory; switch anything else off, or add your own.</p>
       ${checklistEditor(C)}
-      <div class="grow"></div>${dots(5)}<button class="btn big" data-a="ob" data-v="logging">Looks good · ${checklistCount(C)} items</button>${back('level')}</div>`}
+      <div class="grow"></div>${dots(4)}<button class="btn big" data-a="ob" data-v="logging">Looks good · ${checklistCount(C)} items</button>${back(up?'new':'routine')}</div>`}
   if(step==='logging'){const C=V.obSad;
-    return `<div class="ob"><div class="eb">Your sadhana · 3 of 4</div><h2>How much detail do you want to log?</h2>
+    return `<div class="ob"><div class="eb">Your sadhana · 2 of 3</div><h2>How much detail do you want to log?</h2>
       <p>You can switch any time in Profile → My sadhana.</p>
       ${modeCards(C)}
-      <div class="grow"></div>${dots(6)}<button class="btn big" data-a="ob" data-v="sangha">Continue</button>${back('checklist')}</div>`}
+      <div class="grow"></div>${dots(5)}<button class="btn big" data-a="ob" data-v="sangha">Continue</button>${back('checklist')}</div>`}
   if(step==='sangha'){const vis=V.obVis;
-    return `<div class="ob"><div class="eb">Your sadhana · 4 of 4</div><h2>Practise alongside others?</h2>
+    return `<div class="ob"><div class="eb">Your sadhana · 3 of 3</div><h2>Practise alongside others?</h2>
       <div class="banner">${svg('sangha')}<span>The sangha is a list of people preparing for Samyama on this app. Only people who join can see it.</span></div>
       <div class="pick">
         <button class="pickrow${!vis?' on':''}" data-a="obvis" data-v="0" style="grid-template-columns:minmax(0,1fr) auto"><span><b>Stay private</b><small>Nobody sees you. You won’t see the sangha either.</small></span><span class="rd${!vis?' on':''}">${!vis?CHECK:''}</span></button>
@@ -1959,13 +2003,13 @@ function renderOnboarding(){
       </div>
       ${vis?`<div class="slist"><div class="srow" style="cursor:default;grid-template-columns:minmax(0,1fr) auto"><span><b>Also share my progress</b><small>Your streak and a daily summary: how much of the mandatory you met, and your score. Never your reflections or details.</small></span><button class="tog${V.obShare?' on':''}" data-a="obshare" role="switch" aria-checked="${!!V.obShare}" aria-label="Share my progress"></button></div></div>`:''}
       <p class="hint">Change this any time in Profile → Sangha.</p>
-      <div class="grow"></div>${dots(7)}${up?'<button class="btn big" data-a="obfinish">Save and continue</button>':'<button class="btn big" data-a="ob" data-v="ready">Continue</button>'}${back('logging')}</div>`}
+      <div class="grow"></div>${dots(6)}${up?'<button class="btn big" data-a="obfinish">Save and continue</button>':'<button class="btn big" data-a="ob" data-v="ready">Continue</button>'}${back('logging')}</div>`}
 
   return `<div class="ob"><div class="eb">You are set</div><h2>The road to Samyama</h2>
       <div class="facts">
         <div class="fact"><span class="mini t-sage">${svg('bhuta')}</span><span><b>Build-up, from today</b><small>Practise gently and find your rhythm.</small></span></div>
         <div class="fact"><span class="mini t-peach">${svg('sk')}</span><span><b>Day 1 · ${prettyL(DAY1).split(', ')[1]}</b><small>Full sadhana for 60 days.</small></span></div>
-        <div class="fact"><span class="mini t-sand">${svg('shoonya')}</span><span><b>${checklistCount(V.obSad)} items on your checklist</b><small>${presetOf(V.obSad)==='intense'?'Intensified preparation':presetOf(V.obSad)==='mandatory'?'Isha mandatory':'Isha mandatory plus your choices'} · ${V.obSad.mode} logging · ${V.obVis?'in the sangha':'private'}</small></span></div>
+        <div class="fact"><span class="mini t-sand">${svg('shoonya')}</span><span><b>${checklistCount(V.obSad)} items on your checklist</b><small>${V.obSad.mode==='simple'?'Simple':'Advanced'} logging · ${V.obVis?'in the sangha':'private'}</small></span></div>
         <div class="fact"><span class="mini t-night">${svg('aum')}</span><span><b>Samyama · ${BATCHES[V.obBatch].label}</b><small>Sandhya times are set for Bengaluru.</small></span></div>
       </div>
       <div class="alert" id="obdmsg"></div><div class="grow"></div>${dots(7)}<button class="btn big" data-a="obdone">Start my sadhana</button><button class="linkbtn" data-a="ob" data-v="sangha">‹ Back</button></div>`;
@@ -1983,7 +2027,7 @@ function render(){
   else if(V.tab==='plan') h=renderPlan();
   else if(V.tab==='progress') h=renderProgress();
   else if(V.sub==='durs') h=renderDurs();
-  else if(V.sub==='sad') h=renderSad();
+  else if(V.sub==='sad'){if(!V.sadDraft)V.sadDraft=fixSad(sadSnap(sadOf(ME)));h=renderSad()}
   else if(V.sub==='rem') h=renderRem();
   else if(V.sub==='sangha'){h=renderSangha();if(CLOUD&&!V.sanghaFresh&&S.people[ME].visible){V.sanghaFresh=true;pushNow().then(fetchSangha).then(()=>{if(V.sub==='sangha')render()})}}
   else if(V.sub==='edit') h=renderEdit();
@@ -1996,7 +2040,7 @@ function render(){
   else h=renderProfile();
   $('#main').innerHTML=h;
   V.just=null;
-  renderSheet();renderTimer();
+  renderSheet();renderTimer();renderSadBar();
   if(V.toast){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=V.toast;document.body.appendChild(t);V.toast=null;setTimeout(()=>t.remove(),3800)}
   const ds=document.getElementById('dstrip');if(ds){const on=ds.querySelector('.on');if(on)ds.scrollLeft=on.offsetLeft-ds.clientWidth+on.offsetWidth+4}
   renderTour();
@@ -2194,7 +2238,7 @@ async function pushNow(){
   S.synced=S.synced||{};const snap=S.synced[ME]||(S.synced[ME]={p:null,d:{}});const mine=S.logs[ME]||{};
   const ups=[],nts=[],dels=[],js={};
   const force=!snap.sv; // once after v1.0: resend every day so each carries its sangha summary
-  for(const k in mine){const l=norm(mine[k]),j=JSON.stringify(l);if(force||snap.d[k]!==j){const {note,...data}=l;ups.push({user_id:ME,day:k,data,summary:summaryOf(l,ME),updated_at:new Date().toISOString()});nts.push({user_id:ME,day:k,text:note||'',updated_at:new Date().toISOString()});js[k]=j}}
+  for(const k in mine){const l=norm(mine[k]),j=JSON.stringify(l);if(force||snap.d[k]!==j){const {note,...data}=l;ups.push({user_id:ME,day:k,data,summary:summaryOf(atK(l,k),ME),updated_at:new Date().toISOString()});nts.push({user_id:ME,day:k,text:note||'',updated_at:new Date().toISOString()});js[k]=j}}
   for(const k in snap.d) if(!mine[k]) dels.push(k);
   const pf=pfOf(S.people[ME]),pj=JSON.stringify(pf);
   try{
@@ -2461,9 +2505,10 @@ document.addEventListener('click',e=>{
     if(V.obPw1)P.pwHash=await hashPw(id+':'+V.obPw1);V.obPw1=V.obPw2='';
     P.batch=V.obBatch;P.routines.weekday.wake=P.routines.weekend.wake=V.obWake;P.routines.weekday.sleep=P.routines.weekend.sleep=V.obSleep;
     applyObChoices(P);S.people[id]=P;S.order.push(id);S.logs[id]={};save();ME=id;ls.set(STORE+'-me',ME);V.ob=null;V.tab='today';V.tour=0;render();scrollTo(0,0)})();return}
-  if(a==='tab'){V.cf=null;V.tab=b.dataset.t;V.sub=null;V.et=null;V.confirmReset=false;render();scrollTo(0,0);return}
+  if((a==='tab'||a==='back'||a==='gosub'||a==='tourstart')&&sadDirty()){V.sadLeave={a,t:b.dataset.t,s:b.dataset.s};V.sadConfirm=true;renderSadBar();return}
+  if(a==='tab'){V.sadDraft=null;V.cf=null;V.tab=b.dataset.t;V.sub=null;V.et=null;V.confirmReset=false;render();scrollTo(0,0);return}
   if(a==='gosub'){V.tab='profile';V.sub=b.dataset.s;render();scrollTo(0,0);return}
-  if(a==='back'){V.cf=null;V.sub=V.sub==='member'?'sangha':null;V.sel=null;render();scrollTo(0,0);return}
+  if(a==='back'){V.sadDraft=null;V.cf=null;V.sub=V.sub==='member'?'sangha':null;V.sel=null;render();scrollTo(0,0);return}
   if(a==='member'){V.mid=b.dataset.k;V.sub='member';V.sel=null;render();scrollTo(0,0);return}
   if(a==='adminlogin'){(async()=>{const u=(($('#aun')||{}).value||'').trim().toLowerCase(),p1=($('#apw1')||{}).value||'',m=$('#apwmsg');
     if(u!=='admin'||!ADMIN_H.includes(await hashPw(p1))){m.textContent='Username or password is not right.';return}
@@ -2524,8 +2569,14 @@ document.addEventListener('click',e=>{
   if(a==='dreset'){S.people[ME].durs={...DURS};save();rebuildPlans();render();return}
   if(a==='signout'&&CLOUD){cloudSignOut();return}
   if(a==='signout'){ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.ob=S.order.length?'who':'welcome';V.tab='today';V.sub=null;render();scrollTo(0,0);return}
-  if(a==='sadmode'){sadT().mode=b.dataset.v;sadChanged();return}
-  if(a==='sadpreset'){const on=b.dataset.v==='intense';INT.forEach(x=>sadT().int[x.id]=on);sadChanged();return}
+  if(a==='sadmode'){if(V.ob)V.obSad.mode=b.dataset.v;else{sadOf(ME).mode=b.dataset.v;if(V.sadDraft)V.sadDraft.mode=b.dataset.v;save()}render();return}
+  if(a==='sadguide'){INT.forEach(x=>sadT().int[x.id]=true);sadChanged();return}
+  if(a==='sadreview'){V.sadConfirm=true;renderSadBar();return}
+  if(a==='sadkeep'){V.sadConfirm=false;V.sadLeave=null;renderSadBar();return}
+  if(a==='sadsave'){const P=S.people[ME],o=P.sad;sadCommit(P,{...sadSnap(V.sadDraft),mode:o.mode,rem:o.rem,seen:o.seen,tour:o.tour});
+    const go=V.sadLeave;V.sadDraft=null;V.sadConfirm=false;V.sadLeave=null;V.cf=null;save();rebuildPlans();V.toast='Checklist saved. It applies from today.';
+    if(go)leaveTo(go);else render();return}
+  if(a==='saddiscard'){const go=V.sadLeave;V.sadDraft=null;V.sadConfirm=false;V.sadLeave=null;V.cf=null;if(go)leaveTo(go);else render();return}
   if(a==='sadint'){const I=sadT().int;I[b.dataset.k]=!I[b.dataset.k];sadChanged();return}
   if(a==='sadadd'){const A=sadT().add;A[b.dataset.k]=!A[b.dataset.k];sadChanged();return}
   if(a==='sadsurya'){const C=sadT(),x=b.dataset.v;if(C.surya.includes(x)){if(C.surya.length>1)C.surya=C.surya.filter(y=>y!==x)}else C.surya=Object.keys(SURYA).filter(y=>y===x||C.surya.includes(y));sadChanged();return}
