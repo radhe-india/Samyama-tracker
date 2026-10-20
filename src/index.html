@@ -479,6 +479,34 @@ body{transition:background-color .8s ease}
 .simbar span{flex:1;min-width:0}
 .simbar button{border:0;background:color-mix(in srgb,var(--on-night) 16%,transparent);color:var(--on-night);border-radius:10px;height:34px;min-width:34px;padding:0 10px;font-weight:600}
 .pickrow.on{box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow)}
+.scard{background:var(--surface);border-radius:20px;box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.scard > b{font-family:var(--f-display);font-weight:500;font-size:19px}
+.card h2 .tog{flex-shrink:0}
+.tmchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 2px 2px}
+.tmchips::-webkit-scrollbar{display:none}
+.tmchip{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--teal);color:var(--teal);background:var(--surface);border-radius:999px;padding:6px 13px 6px 9px;font-size:14px;font-weight:600}
+.tmchip svg{width:14px;height:14px;fill:currentColor}
+.timer{position:fixed;inset:0;z-index:25;background:var(--bg);overflow-y:auto}
+.tm-in{min-height:100%;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:16px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:calc(16px + env(safe-area-inset-top,0px)) calc(24px + env(safe-area-inset-bottom,0px))}
+.tm-in .grow{flex:1}
+.tm-top{display:grid;grid-template-columns:48px minmax(0,1fr) 40px;gap:12px;align-items:center}
+.tm-top .thumb{width:48px;height:48px;border-radius:14px}
+.tm-top b{font-family:var(--f-display);font-weight:500;font-size:24px;line-height:1.15}
+.tm-top .back{font-size:18px;color:var(--ink)}
+.tm-ring{position:relative;width:min(78vw,300px);aspect-ratio:1;max-width:100%;margin:12px auto 0}
+.tm-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.tm-ring .rt{fill:none;stroke:var(--track);stroke-width:10}
+.tm-ring .rp{fill:none;stroke:var(--teal);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.tm-ring > div{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.tm-ring output{font-family:var(--f-display);font-size:58px;line-height:1;font-weight:500}
+.tm-ring small{color:var(--muted);font-size:14px}
+.tm-run .grid2 .btn{padding:14px}
+.tmbar{position:fixed;z-index:7;left:max(24px,env(safe-area-inset-left,0px));right:max(24px,env(safe-area-inset-right,0px));bottom:calc(94px + env(safe-area-inset-bottom,0px));max-width:400px;margin:0 auto;border:0;background:var(--night);color:var(--on-night);border-radius:16px;padding:11px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px var(--shadow);font-size:15px;font-weight:500}
+.tmbar span:nth-child(2){flex:1;text-align:left}
+.tmbar b{font-size:17px}
+.tmbar .dot{width:9px;height:9px;border-radius:50%;background:var(--night-muted)}
+.tmbar .dot.on{background:#7FBE8B;animation:aglow 2s ease-in-out infinite}
+.toast{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:calc(100px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:14px;font-size:14.5px;font-weight:500;box-shadow:0 8px 24px var(--shadow);animation:fadein .2s ease}
 #tour{position:fixed;inset:0;z-index:30}
 .tour-hole{position:fixed;border-radius:20px;box-shadow:0 0 0 200vmax rgba(20,16,10,.58);pointer-events:none;transition:all .25s ease}
 .tour-card{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));max-width:480px;margin:0 auto;background:var(--surface);border-radius:20px;padding:16px;box-shadow:0 12px 32px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:6px;animation:fadein .25s ease}
@@ -628,7 +656,7 @@ const QUOTES=[
   'If people around you become more important to you than your own wants, your life will be simple and wonderful.'
 ];
 const DEF={bhuta:false,sck:0,shoonya:0,shambhavi:0,sk:0,ss:0,sn:0,asCyc:0,asSec:30,aum:0,ardha:0,patanga:false,shishu:false,
-  dNeg:false,dStim:false,dNonveg:false,dDairy:false,dOut:false,sattvic:false,nat:0,fruit:0,salad:0,sprouts:false,peanuts:false,sanj:false,digital:null,silence:0,note:''};
+  dNeg:false,dStim:false,dNonveg:false,dDairy:false,dOut:false,sattvic:false,nat:0,fruit:0,salad:0,sprouts:false,peanuts:false,sanj:false,digital:null,scrPhone:0,scrTv:0,scrDone:false,silence:0,note:''};
 const DURS={bhuta:15,prep:10,surya:25,asanas:60,sck:40,shambhavi:21,shoonya:15,sukha:60,aum:15};
 const DUR_META={bhuta:['Bhuta Shuddhi','First thing each morning','bhuta','sage'],prep:['Preparatory asanas','Before Surya and before Shambhavi','prep','sand'],
   surya:['Surya practice','Surya Kriya, Surya Shakti or Surya Namaskar','sk','peach'],asanas:['Yogasanas','Full set','as','rose'],sck:['Shakti Chalana Kriya','Each round','sck','night'],
@@ -659,9 +687,11 @@ const ADDS=[
   {id:'silence',n:'Silence',s:'Hours spent in silence'}];
 const KINDS={done:'Done or not',rounds:'Rounds a day',count:'Count',time:'Minutes'};
 const LIB=[['Isha Kriya','time',15],['Nadi Shuddhi','time',10],['Angamardana','time',30],['Upa Yoga','time',20],['Yoga Namaskar','count',3],['Walking','time',30],['Reading Sadhguru','time',20],['Seva','done',0]];
-function defSad(){return {v:1,mode:'advanced',surya:['sk','ss'],hatha:'alt',int:Object.fromEntries(INT.map(x=>[x.id,true])),add:{prep:true},custom:[]}}
+const defRem=()=>({ardha:{on:false,every:120,from:540,to:1260},screen:{on:false,at:1260},tz:'Asia/Kolkata'});
+function defSad(){return {v:1,mode:'advanced',surya:['sk','ss'],hatha:'alt',int:Object.fromEntries(INT.map(x=>[x.id,true])),add:{prep:true},custom:[],rem:defRem()}}
 function fixSad(c){const d=defSad();c=Object.assign(d,c||{});c.int=Object.assign({},d.int,c.int||{});c.add=Object.assign({},c.add||{});
-  if(!Array.isArray(c.surya)||!c.surya.length)c.surya=['sk','ss'];if(!Array.isArray(c.custom))c.custom=[];return c}
+  if(!Array.isArray(c.surya)||!c.surya.length)c.surya=['sk','ss'];if(!Array.isArray(c.custom))c.custom=[];
+  const r=defRem();c.rem={...r,...(c.rem||{})};c.rem.ardha={...r.ardha,...(c.rem.ardha||{})};c.rem.screen={...r.screen,...(c.rem.screen||{})};return c}
 
 /* ---------- illustrations (original, drawn in a 64×64 box) ---------- */
 const HEAD=(x,y)=>`<circle class="sk" cx="${x}" cy="${y}" r="5.4"/><path class="hr" d="M${x-5.5} ${y-1} Q${x-5} ${y-6.6} ${x} ${y-6.6} Q${x+5} ${y-6.6} ${x+5.5} ${y-1} Q${x+2.5} ${y-3.6} ${x} ${y-3.4} Q${x-2.5} ${y-3.6} ${x-5.5} ${y-1}Z"/>`;
@@ -838,6 +868,7 @@ function norm(o){
   if(typeof l.sanj!=='boolean') l.sanj=!!l.sanj;
   if(typeof l.digital!=='number') l.digital=null;
   if(o.nat==null) l.nat=Math.min(100,(+o.fruit||0)+(+o.salad||0));
+  if(o.scrPhone==null&&typeof o.digital==='number'){l.scrPhone=o.digital;l.scrTv=0;l.scrDone=true}
   // days logged before v1.0 never asked about non-veg; nobody using the app then ate it
   if(o.dNonveg==null) l.dNonveg=!!(Object.keys(o).length&&!o.v1);
   l.qd={...(o.qd||{})};l.cust={...(o.cust||{})};
@@ -993,6 +1024,7 @@ function coach(p,k){
   if(I.kriya2&&l.sck===1) pend.push({t:'SCK, 2nd',m:D.sck,key:'sck',ill:'sck',tile:'night'});
   if(I.kriya2&&l.shambhavi===1) pend.push({t:'Shambhavi, 2nd',m:D.shambhavi,key:'shambhavi',ill:'shambhavi',tile:'dusk'});
   if(A.aum&&!(l.aum>0||l.qd.aum)) pend.push({t:'AUM chanting',m:D.aum,key:'aum',ill:'aum',tile:'night'});
+  if(A.screen&&today&&now>=18*60&&!l.scrDone&&!l.qd.screen) pend.push({t:'Screen time',m:0,key:'scard',ill:'screen',tile:'dusk'});
   C.custom.forEach(c=>{if(custVal(c,l)<1)pend.push({t:c.name,m:c.kind==='time'?c.target||10:10,key:'c-'+c.id,ill:'prep',tile:'sage'})});
   const nnPend=pend.filter(x=>x.nn),met=mandMet(l);
   const chips=[];
@@ -1135,7 +1167,7 @@ function renderHeader(){
   top.hidden=false;tabs.hidden=false;
   const c=S.people[ME].color;
   const meAv=`<button class="av c-${c} ring2" data-a="tab" data-t="profile" aria-label="Profile" style="color:var(${colorVar(c)})">${avInner(ME)}</button>`;
-  const subTitles={sad:'My sadhana',backup:'Backup',import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
+  const subTitles={sad:'My sadhana',rem:'Reminders',backup:'Backup',import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
   const titles={plan:'My day',progress:'Progress',profile:'Profile'};
   if(V.tab==='today') top.innerHTML=`<div class="greet"><small>${isAdmin()?'Admin sandbox'+(ADMIN_TODAY?' · pretend today '+short(ADMIN_TODAY):''):'Namaskaram'}</small><b>${esc(nm(ME))}</b></div>${meAv}`;
   else if(V.tab==='profile'&&V.sub) top.innerHTML=`<div class="ptitle"><button class="back" data-a="back" aria-label="Back">${BACK}</button>${esc(subTitles[V.sub])}</div>`;
@@ -1184,7 +1216,7 @@ function renderToday(){
     simple?q('sukha','Sukha Kriya','60 minutes done today','sukha','peach',sukOk(l),1)
     :prow({key:'sukha',name:'Sukha Kriya',must:1,sub:sukSub,subc:sukOk(l)?'met':'',ill:'sukha',tile:'peach',
       state:sukOk(l)?'done':st?'part':'',right:st?dur(st):'',
-      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<button class="btn ghost" data-a="sadd">${l.sits.length?'Add another sitting':'Add a sitting'}</button>`}),
+      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
     simple&&I.sukhaHour?q('sukhaHour','In one stretch','A full hour in a sandhya kala','sukha','peach',!!l.qd.sukhaHour):'',
     A.aum?(simple?q('aum','AUM chanting','Done today','aum','night',l.aum>0||!!l.qd.aum)
       :prow({key:'aum',name:'AUM chanting',sub:l.aum?dur(l.aum):'Log minutes',ill:'aum',tile:'night',state:l.aum?'done':'',right:l.aum?dur(l.aum):'',body:ctl('Minutes','aum',l.aum,1,120)})):''
@@ -1196,7 +1228,7 @@ function renderToday(){
   const sitting=[
     prow({key:'ardha',name:'Ardha Siddhasana',sub:ardhaSub,subc:l.ardha>=90?'met':'',ill:'ardha',tile:'sage',state:l.ardha>=90?'done':l.ardha?'part':'',right:l.ardha?dur(l.ardha):'',
       body:`<div class="bar"><i style="width:${Math.min(100,l.ardha/90*100)}%"></i></div>`+(simple?`<div class="ctrl"><span>Longest stretch today</span></div><div class="seg">${[15,30,45,60,75,90].map(v=>`<button class="pill${l.ardha===v?' on':''}" data-a="set" data-k="ardha" data-v="${v}">${dur(v)}</button>`).join('')}</div>`:ctl('Longest sit','ardha',l.ardha,1,180))
-        +'<div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div>'}),
+        +'<div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div><button class="btn ghost" data-a="tmopen" data-k="ardha">Time a sit</button>'}),
     I.patanga?prow({key:'patanga',name:'Patangasana',sub:'Butterfly',ill:'patanga',tile:'rose',act:'tog',state:l.patanga?'done':''}):'',
     I.shishu?prow({key:'shishu',name:'Shishupalasana',sub:'Rock the baby',ill:'shishu',tile:'sand',act:'tog',state:l.shishu?'done':''}):''
   ].join('');
@@ -1222,7 +1254,7 @@ function renderToday(){
   const lifeRows=[
     A.screen?(simple?q('screen','Screen time','Phone + TV within 2 hours','screen','dusk',!!l.qd.screen)
       :prow({key:'digital',name:'Screen time',sub:l.digital==null?scrState[0]:dur(l.digital)+' · '+scrState[0].toLowerCase(),subc:scrState[1],ill:'screen',tile:'dusk',state:scrState[2],right:l.digital!=null?dur(l.digital):'',
-      body:ctl('Phone + TV','digital',l.digital,1,360)})):'',
+      body:ctl('Phone','scrPhone',l.scrPhone,15,720,true)+ctl('TV and other screens','scrTv',l.scrTv,15,720,true)+`<div class="hint">${screenGuide()}</div>`})):'',
     A.silence?(simple?q('silence','Silence','Spent time in silence','silence','night',!!l.qd.silence)
       :prow({key:'silence',name:'Silence',sub:l.silence?l.silence+' hours in silence':'Hours spent in silence',ill:'silence',tile:'night',state:l.silence?'done':'',right:l.silence?l.silence+'h':'',
       body:ctl('Hours','silence',l.silence,.5,16)})):''].join('');
@@ -1260,7 +1292,7 @@ function renderToday(){
     <div class="rbtns">${shoBtn(0)}${shoBtn(1)}</div>
   </section>
 
-  <section class="sec">${sech('Balancing sadhana')}<div class="list">${balancing}</div></section>
+  <section class="sec">${sech('Balancing sadhana')}<div class="tmchips">${timedList().map(x=>`<button class="tmchip" data-a="tmopen" data-k="${x.k}"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg>${esc(x.n)}</button>`).join('')}</div><div class="list">${balancing}</div></section>
   <section class="sec">${sech('Sitting','Toward 1.5 hours at a stretch')}<div class="list">${sitting}</div></section>
 
   <section class="sec" id="r-food">
@@ -1283,7 +1315,7 @@ function renderToday(){
     </div>
   </section>
 
-  ${lifeRows?`<section class="sec">${sech('Lifestyle','Keep it in check')}<div class="list">${lifeRows}</div></section>`:''}
+  ${lifeRows?`<section class="sec">${sech('Lifestyle','Keep it in check')}${A.screen&&!l.scrDone&&!l.qd.screen&&(k<todayK()||nowMin()>=18*60)?screenCard(l,k):''}<div class="list">${lifeRows}</div></section>`:''}
   ${own?`<section class="sec">${sech('My practices')}<div class="list">${own}</div></section>`:''}
 
   <section class="sec">
@@ -1626,6 +1658,7 @@ function renderProfile(){
   <div class="slist">
     ${srow('data-a="gosub" data-s="sad"','pen','sage','My sadhana',(presetOf(sadOf(ME))==='intense'?'Intensified preparation':presetOf(sadOf(ME))==='mandatory'?'Isha mandatory':'Mandatory plus your choices')+' · '+(sadOf(ME).mode==='simple'?'simple':'advanced')+' logging')}
     ${srow('data-a="gosub" data-s="durs"','clock','peach','Practice durations','Used to build your sadhana plan')}
+    ${srow('data-a="gosub" data-s="rem"','clock','sand','Reminders','Ardha Siddhasana, screen time and timer bells')}
     ${srow('data-a="tourstart"','moon','dusk','Take the tour','A one-minute look at the main screens')}
     ${srow('data-a="gosub" data-s="sangha"','people','sage','Sangha',!P.visible?'You are private · join to practise alongside others':P.share?'Visible · sharing your progress':'Visible · progress private')}
   </div>
@@ -1951,6 +1984,7 @@ function render(){
   else if(V.tab==='progress') h=renderProgress();
   else if(V.sub==='durs') h=renderDurs();
   else if(V.sub==='sad') h=renderSad();
+  else if(V.sub==='rem') h=renderRem();
   else if(V.sub==='sangha'){h=renderSangha();if(CLOUD&&!V.sanghaFresh&&S.people[ME].visible){V.sanghaFresh=true;pushNow().then(fetchSangha).then(()=>{if(V.sub==='sangha')render()})}}
   else if(V.sub==='edit') h=renderEdit();
   else if(V.sub==='journey'&&isAdmin()) h=renderJourneySim();
@@ -1962,10 +1996,150 @@ function render(){
   else h=renderProfile();
   $('#main').innerHTML=h;
   V.just=null;
-  renderSheet();
+  renderSheet();renderTimer();
+  if(V.toast){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=V.toast;document.body.appendChild(t);V.toast=null;setTimeout(()=>t.remove(),3800)}
   const ds=document.getElementById('dstrip');if(ds){const on=ds.querySelector('.on');if(on)ds.scrollLeft=on.offsetLeft-ds.clientWidth+on.offsetWidth+4}
   renderTour();
 }
+
+/* ---------- reminders and notifications ----------
+   With the app closed, reminders arrive as push notifications sent by the shared account every few minutes.
+   While the app is open they also play a soft bell here. */
+const VAPID='__VAPID__';
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent),isAndroid=/Android/.test(navigator.userAgent);
+const standalone=()=>!!(navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
+const PUSH_OK=CLOUD&&VAPID.length>40&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+V.push='unsupported';
+const remOf=p=>sadOf(p).rem;
+function b64u(s){const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
+async function pushStatus(){if(!PUSH_OK)return 'unsupported';if(isIOS&&!standalone())return 'install';if(Notification.permission==='denied')return 'denied';
+  try{const reg=await navigator.serviceWorker.ready,sub=await reg.pushManager.getSubscription();return sub?'on':'off'}catch(e){return 'off'}}
+async function pushEnable(){
+  const perm=await Notification.requestPermission();if(perm!=='granted'){V.push=perm==='denied'?'denied':'off';render();return}
+  try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID)});
+    const {error}=await sb.from('push_subs').upsert({endpoint:sub.endpoint,user_id:ME,sub:sub.toJSON()},{onConflict:'endpoint'});if(error)throw error;
+    V.push='on';V.toast='Notifications are on for this phone.'}catch(e){console.warn('push',e);V.toast='Could not turn on notifications: '+(e.message||e)}
+  render()}
+async function pushDisable(){try{const reg=await navigator.serviceWorker.ready,sub=await reg.pushManager.getSubscription();
+  if(sub){await sb.from('push_subs').delete().eq('endpoint',sub.endpoint);await sub.unsubscribe()}}catch(e){}V.push='off';render()}
+async function pushTimerJob(){if(!CLOUD||!ME||!TM||!TM.target||!TM.run||V.push!=='on')return;
+  const left=TM.target*60000-tmEl();if(left<30000)return;
+  try{await clearPushJobs('timer');await sb.from('push_jobs').insert({user_id:ME,at:new Date(Date.now()+left).toISOString(),tag:'timer',title:tmInfo(TM.k).n+' · '+dur(TM.target),body:'Your sitting is complete. Open the app to log it.'})}catch(e){console.warn('job',e)}}
+async function clearPushJobs(tag){if(!CLOUD||!ME)return;try{await sb.from('push_jobs').delete().eq('user_id',ME).eq('tag',tag)}catch(e){}}
+// in-app reminders, checked each minute while the app is open
+let lastRem='';
+setInterval(()=>{if(!ME||V.ob||!S.people[ME])return;const R=remOf(ME),m=nowMin(),key=todayK()+m;if(key===lastRem)return;
+  let msg='';
+  if(R.ardha.on&&!TM&&m>=R.ardha.from&&m<=R.ardha.to&&(m-R.ardha.from)%R.ardha.every===0)msg='Time to sit in Ardha Siddhasana.';
+  if(R.screen.on&&sadOf(ME).add.screen&&m===R.screen.at&&!get(ME,todayK()).scrDone)msg='Enter today’s screen time on the Today tab.';
+  if(msg){lastRem=key;bell(false);V.toast=msg;if(!document.querySelector('input:focus,textarea:focus'))render()}},20000);
+function renderRem(){
+  const R=remOf(ME),hasScreen=sadOf(ME).add.screen;
+  const st={on:['Notifications are on for this phone','Reminders reach you even with the app closed.'],
+    off:['Notifications are off','Turn them on to get reminders with the app closed.'],
+    denied:['Notifications are blocked','Allow them for this app in your phone’s Settings, then come back.'],
+    install:['Add the app to your Home Screen first','On iPhone, notifications only work from the installed app: Share → Add to Home Screen, then open it from there.'],
+    unsupported:[CLOUD?'Notifications are not available here':'Reminders play in the app','In this test build, reminders ring only while the app is open. Notifications with the app closed come with the live update.']}[V.push]||['',''];
+  const tg=(a,on,label)=>`<button class="tog${on?' on':''}" data-a="${a}" role="switch" aria-checked="${!!on}" aria-label="${label}"></button>`;
+  return `<section class="card"><h2>${st[0]}</h2><div class="hint" style="margin-top:-6px">${st[1]}</div>
+    ${V.push==='off'?'<button class="btn" data-a="pushon">Turn on notifications</button>':V.push==='on'?'<button class="btn ghost" data-a="pushoff">Turn off on this phone</button>':''}</section>
+  <section class="card"><h2>Ardha Siddhasana ${tg('remardha',R.ardha.on,'Ardha Siddhasana reminders')}</h2>
+    <div class="hint" style="margin-top:-6px">A gentle reminder to sit in Ardha Siddhasana through the day, as the guidelines suggest: whenever possible.</div>
+    ${R.ardha.on?`<div class="field">How often<div class="seg" style="margin-top:4px">${[60,90,120,180].map(v=>`<button class="pill${R.ardha.every===v?' on':''}" data-a="remevery" data-v="${v}">Every ${dur(v)}</button>`).join('')}</div></div>
+    <div class="grid2"><label class="field">From<input id="remfrom" type="time" value="${toHM(R.ardha.from)}" data-f="remfrom"></label><label class="field">Until<input id="remto" type="time" value="${toHM(R.ardha.to)}" data-f="remto"></label></div>`:''}</section>
+  <section class="card"><h2>Screen time ${hasScreen?tg('remscreen',R.screen.on,'Screen time reminder'):''}</h2>
+    ${hasScreen?`<div class="hint" style="margin-top:-6px">An evening reminder to copy today’s screen time from your phone into the app.</div>
+    ${R.screen.on?`<label class="field">Remind me at<input id="remat" type="time" value="${toHM(R.screen.at)}" data-f="remat"></label>`:''}`
+    :'<div class="hint" style="margin-top:-6px">Switch on Screen time in My sadhana to use this reminder.</div>'}</section>
+  <section class="card"><h2>Timer bell</h2><div class="hint" style="margin-top:-6px">When you start a timer with a target, the end bell plays in the app${V.push==='on'?' and arrives as a notification if the app is closed':''}.</div></section>`;
+}
+function remChanged(){const R=remOf(ME);try{R.tz=Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){}save();render()}
+
+/* ---------- screen time: copied from the phone's own report each evening ---------- */
+function screenGuide(){
+  const ios='iPhone: Settings → Screen Time → See All App & Website Activity → Day.',and='Android: Settings → Digital Wellbeing → today’s screen time.';
+  return isIOS?ios:isAndroid?and:ios+' '+and}
+function screenCard(l,k){
+  const y=get(ME,addD(k,-1)),hasY=logged(ME,addD(k,-1))&&y.scrDone;
+  return `<div class="scard" id="r-scard"><b>Today’s screen time</b><div class="hint">Phones don’t let apps read this directly, so copy it across. ${screenGuide()}</div>
+    ${ctl('Phone','scrPhone',l.scrPhone,15,720,true)}${ctl('TV and other screens','scrTv',l.scrTv,15,720,true)}
+    <div class="ctrl"><span>Total</span><b class="num" id="scrtot">${dur(l.scrPhone+l.scrTv)}</b></div>
+    <div class="grid2">${hasY?`<button class="btn ghost" data-a="scrsame">Same as yesterday</button>`:'<span></span>'}<button class="btn" data-a="scrsave">Save</button></div></div>`}
+
+/* ---------- sitting timer ----------
+   Counts from timestamps, so it stays right when the phone locks or the app is closed.
+   Finishing logs the minutes to the practice on the day the sitting began. */
+const TSTORE=STORE+'-timer';
+let TM=null;try{TM=JSON.parse(ls.get(TSTORE))}catch(e){TM=null}
+const timedList=()=>{const C=sadOf(ME),o=[{k:'sukha',n:'Sukha Kriya',ill:'sukha',tile:'peach',target:60},{k:'ardha',n:'Ardha Siddhasana',ill:'ardha',tile:'sage',target:90}];
+  if(C.add.aum)o.push({k:'aum',n:'AUM chanting',ill:'aum',tile:'night',target:0});
+  C.custom.filter(c=>c.kind==='time').forEach(c=>o.push({k:'c:'+c.id,n:c.name,ill:'prep',tile:'sage',target:c.target||0}));return o};
+const tmInfo=k=>timedList().find(x=>x.k===k)||{k,n:'Sitting',ill:'sukha',tile:'peach',target:0};
+const tmEl=()=>TM?TM.acc+(TM.run?Date.now()-TM.start:0):0;
+const tmSave=()=>{if(TM)ls.set(TSTORE,JSON.stringify(TM));else ls.del(TSTORE)};
+const mmss=ms=>{const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return (h?h+':'+pad(m):m)+':'+pad(s%60)};
+// bells are synthesised, so nothing has to download
+let AC=null;
+function bell(strong){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+  const t=AC.currentTime,g=AC.createGain();g.connect(AC.destination);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(strong?.5:.3,t+.02);g.gain.exponentialRampToValueAtTime(0.0001,t+(strong?6:3.5));
+  [[528,1],[1056,.4],[1584,.18],[792,.25]].forEach(([f,a])=>{const o=AC.createOscillator(),og=AC.createGain();o.type='sine';o.frequency.value=f;og.gain.value=a;o.connect(og);og.connect(g);o.start(t);o.stop(t+(strong?6:3.5))});
+  if(strong&&navigator.vibrate)navigator.vibrate([300,150,300])}catch(e){}}
+let WL=null;
+async function wakeOn(){try{if(TM&&TM.awake&&TM.run&&navigator.wakeLock&&!WL){WL=await navigator.wakeLock.request('screen');WL.addEventListener('release',()=>{WL=null})}}catch(e){}}
+function wakeOff(){try{if(WL)WL.release()}catch(e){}WL=null}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){wakeOn();if(TM)renderTimer()}});
+function timerOpen(k){
+  if(TM&&TM.run){V.tmView=true;renderTimer();return}
+  const I=tmInfo(k);V.tmSetup={k,target:I.target,bell:0,ardha:k==='sukha',awake:true};V.tmView=true;renderTimer()}
+function timerStart(){const s=V.tmSetup;bell(false);
+  TM={k:s.k,day:V.day,start:Date.now(),acc:0,run:true,target:s.target,bell:s.bell,ardha:s.ardha,awake:s.awake,rang:0,done:false};
+  V.tmSetup=null;tmSave();wakeOn();pushTimerJob();renderTimer()}
+function timerLog(){
+  const m=Math.round(tmEl()/60000),k=TM.k,day=TM.day||todayK();let msg='';
+  if(m>=1){const l=mut(ME,day);
+    if(k==='sukha'){l.sits.push(m);if(TM.ardha)l.ardha=Math.max(l.ardha,m);msg='Logged '+dur(m)+' of Sukha Kriya'+(TM.ardha?' and Ardha Siddhasana':'')}
+    else if(k==='ardha'){l.ardha=Math.max(l.ardha,m);msg='Logged '+dur(m)+' in Ardha Siddhasana'}
+    else if(k==='aum'){l.aum=(l.aum||0)+m;msg='Logged '+dur(m)+' of AUM chanting'}
+    else if(k.startsWith('c:')){const id=k.slice(2);l.cust[id]=(l.cust[id]||0)+m;msg='Logged '+dur(m)+' of '+tmInfo(k).n}
+    save();V.just=k==='ardha'?'ardha':k==='sukha'?'sukha':k}
+  else msg='Under a minute, so nothing was logged.';
+  timerClear();V.toast=msg;render();
+}
+function timerClear(){TM=null;tmSave();wakeOff();V.tmView=false;V.tmSetup=null;clearPushJobs('timer');renderTimer()}
+function renderTimer(){
+  let el=document.getElementById('timer');
+  if(!V.tmView||V.ob){if(el)el.remove();renderTimerBar();return}
+  if(!el){el=document.createElement('div');el.id='timer';el.className='timer';el.setAttribute('role','dialog');el.setAttribute('aria-label','Timer');document.body.appendChild(el)}
+  renderTimerBar();
+  if(V.tmSetup){const s=V.tmSetup,I=tmInfo(s.k);
+    const tp=[0,20,30,45,60,90].map(v=>`<button class="pill${s.target===v?' on':''}" data-a="tmset" data-k="target" data-v="${v}">${v?dur(v):'No target'}</button>`).join('');
+    el.innerHTML=`<div class="tm-in"><div class="tm-top"><span class="thumb t-${I.tile}">${svg(I.ill)}</span><b>${esc(I.n)}</b><button class="back" data-a="tmclose" aria-label="Close">✕</button></div>
+      <div class="field">Target<div class="seg" style="margin-top:4px">${tp}</div></div>
+      <div class="field">Interval bell<div class="seg" style="margin-top:4px">${[0,10,15,20,30].map(v=>`<button class="pill${s.bell===v?' on':''}" data-a="tmset" data-k="bell" data-v="${v}">${v?'Every '+v+'m':'Off'}</button>`).join('')}</div></div>
+      ${s.k==='sukha'?`<div class="ctrl"><span>Sitting in Ardha Siddhasana<br><small class="hint">Also counts toward your longest sit</small></span><button class="tog${s.ardha?' on':''}" data-a="tmtog" data-k="ardha" role="switch" aria-checked="${s.ardha}" aria-label="In Ardha Siddhasana"></button></div>`:''}
+      <div class="ctrl"><span>Keep the screen on</span><button class="tog${s.awake?' on':''}" data-a="tmtog" data-k="awake" role="switch" aria-checked="${s.awake}" aria-label="Keep the screen on"></button></div>
+      <div class="hint">${s.target?'A bell rings at '+dur(s.target)+'. ':''}The timer keeps counting if the phone locks. Allow notifications in Profile → Reminders to hear the end bell with the app closed.</div>
+      <div class="grow"></div><button class="btn big" data-a="tmstart">Start</button></div>`;return}
+  if(!TM){V.tmView=false;el.remove();return}
+  const I=tmInfo(TM.k),e=tmEl(),tg=TM.target*60000,pct=tg?Math.min(1,e/tg):0,R=110,Cc=2*Math.PI*R;
+  el.innerHTML=`<div class="tm-in tm-run"><div class="tm-top"><span class="thumb t-${I.tile}">${svg(I.ill)}</span><b>${esc(I.n)}</b><button class="back" data-a="tmhide" aria-label="Hide timer">⌄</button></div>
+    <div class="tm-ring"><svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="${R}" class="rt"/>${tg?`<circle cx="125" cy="125" r="${R}" class="rp" stroke-dasharray="${Cc}" stroke-dashoffset="${Cc*(1-pct)}"/>`:''}</svg>
+      <div><output id="tmclock" class="num">${mmss(e)}</output><small id="tmsub">${TM.run?(tg?(e>=tg?'Target reached':'of '+dur(TM.target)):'sitting'):'Paused'}</small></div></div>
+    <div class="hint" style="text-align:center">${TM.bell?'Bell every '+TM.bell+' minutes · ':''}${TM.ardha?'In Ardha Siddhasana · ':''}Logs to ${TM.day===todayK()?'today':pretty(TM.day)}</div>
+    <div class="grow"></div>
+    <div class="grid2"><button class="btn ghost" data-a="${TM.run?'tmpause':'tmresume'}">${TM.run?'Pause':'Resume'}</button><button class="btn" data-a="tmfinish">Finish and log</button></div>
+    ${V.tmCancel?`<div class="grid2"><button class="btn ghost" data-a="tmcancel0">Keep going</button><button class="btn warn" data-a="tmcancel1">Discard</button></div>`:'<button class="linkbtn" style="text-align:center;color:var(--muted)" data-a="tmcancel">Discard this sitting</button>'}</div>`;
+}
+function renderTimerBar(){let bar=document.getElementById('tmbar');
+  if(!TM||V.tmView||V.ob){if(bar)bar.remove();return}
+  if(!bar){bar=document.createElement('button');bar.id='tmbar';bar.className='tmbar';bar.dataset.a='tmshow';document.body.appendChild(bar)}
+  bar.innerHTML=`<span class="dot${TM.run?' on':''}"></span><span>${esc(tmInfo(TM.k).n)}</span><b class="num" id="tmbarclock">${mmss(tmEl())}</b>`}
+setInterval(()=>{if(!TM||!TM.run)return;const e=tmEl();
+  if(TM.bell&&Math.floor(e/(TM.bell*60000))>TM.rang){TM.rang=Math.floor(e/(TM.bell*60000));tmSave();if(!(TM.target&&e>=TM.target*60000&&!TM.done))bell(false)}
+  if(TM.target&&!TM.done&&e>=TM.target*60000){TM.done=true;tmSave();bell(true)}
+  const c=document.getElementById('tmclock'),bc=document.getElementById('tmbarclock');if(c)c.textContent=mmss(e);if(bc)bc.textContent=mmss(e);
+  const ring=document.querySelector('.tm-ring .rp');if(ring&&TM.target){const Cc=2*Math.PI*110;ring.style.strokeDashoffset=Cc*(1-Math.min(1,e/(TM.target*60000)))}
+  const sub=document.getElementById('tmsub');if(sub&&TM.target&&e>=TM.target*60000)sub.textContent='Target reached'},1000);
 
 /* ---------- guided tour: a few spotlight cards over the real screen ---------- */
 const TOUR=[
@@ -2068,6 +2242,7 @@ async function afterSignIn(){
   V.ob=null;V.tab=V.tab||'today';V.day=todayK();render();
   try{await pullMine();ADMIN_TODAY=isAdmin()?(S.adminToday||null):null;V.day=todayK();syncState='ok';lastSync=Date.now();maybeUpgrade()}catch(e){syncState=navigator.onLine===false?'offline':'error'}
   render();pushNow();fetchSangha().then(()=>{if(V.tab==='profile')render()});
+  pushStatus().then(st=>{V.push=st;if(V.sub==='rem')render()});
 }
 async function cloudSignIn(){
   const raw=(($('#siem')||{}).value||'').trim(),pw=($('#sipw')||{}).value||'',m=$('#simsg2');
@@ -2245,6 +2420,26 @@ document.addEventListener('click',e=>{
     if(CLOUD){if(!/^\S+@\S+\.\S+$/.test(V.obEmail.trim())){m.textContent='Please enter a valid email.';return}if(V.obPw1.length<6){m.textContent='Use at least 6 characters for the password.';return}if(V.obPw1!==V.obPw2){m.textContent='The two passwords do not match.';return}}
     else if(V.obPw1||V.obPw2){if(V.obPw1.length<4){m.textContent='Use at least 4 characters for the password.';return}if(V.obPw1!==V.obPw2){m.textContent='The two passwords do not match.';return}}}V.ob=b.dataset.v;render();scrollTo(0,0);return}
   if(a==='obcolor'){V.obColor=b.dataset.v;render();return}
+  if(a==='pushon'){pushEnable();return}
+  if(a==='pushoff'){pushDisable();return}
+  if(a==='remardha'){const R=remOf(ME);R.ardha.on=!R.ardha.on;remChanged();return}
+  if(a==='remscreen'){const R=remOf(ME);R.screen.on=!R.screen.on;remChanged();return}
+  if(a==='remevery'){remOf(ME).ardha.every=+b.dataset.v;remChanged();return}
+  if(a==='scrsave'){const l=mut(ME,V.day);l.digital=l.scrPhone+l.scrTv;l.scrDone=true;save();V.toast='Screen time saved: '+dur(l.digital)+'.';render();return}
+  if(a==='scrsame'){const y=get(ME,addD(V.day,-1)),l=mut(ME,V.day);l.scrPhone=y.scrPhone;l.scrTv=y.scrTv;l.digital=l.scrPhone+l.scrTv;l.scrDone=true;save();V.toast='Screen time saved: '+dur(l.digital)+'.';render();return}
+  if(a==='tmopen'){timerOpen(b.dataset.k);return}
+  if(a==='tmset'){V.tmSetup[b.dataset.k]=+b.dataset.v;renderTimer();return}
+  if(a==='tmtog'){V.tmSetup[b.dataset.k]=!V.tmSetup[b.dataset.k];renderTimer();return}
+  if(a==='tmstart'){timerStart();return}
+  if(a==='tmclose'){V.tmSetup=null;V.tmView=false;renderTimer();return}
+  if(a==='tmhide'){V.tmView=false;renderTimer();return}
+  if(a==='tmshow'){V.tmView=true;renderTimer();return}
+  if(a==='tmpause'){TM.acc=tmEl();TM.run=false;tmSave();wakeOff();clearPushJobs('timer');renderTimer();return}
+  if(a==='tmresume'){TM.start=Date.now();TM.run=true;tmSave();wakeOn();pushTimerJob();renderTimer();return}
+  if(a==='tmfinish'){V.tmCancel=false;timerLog();return}
+  if(a==='tmcancel'){V.tmCancel=true;renderTimer();return}
+  if(a==='tmcancel0'){V.tmCancel=false;renderTimer();return}
+  if(a==='tmcancel1'){V.tmCancel=false;timerClear();V.toast='Sitting discarded.';render();return}
   if(a==='tournext'){V.tour++;if(V.tour>=TOUR.length){V.tour=null;S.people[ME].sad.tour=1;save();scrollTo(0,0)}renderTour();return}
   if(a==='tourend'){V.tour=null;S.people[ME].sad.tour=1;save();renderTour();return}
   if(a==='tourstart'){V.tab='today';V.sub=null;V.day=todayK();V.tour=0;render();scrollTo(0,0);renderTour();return}
@@ -2353,7 +2548,7 @@ document.addEventListener('click',e=>{
     if(a==='qtog'){l.qd[k]=!l.qd[k];if(l.qd[k])V.just=k;else delete l.qd[k]}
     if(a==='ctog'){l.cust[k]=!l.cust[k];if(l.cust[k])V.just='c-'+k}
     if(a==='ccyc'){const m=+b.dataset.max;l.cust[k]=((l.cust[k]||0)+1)%(m+1);if(l.cust[k])V.just='c-'+k}
-    if(a==='inc'){const v=Math.round(((getV(l,k)??0)+ +b.dataset.d)*10)/10;setV(l,k,Math.max(0,Math.min(+b.dataset.max,v)))}
+    if(a==='inc'){const v=Math.round(((getV(l,k)??0)+ +b.dataset.d)*10)/10;setV(l,k,Math.max(0,Math.min(+b.dataset.max,v)));if(k==='scrPhone'||k==='scrTv'){l.digital=l.scrPhone+l.scrTv;if(document.getElementById('r-scard')&&!l.scrDone){save();const o=document.getElementById(oid(k)),t=document.getElementById('scrtot');if(o)o.textContent=dur(l[k]);if(t)t.textContent=dur(l.digital);return}l.scrDone=true}}
     if(a==='cyc'){const m=+b.dataset.max;l[k]=(l[k]+1)%(m+1);if(l[k])V.just=k}
     if(a==='sho'){const i=+b.dataset.i;l.shoonya=l.shoonya>i?i:i+1;if(l.shoonya)V.just='shoonya'}
     if(a==='tog') l[k]=!l[k];
@@ -2401,6 +2596,9 @@ document.addEventListener('change',e=>{
   if(f==='dsl'||f==='dh'||f==='dm'){rebuildPlans();return}
   if(f==='photo'){const file=t.files&&t.files[0];if(!file)return;const msg=$('#photomsg');if(msg)msg.textContent='Preparing photo…';loadPhoto(file,url=>{if(!url){if(msg)msg.textContent='That file could not be read as an image. Try a JPG or PNG.';return}S.people[ME].photo=url;save();render()});return}
   if(!t.value&&t.type==='time')return;
+  if(f==='remfrom'){remOf(ME).ardha.from=fromHM(t.value);remChanged();return}
+  if(f==='remto'){remOf(ME).ardha.to=fromHM(t.value);remChanged();return}
+  if(f==='remat'){remOf(ME).screen.at=fromHM(t.value);remChanged();return}
   if(f==='obwake'){V.obWake=fromHM(t.value);return}
   if(f==='obsleep'){V.obSleep=fromHM(t.value)||1439;return}
   const P=S.people[ME],r=P.routines[V.kind],i=+t.dataset.i;

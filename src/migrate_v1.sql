@@ -42,3 +42,44 @@ language sql stable security definer set search_path = public as $$
 $$;
 revoke all on function public.sangha_feed() from public, anon;
 grant execute on function public.sangha_feed() to authenticated;
+
+-- 3. Reminders and timer bells as push notifications ----------------------
+-- Each phone that allows notifications is stored here. Only its owner can see or change it.
+create table if not exists public.push_subs (
+  endpoint   text primary key,
+  user_id    uuid not null references auth.users on delete cascade,
+  sub        jsonb not null,
+  created_at timestamptz not null default now()
+);
+alter table public.push_subs enable row level security;
+drop policy if exists "push subs own" on public.push_subs;
+create policy "push subs own" on public.push_subs for all to authenticated
+  using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- One-off notifications such as the end bell of a timer.
+create table if not exists public.push_jobs (
+  id      bigserial primary key,
+  user_id uuid not null references auth.users on delete cascade,
+  at      timestamptz not null,
+  tag     text not null default '',
+  title   text not null,
+  body    text not null default ''
+);
+create index if not exists push_jobs_at on public.push_jobs (at);
+alter table public.push_jobs enable row level security;
+drop policy if exists "push jobs own" on public.push_jobs;
+create policy "push jobs own" on public.push_jobs for all to authenticated
+  using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+-- 4. Run the push-tick function every 5 minutes ---------------------------
+-- Before this part: deploy supabase/functions/push-tick and set its VAPID secrets (see the release notes).
+-- Then put your project URL and anon key below and run this part once.
+create extension if not exists pg_cron;
+create extension if not exists pg_net;
+select cron.unschedule('push-tick') where exists (select 1 from cron.job where jobname = 'push-tick');
+select cron.schedule('push-tick', '*/5 * * * *', $$
+  select net.http_post(
+    url     := 'https://YOUR-PROJECT.supabase.co/functions/v1/push-tick',
+    headers := jsonb_build_object('Content-Type','application/json','Authorization','Bearer YOUR-ANON-KEY'),
+    body    := '{}'::jsonb)
+$$);
