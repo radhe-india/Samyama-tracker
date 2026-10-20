@@ -12,6 +12,7 @@ create table if not exists public.profiles (
   is_admin   boolean not null default false,
   durs       jsonb,
   routines   jsonb,
+  sadhana    jsonb,
   updated_at timestamptz not null default now()
 );
 
@@ -46,7 +47,7 @@ create policy "profiles update own" on public.profiles for update to authenticat
   using (id = auth.uid()) with check (id = auth.uid());
 -- Nobody can make themselves admin from the app.
 revoke insert, update, delete on public.profiles from authenticated, anon;
-grant update (name, color, photo, batch, share, durs, routines, updated_at) on public.profiles to authenticated;
+grant update (name, color, photo, batch, share, durs, routines, sadhana, updated_at) on public.profiles to authenticated;
 
 -- Logs: you manage your own; you can read logs of people who share.
 drop policy if exists "logs read" on public.logs;
