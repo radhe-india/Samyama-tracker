@@ -90,7 +90,7 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 .quote{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:0 4px}
 .quote .qm{width:34px;height:34px;border-radius:50%;background:var(--surface);box-shadow:0 2px 8px var(--shadow);display:grid;place-items:center}
 .quote .qm svg{width:16px;height:16px;fill:var(--teal)}
-.quote blockquote{margin:0;font-family:var(--f-display);font-size:18px;line-height:1.45;text-wrap:balance}
+.quote blockquote{margin:0;font-family:var(--f-display);font-size:22px;line-height:1.4;text-wrap:balance}
 .quote figcaption{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--terra);font-weight:600}
 .scallop{display:block;width:100%;height:14px}
 .scallop rect{fill:url(#scal)}
@@ -1898,11 +1898,18 @@ function loadPhoto(file,done){
 /* ---------- Sangha: opt-in. Others see only a daily summary, and only from people who chose to share ---------- */
 // one day's summary, the only thing the sangha ever sees: mandatory met and the score
 const summaryOf=(l,p)=>({m:mandMet(l),s:score(l,p)});
-function sumOf(id,k){if(CLOUD&&id!==ME)return ((S.sum||{})[id]||{})[k]||null;return logged(id,k)?summaryOf(get(id,k),id):null}
+// preview builds can show a few clearly marked sample members so the sangha can be tried out
+function ensureDemo(){if(CLOUD||!window.DEMO_SANGHA||S.people.demo1)return;S.sum=S.sum||{};
+  [['demo1','Anand · sample','terra',true,.9],['demo2','Meera · sample','sage',true,.7],['demo3','Kiran · sample','dusk',false,0]].forEach(([id,n,c,sh,q],i)=>{
+    const P=defPerson(n,c);P.visible=true;P.share=sh;P.demo=true;S.people[id]=P;S.logs[id]={};if(!S.order.includes(id))S.order.push(id);
+    const d={};let x=Math.sin(i+1)*1e4;const r=()=>{x=Math.sin(x)*1e4;return x-Math.floor(x)};
+    for(let j=0;j<30;j++){const k=addD(todayK(),-j);if(j===0&&i===1)continue;const g=Math.min(1,q+(r()-.5)*.3+(j<6?.08:0));const m=g>.82?10:Math.round(g*10);d[k]={m,s:Math.round(g*100)}}
+    S.sum[id]=d});saveLocal()}
+function sumOf(id,k){if((CLOUD||(S.people[id]&&S.people[id].demo))&&id!==ME)return ((S.sum||{})[id]||{})[k]||null;return logged(id,k)?summaryOf(get(id,k),id):null}
 function sumStreak(id){let k=todayK(),n=0;const ok=x=>x&&x.m===MAND_N;if(!ok(sumOf(id,k)))k=addD(k,-1);while(ok(sumOf(id,k))){n++;k=addD(k,-1)}return n}
 const sanghaOthers=()=>S.order.filter(id=>id!==ME&&S.people[id]&&S.people[id].visible&&id!=='admin');
 function renderSangha(){
-  const P=S.people[ME];
+  const P=S.people[ME];ensureDemo();
   if(!P.visible) return `
   <div class="banner">${svg('sangha')}<span>The sangha is a list of people preparing for Samyama on this app. Only people who join can see it, and you choose what they see.</span></div>
   <section class="card"><h2>What others would see</h2>
@@ -1924,7 +1931,8 @@ function renderSangha(){
     ${tg('share',P.share,'Share my progress',P.share?'Your streak and daily summary are shared. Never details or reflections.':'Only your name shows. Your progress stays private.')}
   </div>
   <div class="sgroup">Your sangha · ${others.length}</div>
-  <div class="slist">${others.length?others.map(row).join(''):'<div class="empty">No one else has joined yet.</div>'}</div>`;
+  <div class="slist">${others.length?others.map(row).join(''):'<div class="empty">No one else has joined yet.</div>'}</div>
+  ${others.some(id=>S.people[id].demo)?'<p class="hint" style="margin:0 6px">Sample members are shown in this test build only, so you can see how the sangha looks.</p>':''}`;
 }
 function renderMember(id){
   const Q=S.people[id],tk=todayK(),keys=Array.from({length:30},(_,i)=>addD(tk,i-29)),D=keys.map(k=>sumOf(id,k)),L=D.filter(Boolean);
@@ -1945,7 +1953,7 @@ function renderOnboarding(){
     return `<div class="ob"><div class="sky anim-in">${s.svg}</div>
       <div class="eb anim-in">60 days to Samyama</div><h1 class="anim-in d1">Samyama Sadhana</h1>
       <p class="anim-in d2">A quiet companion for your preparation. Log each practice, follow a plan built around your day, and watch your journey to Samyama unfold.</p>
-      <div class="grow"></div>${dots(0)}<button class="btn big" data-a="ob" data-v="name">${CLOUD?'Create my account':'Begin'}</button>${CLOUD?'<button class="btn big ghost" data-a="ob" data-v="signin">I already have an account</button>':''}${!CLOUD&&S.order.length?'<button class="linkbtn" style="text-align:center" data-a="ob" data-v="who">Already set up on this phone? Sign in</button>':''}<button class="linkbtn" style="text-align:center;color:var(--muted);font-weight:500;font-size:13px" data-a="ob" data-v="${CLOUD?'signin':'admin'}">Admin sign-in</button></div>`}
+      <div class="grow"></div>${dots(0)}<button class="btn big" data-a="ob" data-v="name">${CLOUD?'Create my account':'Begin'}</button>${CLOUD?'<button class="btn big ghost" data-a="ob" data-v="signin">I already have an account</button>':''}${!CLOUD&&S.order.some(id=>!S.people[id].demo)?'<button class="linkbtn" style="text-align:center" data-a="ob" data-v="who">Already set up on this phone? Sign in</button>':''}<button class="linkbtn" style="text-align:center;color:var(--muted);font-weight:500;font-size:13px" data-a="ob" data-v="${CLOUD?'signin':'admin'}">Admin sign-in</button></div>`}
   if(step==='signin'){
     return `<div class="ob"><div class="eb">Sign in</div><h2>Welcome back</h2>
       <label class="field">Email<input id="siem" type="email" inputmode="email" autocomplete="username" autocapitalize="none" placeholder="you@example.com"></label>
@@ -1975,7 +1983,7 @@ function renderOnboarding(){
       <div class="grow"></div><button class="btn big" data-a="userlogin">Sign in</button><button class="linkbtn" data-a="ob" data-v="who">‹ Back</button></div>`}
   if(step==='who'){
     return `<div class="ob"><div class="eb">Sign in</div><h2>Welcome back</h2><p>Choose your profile to continue.</p>
-      <div class="pick">${S.order.map(id=>`<button class="pickrow" data-a="obpick" data-k="${id}">${avatar(id)}<span><b>${esc(nm(id))}</b><small>${S.people[id].pwHash?'Password protected':Object.keys(S.logs[id]||{}).length?'Continue your sadhana':'Continue'}</small></span>${CHEV}</button>`).join('')}
+      <div class="pick">${S.order.filter(id=>!S.people[id].demo).map(id=>`<button class="pickrow" data-a="obpick" data-k="${id}">${avatar(id)}<span><b>${esc(nm(id))}</b><small>${S.people[id].pwHash?'Password protected':Object.keys(S.logs[id]||{}).length?'Continue your sadhana':'Continue'}</small></span>${CHEV}</button>`).join('')}
         <button class="pickrow" data-a="ob" data-v="name"><span class="av c-dusk">+</span><span><b>I’m new here</b><small>Create your profile</small></span>${CHEV}</button></div>
       <p class="hint">When the shared account is connected, everyone signs in with their own email.</p>
       <div class="grow"></div><button class="linkbtn" data-a="ob" data-v="welcome">‹ Back</button></div>`}
@@ -2588,7 +2596,7 @@ document.addEventListener('click',e=>{
     ['weekday','weekend'].forEach(kd=>{if(R[kd].plan)buildPlan(ME,kd)});render();return}
   if(a==='dreset'){S.people[ME].durs={...DURS};save();rebuildPlans();render();return}
   if(a==='signout'&&CLOUD){cloudSignOut();return}
-  if(a==='signout'){ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.ob=S.order.length?'who':'welcome';V.tab='today';V.sub=null;render();scrollTo(0,0);return}
+  if(a==='signout'){ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.ob=S.order.some(id=>!S.people[id].demo)?'who':'welcome';V.tab='today';V.sub=null;render();scrollTo(0,0);return}
   if(a==='sadmode'){if(V.ob)V.obSad.mode=b.dataset.v;else{sadOf(ME).mode=b.dataset.v;if(V.sadDraft)V.sadDraft.mode=b.dataset.v;save()}render();return}
   if(a==='introok'){sadOf(ME).intro=1;if(V.tour===0)V.tour=1;save();V.toast='You can change it any time in Profile → My sadhana.';render();return}
   if(a==='introedit'){sadOf(ME).intro=1;save();V.tour=null;V.tab='profile';V.sub='sad';render();scrollTo(0,0);return}
