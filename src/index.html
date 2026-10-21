@@ -931,6 +931,15 @@ const asOk=l=>l.asCyc>0||!!l.qd.as;
 const hathaOk=l=>suryaOk(l)||asOk(l);
 const sukOk=l=>sukT(l)>=60||!!l.qd.sukha;
 const natOk=l=>l.nat>=50||!!l.qd.nat;
+function qDone(l,k){if(k.startsWith('c:')){const c=custById(ME,k.slice(2));return c?custVal(c,l)>=1:!!l.qd[k]}
+  return !!({surya:suryaOk(l),as:asOk(l),sukha:sukOk(l),sukhaHour:sukMax(l)>=60||l.qd.sukhaHour,nat:natOk(l),nat100:l.qd.nat100||l.nat>=100,
+    aum:l.aum>0||l.qd.aum,screen:l.qd.screen||(l.digital!=null&&l.digital<=SCREEN_MAX),silence:l.silence>0||l.qd.silence}[k]??l.qd[k])}
+function qClear(l,k){delete l.qd[k];
+  if(k==='surya'){l.sk=l.ss=l.sn=0}else if(k==='as'){l.asCyc=0}
+  else if(k==='sukha'){l.sits=[];delete l.qd.sukhaHour}else if(k==='sukhaHour'){l.sits=l.sits.filter(v=>v<60)}
+  else if(k==='nat'){l.nat=0;delete l.qd.nat100}else if(k==='nat100'){if(l.nat>=100)l.nat=50}
+  else if(k==='aum'){l.aum=0}else if(k==='screen'){l.digital=null;l.scrPhone=l.scrTv=0;l.scrDone=false}else if(k==='silence'){l.silence=0}
+  else if(k.startsWith('c:')){l.cust[k.slice(2)]=0}}
 const dietOk=l=>l.dNeg&&l.dStim&&l.dNonveg&&l.dDairy;
 // Isha mandatory, one entry per check: [id, name, met, partial credit]
 function mandList(l){
@@ -1222,15 +1231,15 @@ function renderToday(){
   const scrState=l.digital==null?['Phone + TV · keep under 2 hours','',''] :l.digital<=SCREEN_IDEAL?['Within 1.5 hours','met','done']:l.digital<=SCREEN_MAX?['Within the 2-hour limit','met','done']:['Over the 2-hour limit','over','part'];
   const rounds=n=>['Not yet today','1 of 2 rounds','Both rounds done'][n];
   // a one-tap row for Simple mode: ticks that the target was met
-  const q=(id,name,sub,ill,tile,ok,must)=>prow({key:id,name,sub,ill,tile,act:'qtog',must,state:ok?'done':'',subc:ok?'met':''});
+  const q=(id,name,sub,ill,tile,ok,must)=>{ok=qDone(l,id);return prow({key:id,name,sub,ill,tile,act:'qtog',must,state:ok?'done':'',subc:ok?'met':''})};
 
   // hatha
   const hm=f==='both'?'Surya and Yogasanas today':'Today: '+(f==='as'?'Yogasanas':suryaName(p))+' · either meets the mandatory';
   const hathaRows=[];
   if(A.bhuta) hathaRows.push(prow({key:'bhuta',name:'Bhuta Shuddhi',sub:l.bhuta?'Done':'First, before everything',subc:l.bhuta?'met':'',ill:'bhuta',tile:'sage',act:'tog',state:l.bhuta?'done':''}));
   if(simple){
-    hathaRows.push(prow({key:'surya',k:'surya',name:suryaName(p),sub:'Guideline: '+C.surya.map(x=>SURYA[x].min+'+ '+SURYA[x].n).join(' or '),ill:'sk',tile:'peach',act:'qtog',state:suryaOk(l)?'done':'',subc:suryaOk(l)?'met':''}));
-    hathaRows.push(prow({key:'as',k:'as',name:'Yogasanas',sub:'Full set',ill:'as',tile:'rose',act:'qtog',state:asOk(l)?'done':'',subc:asOk(l)?'met':''}));
+    hathaRows.push(q('surya',suryaName(p),'Guideline: '+C.surya.map(x=>SURYA[x].min+'+ '+SURYA[x].n).join(' or '),'sk','peach'));
+    hathaRows.push(q('as','Yogasanas','Full set','as','rose'));
   } else {
     C.surya.forEach(x=>{const S2=SURYA[x],v=l[x],ok=v>=S2.min;
       hathaRows.push(prow({key:x,name:S2.n,sub:v?v+' cycle'+(v>1?'s':'')+(ok?' · guideline met':' · '+S2.min+'+ meets the guideline'):S2.min+'+ cycles meets the guideline',subc:ok?'met':'',ill:S2.ill,tile:'peach',state:ok?'done':v?'part':'',right:v?v+'×':'',
@@ -1251,7 +1260,7 @@ function renderToday(){
     simple?q('sukha','Sukha Kriya','60 minutes done today','sukha','peach',sukOk(l),1)
     :prow({key:'sukha',name:'Sukha Kriya',must:1,sub:sukSub,subc:sukOk(l)?'met':'',ill:'sukha',tile:'peach',
       state:sukOk(l)?'done':st?'part':'',right:st?dur(st):'',
-      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
+      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}${l.qd.sukha?'<div class="ctrl"><span>Marked done with a quick tick</span><button class="linkbtn" data-a="qclear" data-k="sukha">Untick</button></div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
     simple&&I.sukhaHour?q('sukhaHour','In one stretch','A full hour in a sandhya kala','sukha','peach',!!l.qd.sukhaHour):'',
     A.aum?(simple?q('aum','AUM chanting','Done today','aum','night',l.aum>0||!!l.qd.aum)
       :prow({key:'aum',name:'AUM chanting',sub:l.aum?dur(l.aum):'Log minutes',ill:'aum',tile:'night',state:l.aum?'done':'',right:l.aum?dur(l.aum):'',body:ctl('Minutes','aum',l.aum,1,120)})):''
@@ -1270,7 +1279,7 @@ function renderToday(){
 
   const pledge=(k,b,s,must)=>`<button class="pledge${l[k]?' on':''}" data-a="tog" data-k="${k}" aria-pressed="${l[k]}"><span class="chk">${l[k]?CHECK:''}</span><span><b>${b}${must?'<span class="tag">mandatory</span>':''}</b><small>${s}</small></span></button>`;
   const xt=(k,n,ill,tile)=>`<button class="xt t-${tile}${l[k]?' on':''}" data-a="tog" data-k="${k}" aria-pressed="${l[k]}">${svg(ill)}${n}<span class="rd${l[k]?' on':''}">${l[k]?CHECK:''}</span></button>`;
-  const qp=(id,b,s,ok,must)=>`<button class="pledge${ok?' on':''}" data-a="qtog" data-k="${id}" aria-pressed="${ok}"><span class="chk">${ok?CHECK:''}</span><span><b>${b}${must?'<span class="tag">mandatory</span>':''}</b><small>${s}</small></span></button>`;
+  const qp=(id,b,s,ok,must)=>{ok=qDone(l,id);return `<button class="pledge${ok?' on':''}" data-a="qtog" data-k="${id}" aria-pressed="${ok}"><span class="chk">${ok?CHECK:''}</span><span><b>${b}${must?'<span class="tag">mandatory</span>':''}</b><small>${s}</small></span></button>`};
   const shoBtn=i=>`<button class="rbtn${l.shoonya>i?' on':''}" data-a="sho" data-i="${i}">${l.shoonya>i?CHECK:''}${i?'2nd round':'1st round'}</button>`;
   const C2=2*Math.PI*44,na=Math.min(nat,100)/100*C2;
   const natBlock=simple?`<div class="pledges">${qp('nat','50%+ natural food','Fruits, salads, sprouts, nuts',natOk(l),1)}${I.nat100?qp('nat100','100% natural food','The ideal in the guidelines',!!l.qd.nat100):''}</div>`
@@ -2624,9 +2633,10 @@ document.addEventListener('click',e=>{
     sadT().custom.push({id:'c'+Date.now().toString(36),name:n,kind:cf.kind,target:cf.kind==='count'||cf.kind==='time'?+cf.target:0,rounds:cf.kind==='rounds'?cf.rounds:0,unit:cf.kind==='count'?(cf.unit||'').trim():'',plan:cf.plan?Math.max(5,+cf.d||15):0});
     V.cf=null;sadChanged();return}
   if(a==='cdel'){sadT().custom.splice(+b.dataset.i,1);sadChanged();return}
-  if(['inc','cyc','tog','set','sadd','sdel','sho','qtog','ctog','ccyc'].includes(a)){
+  if(['inc','cyc','tog','set','sadd','sdel','sho','qtog','qclear','ctog','ccyc'].includes(a)){
     const l=mut(ME,V.day),k=b.dataset.k;
-    if(a==='qtog'){l.qd[k]=!l.qd[k];if(l.qd[k])V.just=k;else delete l.qd[k]}
+    if(a==='qtog'){if(qDone(l,k))qClear(l,k);else{l.qd[k]=true;V.just=k}}
+    if(a==='qclear')qClear(l,k);
     if(a==='ctog'){l.cust[k]=!l.cust[k];if(l.cust[k])V.just='c-'+k}
     if(a==='ccyc'){const m=+b.dataset.max;l.cust[k]=((l.cust[k]||0)+1)%(m+1);if(l.cust[k])V.just='c-'+k}
     if(a==='inc'){const v=Math.round(((getV(l,k)??0)+ +b.dataset.d)*10)/10;setV(l,k,Math.max(0,Math.min(+b.dataset.max,v)));if(k==='scrPhone'||k==='scrTv'){l.digital=l.scrPhone+l.scrTv;if(document.getElementById('r-scard')&&!l.scrDone){save();const o=document.getElementById(oid(k)),t=document.getElementById('scrtot');if(o)o.textContent=dur(l[k]);if(t)t.textContent=dur(l.digital);return}l.scrDone=true}}
