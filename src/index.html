@@ -2125,7 +2125,7 @@ function renderRem(){
     off:['Notifications are off','Turn them on to get reminders with the app closed.'],
     denied:['Notifications are blocked','Allow them for this app in your phone’s Settings, then come back.'],
     install:['Add the app to your Home Screen first','On iPhone, notifications only work from the installed app: Share → Add to Home Screen, then open it from there.'],
-    unsupported:[CLOUD?'Notifications are not available here':'Reminders play in the app','In this test build, reminders ring only while the app is open. Notifications with the app closed come with the live update.']}[V.push]||['',''];
+    unsupported:['Reminders play in the app','Reminders and bells ring while the app is open. Notifications with the app closed are coming in a later update.']}[V.push]||['',''];
   const tg=(a,on,label)=>`<button class="tog${on?' on':''}" data-a="${a}" role="switch" aria-checked="${!!on}" aria-label="${label}"></button>`;
   return `<section class="card"><h2>${st[0]}</h2><div class="hint" style="margin-top:-6px">${st[1]}</div>
     ${V.push==='off'?'<button class="btn" data-a="pushon">Turn on notifications</button>':V.push==='on'?'<button class="btn ghost" data-a="pushoff">Turn off on this phone</button>':''}</section>
@@ -2204,7 +2204,7 @@ function renderTimer(){
       <div class="field">Interval bell<div class="seg" style="margin-top:4px">${[0,10,15,20,30].map(v=>`<button class="pill${s.bell===v?' on':''}" data-a="tmset" data-k="bell" data-v="${v}">${v?'Every '+v+'m':'Off'}</button>`).join('')}</div></div>
       ${s.k==='sukha'?`<div class="ctrl"><span>Sitting in Ardha Siddhasana<br><small class="hint">Also counts toward your longest sit</small></span><button class="tog${s.ardha?' on':''}" data-a="tmtog" data-k="ardha" role="switch" aria-checked="${s.ardha}" aria-label="In Ardha Siddhasana"></button></div>`:''}
       <div class="ctrl"><span>Keep the screen on</span><button class="tog${s.awake?' on':''}" data-a="tmtog" data-k="awake" role="switch" aria-checked="${s.awake}" aria-label="Keep the screen on"></button></div>
-      <div class="hint">${s.target?'A bell rings at '+dur(s.target)+'. ':''}The timer keeps counting if the phone locks. Allow notifications in Profile → Reminders to hear the end bell with the app closed.</div>
+      <div class="hint">${s.target?'A bell rings at '+dur(s.target)+'. ':''}The timer keeps counting if the phone locks.${PUSH_OK?' Allow notifications in Profile → Reminders to hear the end bell with the app closed.':' Keep the app open to hear the end bell.'}</div>
       <div class="grow"></div><button class="btn big" data-a="tmstart">Start</button></div>`;return}
   if(!TM){V.tmView=false;el.remove();return}
   const I=tmInfo(TM.k),e=tmEl(),tg=TM.target*60000,pct=tg?Math.min(1,e/tg):0,R=110,Cc=2*Math.PI*R;
