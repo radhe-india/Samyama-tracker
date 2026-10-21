@@ -1268,7 +1268,7 @@ function renderToday(){
     simple?q('sukha','Sukha Kriya','60 minutes done today','sukha','peach',sukOk(l),1)
     :prow({key:'sukha',name:'Sukha Kriya',must:1,sub:sukSub,subc:sukOk(l)?'met':'',ill:'sukha',tile:'peach',
       state:sukOk(l)?'done':st?'part':'',right:st?dur(st):l.qd.sukha?'Done':'',
-      body:`<div class="bar"><i style="width:${l.qd.sukha?100:Math.min(100,st/60*100)}%"></i></div>${qline('sukha','Ticked done in Simple mode')}${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
+      body:`<div class="bar"><i style="width:${l.qd.sukha?100:Math.min(100,st/60*100)}%"></i></div>${qline('sukha','Ticked done in Simple mode')}${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">Add a sitting</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
     simple&&I.sukhaHour?q('sukhaHour','In one stretch','A full hour in a sandhya kala','sukha','peach',!!l.qd.sukhaHour):'',
     A.aum?(simple?q('aum','AUM chanting','Done today','aum','night',l.aum>0||!!l.qd.aum)
       :prow({key:'aum',name:'AUM chanting',sub:l.aum?dur(l.aum):'Log minutes',ill:'aum',tile:'night',state:l.aum?'done':'',right:l.aum?dur(l.aum):'',body:ctl('Minutes','aum',l.aum,1,120)})):''
@@ -1276,13 +1276,12 @@ function renderToday(){
 
   // Ardha Siddhasana: progress toward 90 minutes at a stretch
   const best=Math.max(0,...Object.keys(S.logs[p]||{}).map(d=>+(S.logs[p][d].ardha)||0));
-  const ardhaSub=l.ardha>=90?'Hour and a half reached':l.ardha?'Longest today '+dur(l.ardha)+' · best '+dur(best):l.qd.ardha?'Done today':'Goal 90 minutes at a stretch'+(best?' · best '+dur(best):'');
+  const aq=l.qd.ardha&&l.ardha<90,ardhaSub=aq?'Done today':l.ardha>=90?'1.5 hours at a stretch reached':l.ardha?'Longest '+dur(l.ardha)+' · '+dur(90-l.ardha)+' to go'+(best>l.ardha?' · best '+dur(best):''):'Build up to 90 minutes at a stretch'+(best?' · best '+dur(best):'');
   const sitting=[
-    simple?q('ardha','Ardha Siddhasana','Sat in Ardha Siddhasana today · goal 90 minutes at a stretch','ardha','sage')
-    :prow({key:'ardha',name:'Ardha Siddhasana',sub:ardhaSub,subc:l.ardha>=90?'met':'',ill:'ardha',tile:'sage',state:l.ardha||l.qd.ardha?'done':'',right:l.ardha?dur(l.ardha):l.qd.ardha?'Done':'',
-      body:`<div class="bar"><i style="width:${Math.min(100,l.ardha/90*100)}%"></i></div>${qline('ardha','Ticked done in Simple mode')}${sitList('asit:',l.asits,v=>v>=90?' · 1.5 hours':v===l.ardha&&l.asits.length>1?' · longest':'','adel')}
-        <div class="grid2"><button class="btn ghost" data-a="aadd">Add a sitting</button><button class="btn" data-a="tmopen" data-k="ardha">Start timer</button></div>
-        <div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div>`}),
+    simple?q('ardha','Ardha Siddhasana','Sat today · building up to 90 minutes','ardha','sage')
+    :prow({key:'ardha',name:'Ardha Siddhasana',sub:ardhaSub,subc:aq||l.ardha>=90?'met':'',ill:'ardha',tile:'sage',
+      state:aq||l.ardha>=90?'done':l.ardha?'part':'',right:l.ardha?dur(l.ardha):aq?'Done':'',
+      body:`<div class="bar"><i style="width:${aq?100:Math.min(100,l.ardha/90*100)}%"></i></div>${qline('ardha','Ticked done in Simple mode')}${sitList('asit:',l.asits,v=>v>=90?' · 1.5 hours':v===l.ardha&&l.asits.length>1?' · longest':'','adel')}<div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div><div class="grid2"><button class="btn ghost" data-a="aadd">Add a sitting</button><button class="btn" data-a="tmopen" data-k="ardha">Start timer</button></div>`}),
     I.patanga?prow({key:'patanga',name:'Patangasana',sub:'Butterfly',ill:'patanga',tile:'rose',act:'tog',state:l.patanga?'done':''}):'',
     I.shishu?prow({key:'shishu',name:'Shishupalasana',sub:'Rock the baby',ill:'shishu',tile:'sand',act:'tog',state:l.shishu?'done':''}):''
   ].join('');
@@ -2648,7 +2647,7 @@ document.addEventListener('click',e=>{
     if(a==='qtog'){if(qDone(l,k))qClear(l,k);else{l.qd[k]=true;V.just=k}}
     if(a==='qclear')qClear(l,k);
     if(a==='qdel')delete l.qd[k];
-    if(a==='aadd'){l.asits.push(l.asits.length?15:30);syncArdha(l)}
+    if(a==='aadd'){l.asits.push(l.asits.length?20:30);syncArdha(l)}
     if(a==='adel'){l.asits.splice(+b.dataset.i,1);syncArdha(l)}
     if(a==='ctog'){l.cust[k]=!l.cust[k];if(l.cust[k])V.just='c-'+k}
     if(a==='ccyc'){const m=+b.dataset.max;l.cust[k]=((l.cust[k]||0)+1)%(m+1);if(l.cust[k])V.just='c-'+k}
