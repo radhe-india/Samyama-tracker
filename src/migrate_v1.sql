@@ -72,14 +72,14 @@ create policy "push jobs own" on public.push_jobs for all to authenticated
   using (user_id = auth.uid()) with check (user_id = auth.uid());
 
 -- 4. Run the push-tick function every 5 minutes ---------------------------
--- Before this part: deploy supabase/functions/push-tick and set its VAPID secrets (see the release notes).
--- Then put your project URL and anon key below and run this part once.
+-- Before this part: deploy supabase/functions/push-tick (Verify JWT off) and set its secrets.
+-- Replace YOUR-PROJECT and YOUR-CRON-SECRET, then run this part once.
 create extension if not exists pg_cron;
 create extension if not exists pg_net;
 select cron.unschedule('push-tick') where exists (select 1 from cron.job where jobname = 'push-tick');
 select cron.schedule('push-tick', '*/5 * * * *', $$
   select net.http_post(
     url     := 'https://YOUR-PROJECT.supabase.co/functions/v1/push-tick',
-    headers := jsonb_build_object('Content-Type','application/json','Authorization','Bearer YOUR-ANON-KEY'),
+    headers := jsonb_build_object('Content-Type','application/json','x-cron-secret','YOUR-CRON-SECRET'),
     body    := '{}'::jsonb)
 $$);

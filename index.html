@@ -2109,7 +2109,7 @@ function render(){
 /* ---------- reminders and notifications ----------
    With the app closed, reminders arrive as push notifications sent by the shared account every few minutes.
    While the app is open they also play a soft bell here. */
-const VAPID='';
+const VAPID='BMRTqz3vOV9PQrKxc8cTwMWAjtISWxhEhno2b_HnXQ38jcNirD67aKiKb7aluLBCAtAakmiV6rDwkBQ6Q0AOz-0';
 const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent),isAndroid=/Android/.test(navigator.userAgent);
 const standalone=()=>!!(navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches));
 const PUSH_OK=CLOUD&&VAPID.length>40&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;

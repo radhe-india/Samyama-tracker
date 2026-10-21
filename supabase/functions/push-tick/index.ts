@@ -1,6 +1,6 @@
 // Samyama Sadhana · sends reminders and timer bells as push notifications.
-// Runs every 5 minutes (scheduled in migrate_v1.sql). Needs these secrets set in Supabase:
-//   VAPID_PUBLIC, VAPID_PRIVATE, VAPID_SUBJECT (e.g. mailto:you@example.com)
+// Runs every 5 minutes (scheduled in migrate_v1.sql). Deploy with "Verify JWT" off; it checks its own secret instead.
+// Needs these secrets set in Supabase: VAPID_PUBLIC, VAPID_PRIVATE, VAPID_SUBJECT, CRON_SECRET
 // SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided by Supabase automatically.
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 import webpush from "npm:web-push@3.6.7";
@@ -31,7 +31,8 @@ function localMinutes(tz: string): number {
 }
 const dueNow = (now: number, at: number) => now >= at && now < at + STEP;
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
+  if (req.headers.get("x-cron-secret") !== Deno.env.get("CRON_SECRET")) return new Response("forbidden", { status: 403 });
   let sent = 0;
   // 1. timer bells that are due
   const { data: jobs } = await sb.from("push_jobs").select("id,user_id,title,body,tag").lte("at", new Date().toISOString());
