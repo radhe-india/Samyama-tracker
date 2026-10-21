@@ -506,6 +506,9 @@ body{transition:background-color .8s ease}
 .scard{background:var(--surface);border-radius:20px;box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .scard > b{font-family:var(--f-display);font-weight:500;font-size:19px}
 .card h2 .tog{flex-shrink:0}
+.sit.qline{padding:6px 12px}
+.sit.qline span{display:flex;align-items:center;gap:8px;color:var(--teal);font-weight:600}
+.sit.qline span svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .tmchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 2px 2px}
 .tmchips::-webkit-scrollbar{display:none}
 .tmchip{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--teal);color:var(--teal);background:var(--surface);border-radius:999px;padding:6px 13px 6px 9px;font-size:14px;font-weight:600}
@@ -894,6 +897,7 @@ if(!CLOUD&&ME)maybeUpgrade();
 function norm(o){
   o=o||{};const l=Object.assign({},DEF,o);
   l.sits=Array.isArray(o.sits)?o.sits.slice():(o.sukha?[o.sukha]:[]);
+  l.asits=Array.isArray(o.asits)&&o.asits.length?o.asits.slice():(+o.ardha>0?[+o.ardha]:[]);l.ardha=l.asits.length?Math.max(...l.asits):0;
   if(typeof l.sanj!=='boolean') l.sanj=!!l.sanj;
   if(typeof l.digital!=='number') l.digital=null;
   if(o.nat==null) l.nat=Math.min(100,(+o.fruit||0)+(+o.salad||0));
@@ -933,12 +937,12 @@ const sukOk=l=>sukT(l)>=60||!!l.qd.sukha;
 const natOk=l=>l.nat>=50||!!l.qd.nat;
 function qDone(l,k){if(k.startsWith('c:')){const c=custById(ME,k.slice(2));return c?custVal(c,l)>=1:!!l.qd[k]}
   return !!({surya:suryaOk(l),as:asOk(l),sukha:sukOk(l),sukhaHour:sukMax(l)>=60||l.qd.sukhaHour,nat:natOk(l),nat100:l.qd.nat100||l.nat>=100,
-    aum:l.aum>0||l.qd.aum,screen:l.qd.screen||(l.digital!=null&&l.digital<=SCREEN_MAX),silence:l.silence>0||l.qd.silence}[k]??l.qd[k])}
+    aum:l.aum>0||l.qd.aum,ardha:l.ardha>0||l.qd.ardha,screen:l.qd.screen||(l.digital!=null&&l.digital<=SCREEN_MAX),silence:l.silence>0||l.qd.silence}[k]??l.qd[k])}
 function qClear(l,k){delete l.qd[k];
   if(k==='surya'){l.sk=l.ss=l.sn=0}else if(k==='as'){l.asCyc=0}
   else if(k==='sukha'){l.sits=[];delete l.qd.sukhaHour}else if(k==='sukhaHour'){l.sits=l.sits.filter(v=>v<60)}
   else if(k==='nat'){l.nat=0;delete l.qd.nat100}else if(k==='nat100'){if(l.nat>=100)l.nat=50}
-  else if(k==='aum'){l.aum=0}else if(k==='screen'){l.digital=null;l.scrPhone=l.scrTv=0;l.scrDone=false}else if(k==='silence'){l.silence=0}
+  else if(k==='aum'){l.aum=0}else if(k==='ardha'){l.asits=[];l.ardha=0}else if(k==='screen'){l.digital=null;l.scrPhone=l.scrTv=0;l.scrDone=false}else if(k==='silence'){l.silence=0}
   else if(k.startsWith('c:')){l.cust[k.slice(2)]=0}}
 const dietOk=l=>l.dNeg&&l.dStim&&l.dNonveg&&l.dDairy;
 // Isha mandatory, one entry per check: [id, name, met, partial credit]
@@ -1179,8 +1183,9 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const UNITS={silence:'h',fruit:'%',salad:'%',nat:'%'};
 const unitOf=k=>k.startsWith('c:')?((custById(ME,k.slice(2))||{}).kind==='time'?'m':''):UNITS[k]??(['sk','ss','sn','asCyc'].includes(k)?'':'m');
 function showV(k,v){if(v==null)return '—';const u=unitOf(k);return u==='m'?dur(v):v+u}
-function getV(l,k){return k.startsWith('sit:')?l.sits[+k.slice(4)]:k.startsWith('c:')?(l.cust[k.slice(2)]||0):l[k]}
-function setV(l,k,v){if(k.startsWith('sit:'))l.sits[+k.slice(4)]=v;else if(k.startsWith('c:'))l.cust[k.slice(2)]=v;else l[k]=v}
+const syncArdha=l=>{l.ardha=l.asits.length?Math.max(...l.asits):0};
+function getV(l,k){return k.startsWith('asit:')?l.asits[+k.slice(5)]:k.startsWith('sit:')?l.sits[+k.slice(4)]:k.startsWith('c:')?(l.cust[k.slice(2)]||0):l[k]}
+function setV(l,k,v){if(k.startsWith('asit:')){l.asits[+k.slice(5)]=v;syncArdha(l)}else if(k.startsWith('sit:'))l.sits[+k.slice(4)]=v;else if(k.startsWith('c:'))l.cust[k.slice(2)]=v;else l[k]=v}
 const oid=k=>'o-'+k.replace(':','-');
 const stepper=(k,v,step,max,a)=>`<div class="step"><button data-a="${a||'inc'}" data-k="${k}" data-d="${-step}" data-max="${max}" aria-label="Less">−</button><output id="${oid(k)}" class="num">${a?dur(v):showV(k,v)}</output><button data-a="${a||'inc'}" data-k="${k}" data-d="${step}" data-max="${max}" aria-label="More">+</button></div>`;
 const slider=(k,v,step,max,label)=>`<input type="range" min="0" max="${max}" step="${step}" value="${v??0}" style="--p:${(v??0)/max*100}%" data-f="rng" data-k="${k}" aria-label="${label}">`;
@@ -1254,13 +1259,16 @@ function renderToday(){
 
   // Sukha Kriya: any sitting can be logged; 60 minutes in total is the mandatory
   const short20=l.sits.some(v=>v>0&&v<20);
-  const sits=l.sits.map((v,i)=>`<div class="sit"><div class="ctrl"><span>Sitting ${i+1}${v>=60?' · full hour':v>0&&v<20?' · under 20m':''}</span><div style="display:flex;align-items:center">${stepper('sit:'+i,v,1,180)}<button class="x" data-a="sdel" data-i="${i}" aria-label="Remove sitting ${i+1}">×</button></div></div>${slider('sit:'+i,v,1,180,'Sitting '+(i+1)+' minutes')}</div>`).join('');
-  const sukSub=sukOk(l)?(mx>=60?'Full hour in one stretch':dur(st)+' · 60 minutes reached'):st?dur(st)+' so far · '+(60-st)+'m to go':'60 minutes a day'+(I.sukhaHour?' · ideally one stretch in a sandhya':'');
+  // a sitting list; a tick made in Simple mode shows as its own removable line
+  const sitList=(pre,arr,mark,del)=>arr.map((v,i)=>`<div class="sit"><div class="ctrl"><span>Sitting ${i+1}${mark(v)}</span><div style="display:flex;align-items:center">${stepper(pre+i,v,1,180)}<button class="x" data-a="${del}" data-i="${i}" aria-label="Remove sitting ${i+1}">×</button></div></div>${slider(pre+i,v,1,180,'Sitting '+(i+1)+' minutes')}</div>`).join('');
+  const qline=(k,t)=>l.qd[k]?`<div class="sit qline"><div class="ctrl"><span>${CHECK}${t}</span><button class="x" data-a="qdel" data-k="${k}" aria-label="Remove">×</button></div></div>`:'';
+  const sits=sitList('sit:',l.sits,v=>v>=60?' · full hour':v>0&&v<20?' · under 20m':'','sdel');
+  const sukSub=st<60&&l.qd.sukha?'Done today':sukOk(l)?(mx>=60?'Full hour in one stretch':dur(st)+' · 60 minutes reached'):st?dur(st)+' so far · '+(60-st)+'m to go':'60 minutes a day'+(I.sukhaHour?' · ideally one stretch in a sandhya':'');
   const balancing=[
     simple?q('sukha','Sukha Kriya','60 minutes done today','sukha','peach',sukOk(l),1)
     :prow({key:'sukha',name:'Sukha Kriya',must:1,sub:sukSub,subc:sukOk(l)?'met':'',ill:'sukha',tile:'peach',
-      state:sukOk(l)?'done':st?'part':'',right:st?dur(st):'',
-      body:`<div class="bar"><i style="width:${Math.min(100,st/60*100)}%"></i></div>${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}${l.qd.sukha?'<div class="ctrl"><span>Marked done with a quick tick</span><button class="linkbtn" data-a="qclear" data-k="sukha">Untick</button></div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
+      state:sukOk(l)?'done':st?'part':'',right:st?dur(st):l.qd.sukha?'Done':'',
+      body:`<div class="bar"><i style="width:${l.qd.sukha?100:Math.min(100,st/60*100)}%"></i></div>${qline('sukha','Ticked done in Simple mode')}${sits}${short20?'<div class="hint">Recommended: at least 20 minutes in each sitting.</div>':''}<div class="grid2"><button class="btn ghost" data-a="sadd">${l.sits.length?'Add a sitting':'Add a sitting'}</button><button class="btn" data-a="tmopen" data-k="sukha">Start timer</button></div>`}),
     simple&&I.sukhaHour?q('sukhaHour','In one stretch','A full hour in a sandhya kala','sukha','peach',!!l.qd.sukhaHour):'',
     A.aum?(simple?q('aum','AUM chanting','Done today','aum','night',l.aum>0||!!l.qd.aum)
       :prow({key:'aum',name:'AUM chanting',sub:l.aum?dur(l.aum):'Log minutes',ill:'aum',tile:'night',state:l.aum?'done':'',right:l.aum?dur(l.aum):'',body:ctl('Minutes','aum',l.aum,1,120)})):''
@@ -1268,11 +1276,13 @@ function renderToday(){
 
   // Ardha Siddhasana: progress toward 90 minutes at a stretch
   const best=Math.max(0,...Object.keys(S.logs[p]||{}).map(d=>+(S.logs[p][d].ardha)||0));
-  const ardhaSub=l.ardha>=90?'Hour and a half reached':l.ardha?'Longest today '+dur(l.ardha)+' · best '+dur(best):'Longest stretch · goal 90 minutes'+(best?' · best '+dur(best):'');
+  const ardhaSub=l.ardha>=90?'Hour and a half reached':l.ardha?'Longest today '+dur(l.ardha)+' · best '+dur(best):l.qd.ardha?'Done today':'Goal 90 minutes at a stretch'+(best?' · best '+dur(best):'');
   const sitting=[
-    prow({key:'ardha',name:'Ardha Siddhasana',sub:ardhaSub,subc:l.ardha>=90?'met':'',ill:'ardha',tile:'sage',state:l.ardha>=90?'done':l.ardha?'part':'',right:l.ardha?dur(l.ardha):'',
-      body:`<div class="bar"><i style="width:${Math.min(100,l.ardha/90*100)}%"></i></div>`+(simple?`<div class="ctrl"><span>Longest stretch today</span></div><div class="seg">${[15,30,45,60,75,90].map(v=>`<button class="pill${l.ardha===v?' on':''}" data-a="set" data-k="ardha" data-v="${v}">${dur(v)}</button>`).join('')}</div>`:ctl('Longest sit','ardha',l.ardha,1,180))
-        +'<div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div><button class="btn ghost" data-a="tmopen" data-k="ardha">Time a sit</button>'}),
+    simple?q('ardha','Ardha Siddhasana','Sat in Ardha Siddhasana today · goal 90 minutes at a stretch','ardha','sage')
+    :prow({key:'ardha',name:'Ardha Siddhasana',sub:ardhaSub,subc:l.ardha>=90?'met':'',ill:'ardha',tile:'sage',state:l.ardha||l.qd.ardha?'done':'',right:l.ardha?dur(l.ardha):l.qd.ardha?'Done':'',
+      body:`<div class="bar"><i style="width:${Math.min(100,l.ardha/90*100)}%"></i></div>${qline('ardha','Ticked done in Simple mode')}${sitList('asit:',l.asits,v=>v>=90?' · 1.5 hours':v===l.ardha&&l.asits.length>1?' · longest':'','adel')}
+        <div class="grid2"><button class="btn ghost" data-a="aadd">Add a sitting</button><button class="btn" data-a="tmopen" data-k="ardha">Start timer</button></div>
+        <div class="hint">Begin with shorter sits and a cushion. Coming out: stretch the leg, pause 2–3 minutes, rise slowly.</div>`}),
     I.patanga?prow({key:'patanga',name:'Patangasana',sub:'Butterfly',ill:'patanga',tile:'rose',act:'tog',state:l.patanga?'done':''}):'',
     I.shishu?prow({key:'shishu',name:'Shishupalasana',sub:'Rock the baby',ill:'shishu',tile:'sand',act:'tog',state:l.shishu?'done':''}):''
   ].join('');
@@ -1339,7 +1349,7 @@ function renderToday(){
     <div class="rbtns">${shoBtn(0)}${shoBtn(1)}</div>
   </section>
 
-  <section class="sec">${sech('Balancing sadhana')}<div class="tmchips">${timedList().map(x=>`<button class="tmchip" data-a="tmopen" data-k="${x.k}"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg>${esc(x.n)}</button>`).join('')}</div><div class="list">${balancing}</div></section>
+  <section class="sec">${sech('Balancing sadhana')}${simple?'':`<div class="tmchips">${timedList().map(x=>`<button class="tmchip" data-a="tmopen" data-k="${x.k}"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg>${esc(x.n)}</button>`).join('')}</div>`}<div class="list">${balancing}</div></section>
   <section class="sec">${sech('Sitting','Toward 1.5 hours at a stretch')}<div class="list">${sitting}</div></section>
 
   <section class="sec" id="r-food">
@@ -2174,8 +2184,8 @@ function timerStart(){const s=V.tmSetup;bell(false);
 function timerLog(){
   const m=Math.round(tmEl()/60000),k=TM.k,day=TM.day||todayK();let msg='';
   if(m>=1){const l=mut(ME,day);
-    if(k==='sukha'){l.sits.push(m);if(TM.ardha)l.ardha=Math.max(l.ardha,m);msg='Logged '+dur(m)+' of Sukha Kriya'+(TM.ardha?' and Ardha Siddhasana':'')}
-    else if(k==='ardha'){l.ardha=Math.max(l.ardha,m);msg='Logged '+dur(m)+' in Ardha Siddhasana'}
+    if(k==='sukha'){l.sits.push(m);if(TM.ardha){l.asits.push(m);syncArdha(l)}msg='Logged '+dur(m)+' of Sukha Kriya'+(TM.ardha?' and Ardha Siddhasana':'')}
+    else if(k==='ardha'){l.asits.push(m);syncArdha(l);msg='Logged '+dur(m)+' in Ardha Siddhasana'}
     else if(k==='aum'){l.aum=(l.aum||0)+m;msg='Logged '+dur(m)+' of AUM chanting'}
     else if(k.startsWith('c:')){const id=k.slice(2);l.cust[id]=(l.cust[id]||0)+m;msg='Logged '+dur(m)+' of '+tmInfo(k).n}
     save();V.just=k==='ardha'?'ardha':k==='sukha'?'sukha':k}
@@ -2479,7 +2489,7 @@ function simFill(){
       l.bhuta=ch(q);l.sk=ch(q)?rnd(2,4):0;l.ss=ch(q)?rnd(10,18):0;l.asCyc=ch(q*.9)?rnd(6,16):0;l.asSec=[30,45,60,90][rnd(0,3)];
       l.sck=ch(q)?(ch(q)?2:1):(ch(.5)?1:0);l.shoonya=ch(q)?(ch(q*.95)?2:1):0;l.shambhavi=ch(q)?(ch(q)?2:1):0;
       l.sits=ch(q)?(ch(q)?[rnd(55,75)]:[rnd(25,45),rnd(10,25)]):(ch(.5)?[rnd(10,30)]:[]);
-      l.aum=ch(q*.8)?rnd(5,25):0;l.ardha=Math.max(0,Math.round(15+prog*55*(.6+q*.4)+rnd(-6,6)));
+      l.aum=ch(q*.8)?rnd(5,25):0;l.asits=[Math.max(5,Math.round(15+prog*55*(.6+q*.4)+rnd(-6,6)))];syncArdha(l);
       l.patanga=ch(q);l.shishu=ch(q*.9);
       l.dNeg=ch(q+.1);l.dStim=ch(q+.15);l.dNonveg=ch(q+.3);l.dDairy=ch(q);l.dOut=ch(q+.05);l.sattvic=ch(q);l.sn=0;l.v1=1;
       l.nat=Math.max(0,Math.min(100,Math.round((q*65+rnd(-10,15))/5)*5));
@@ -2588,7 +2598,7 @@ document.addEventListener('click',e=>{
   if(a==='day'){const n=addD(V.day,+b.dataset.d);if(n<=todayK()){V.day=n;V.open=null}render();return}
   if(a==='today'){V.day=todayK();V.open=null;render();return}
   if(a==='open'){V.open=V.open===b.dataset.k?null:b.dataset.k;render();return}
-  if(a==='jump'){let k=b.dataset.k;if(k==='surya'&&!simpleMode())k=sadOf(ME).surya[0];V.open=!simpleMode()&&['sk','ss','sn','as','sukha','aum'].includes(k)?k:null;render();
+  if(a==='jump'){let k=b.dataset.k;if(k==='surya'&&!simpleMode())k=sadOf(ME).surya[0];V.open=!simpleMode()&&['sk','ss','sn','as','sukha','aum','ardha'].includes(k)?k:null;render();
     const el=document.getElementById('r-'+k);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('pop')}return}
   if(a==='goto'){V.day=b.dataset.k;V.tab='today';V.sub=null;render();scrollTo(0,0);return}
   if(a==='sel'){V.sel=V.sel===b.dataset.k?null:b.dataset.k;render();return}
@@ -2633,10 +2643,13 @@ document.addEventListener('click',e=>{
     sadT().custom.push({id:'c'+Date.now().toString(36),name:n,kind:cf.kind,target:cf.kind==='count'||cf.kind==='time'?+cf.target:0,rounds:cf.kind==='rounds'?cf.rounds:0,unit:cf.kind==='count'?(cf.unit||'').trim():'',plan:cf.plan?Math.max(5,+cf.d||15):0});
     V.cf=null;sadChanged();return}
   if(a==='cdel'){sadT().custom.splice(+b.dataset.i,1);sadChanged();return}
-  if(['inc','cyc','tog','set','sadd','sdel','sho','qtog','qclear','ctog','ccyc'].includes(a)){
+  if(['inc','cyc','tog','set','sadd','sdel','sho','qtog','qclear','qdel','aadd','adel','ctog','ccyc'].includes(a)){
     const l=mut(ME,V.day),k=b.dataset.k;
     if(a==='qtog'){if(qDone(l,k))qClear(l,k);else{l.qd[k]=true;V.just=k}}
     if(a==='qclear')qClear(l,k);
+    if(a==='qdel')delete l.qd[k];
+    if(a==='aadd'){l.asits.push(l.asits.length?15:30);syncArdha(l)}
+    if(a==='adel'){l.asits.splice(+b.dataset.i,1);syncArdha(l)}
     if(a==='ctog'){l.cust[k]=!l.cust[k];if(l.cust[k])V.just='c-'+k}
     if(a==='ccyc'){const m=+b.dataset.max;l.cust[k]=((l.cust[k]||0)+1)%(m+1);if(l.cust[k])V.just='c-'+k}
     if(a==='inc'){const v=Math.round(((getV(l,k)??0)+ +b.dataset.d)*10)/10;setV(l,k,Math.max(0,Math.min(+b.dataset.max,v)));if(k==='scrPhone'||k==='scrTv'){l.digital=l.scrPhone+l.scrTv;if(document.getElementById('r-scard')&&!l.scrDone){save();const o=document.getElementById(oid(k)),t=document.getElementById('scrtot');if(o)o.textContent=dur(l[k]);if(t)t.textContent=dur(l.digital);return}l.scrDone=true}}
