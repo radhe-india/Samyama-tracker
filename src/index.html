@@ -379,6 +379,9 @@ input[type=time]::-webkit-date-and-time-value{text-align:left}
 .betanote{display:flex;gap:10px;align-items:flex-start;background:var(--terra-soft);border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.45}
 nav.tabs button{position:relative}
 .bdot{position:absolute;top:2px;right:calc(50% - 22px);font-style:normal;font-size:10px;font-weight:700;color:var(--terra);line-height:1}
+.chg{margin:0;padding:0 0 0 18px;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.45}
+.chg li::marker{color:var(--terra)}
+#news .sheet{z-index:33}#news .sheet-bg{z-index:32}
 .presets{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
 .preset{position:relative;border:0;background:var(--surface);border-radius:18px;padding:14px 12px 12px;box-shadow:0 2px 10px var(--shadow);text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0}
 .preset.on{box-shadow:0 0 0 2px var(--teal),0 2px 10px var(--shadow)}
@@ -673,6 +676,24 @@ syncProg('dec26');
 const LAT=12.9716, LNG=77.5946, TZ=5.5; // Bengaluru
 const SCREEN_IDEAL=90, SCREEN_MAX=120;
 const SHOONYA_GAP=30;
+const APP_VERSION='1.1';
+// newest first; shown once after each update and kept in Profile → App updates
+const CHANGES=[
+  {v:'1.1',d:'2026-10-23',t:'A score that follows your sadhana',items:[
+    'Your daily score now counts sadhana more than food: practices count for 75 and the food guidelines for 25.',
+    'Within sadhana, Shakti Chalana Kriya and Shoonya count the most, then Shambhavi and Surya or Yogasanas, then Sukha Kriya.',
+    'Extra practices you have switched on now make up 20% of the score instead of 30%.',
+    'Scores for days you logged earlier have been recalculated the same way, so your ring and charts may look a little different.',
+    'This page now lists every update. Find it any time in Profile → App updates.']},
+  {v:'1.0',d:'2026-10-21',t:'Your sadhana, your way',items:[
+    'Start on the Isha mandatory checklist and add or remove other practices in Profile → My sadhana. Past days keep the checklist they were logged with.',
+    'Choose Simple logging (one tap) or Advanced (cycles, minutes and sittings).',
+    'Sangha is opt-in. Others only ever see a daily summary, never details or reflections.',
+    'A sitting timer for Sukha Kriya, Ardha Siddhasana and AUM chanting, with bells.',
+    'Reminders for Ardha Siddhasana and screen time, and notifications with the app closed.',
+    'My day (beta) suggests a plan starting 45 minutes after you wake.',
+    'A short tour of the app, which you can replay from Profile.']}];
+const verLt=(a,b)=>{const x=String(a).split('.').map(Number),y=String(b).split('.').map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)<(y[i]||0)}return false};
 const PLAN_AFTER_WAKE=45; // the suggested plan begins this long after waking
 // Sadhguru quotes, from isha.sadhguru.org and quotewise.io
 const QUOTES=[
@@ -891,7 +912,7 @@ let V={tab:'today',sub:null,mid:null,day:todayK(),kind:isWeekend(todayK())?'week
 // first time someone opens v1.0: walk them through setting up their sadhana
 function maybeUpgrade(){const P=ME&&S.people[ME];if(!P||isAdmin()||P.sad.seen)return;
   V.obFlow='upgrade';V.obSad=fixSad(sadSnap(P.sad));V.obVis=!!P.visible;V.obShare=!!P.share;V.ob='new'}
-function applyObChoices(P){if(V.obFlow==='upgrade'&&P.sad)P.sad.seen=1;else P.sad=fixSad({...sadSnap(V.obSad),seen:1});P.visible=!!V.obVis;P.share=!!(V.obVis&&V.obShare);V.obSad={...defSad(),mode:'simple'};V.obVis=V.obShare=false}
+function applyObChoices(P){if(V.obFlow==='upgrade'&&P.sad)P.sad.seen=1;else P.sad=fixSad({...sadSnap(V.obSad),seen:1,ver:APP_VERSION});P.visible=!!V.obVis;P.share=!!(V.obVis&&V.obShare);V.obSad={...defSad(),mode:'simple'};V.obVis=V.obShare=false}
 if(!CLOUD&&ME)maybeUpgrade();
 
 function norm(o){
@@ -946,11 +967,14 @@ function qClear(l,k){delete l.qd[k];
   else if(k.startsWith('c:')){l.cust[k.slice(2)]=0}}
 const dietOk=l=>l.dNeg&&l.dStim&&l.dNonveg&&l.dDairy;
 // Isha mandatory, one entry per check: [id, name, met, partial credit]
+// v1.1 weights: sadhana counts for 75, food for 25. Shakti Chalana Kriya and Shoonya count most.
+const MW={sck:20,shoonya:20,shambhavi:12,hatha:12,sukha:11,dNeg:4,dStim:4,dNonveg:4,dDairy:4,nat:9};
+const EXTRA_SHARE=.2; // share of the score from practices switched on beyond the mandatory
 function mandList(l){
   return [['hatha','Surya or Yogasanas',hathaOk(l),0],['sck','Shakti Chalana Kriya',l.sck>=1,0],['shambhavi','Shambhavi',l.shambhavi>=1,0],
     ['shoonya','Shoonya twice',l.shoonya>=2,l.shoonya/2],['sukha','Sukha Kriya 60 min',sukOk(l),Math.min(1,sukT(l)/60)],
     ['dNeg','No negative-pranic food',!!l.dNeg,0],['dStim','No stimulants',!!l.dStim,0],['dNonveg','No non-veg or eggs',!!l.dNonveg,0],['dDairy','No dairy',!!l.dDairy,0],
-    ['nat','Natural food 50%+',natOk(l),Math.min(1,l.nat/50)]].map(([id,n,ok,pt])=>({id,n,ok:!!ok,pt:ok?1:pt}));
+    ['nat','Natural food 50%+',natOk(l),Math.min(1,l.nat/50)]].map(([id,n,ok,pt])=>({id,n,ok:!!ok,pt:ok?1:pt,w:MW[id]}));
 }
 const mandMet=l=>mandList(l).filter(x=>x.ok).length;
 const MAND_N=10;
@@ -975,11 +999,11 @@ function extraList(l,p){
   C.custom.forEach(c=>out.push([c.name,custVal(c,l)]));
   return out;
 }
-// the day's score: 70% Isha mandatory, 30% whatever else is switched on
+// the day's score: the Isha mandatory, weighted by MW, plus whatever else is switched on
 function score(l,p){
-  const M=mandList(l),m=M.reduce((a,x)=>a+x.pt,0)/M.length,X=extraList(l,p||ME);
+  const M=mandList(l),m=M.reduce((a,x)=>a+x.w*x.pt,0)/M.reduce((a,x)=>a+x.w,0),X=extraList(l,p||ME);
   if(!X.length)return Math.round(m*100);
-  return Math.round((.7*m+.3*X.reduce((a,x)=>a+x[1],0)/X.length)*100);
+  return Math.round(((1-EXTRA_SHARE)*m+EXTRA_SHARE*X.reduce((a,x)=>a+x[1],0)/X.length)*100);
 }
 const nnOk=mandOk;
 function streak(p){
@@ -1216,7 +1240,7 @@ function renderHeader(){
   top.hidden=false;tabs.hidden=false;
   const c=S.people[ME].color;
   const meAv=`<button class="av c-${c} ring2" data-a="tab" data-t="profile" aria-label="Profile" style="color:var(${colorVar(c)})">${avInner(ME)}</button>`;
-  const subTitles={sad:'My sadhana',rem:'Reminders',backup:'Backup',import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
+  const subTitles={updates:'App updates',sad:'My sadhana',rem:'Reminders',backup:'Backup',import:'Import entries',simdata:'Simulate data',mypw:'Password',journey:'Journey colours',durs:'Practice times',sangha:'Sangha',edit:'Edit profile',member:V.mid?firstName(V.mid):''};
   const titles={plan:'My day',progress:'Progress',profile:'Profile'};
   if(V.tab==='today') top.innerHTML=`<div class="greet"><small>${isAdmin()?'Admin sandbox'+(ADMIN_TODAY?' · pretend today '+short(ADMIN_TODAY):''):'Namaskaram'}</small><b>${esc(nm(ME))}</b></div>${meAv}`;
   else if(V.tab==='profile'&&V.sub) top.innerHTML=`<div class="ptitle"><button class="back" data-a="back" aria-label="Back">${BACK}</button>${esc(subTitles[V.sub])}</div>`;
@@ -1728,6 +1752,7 @@ function renderProfile(){
   </div>
   <div class="sgroup">App</div>
   <div class="slist">
+    ${srow('data-a="gosub" data-s="updates"','copy','peach','App updates','Version '+APP_VERSION+' · what changed in each update')}
     <div><div class="srow" style="cursor:default"><span class="sico t-dusk">${ico('moon')}</span><span><b>Appearance</b></span><span></span></div>
     <div style="padding:0 14px 14px"><div class="segtabs">${[['system','Automatic'],['light','Light'],['dark','Dark']].map(([v,t])=>`<button class="${THEME===v?'on':''}" data-a="theme" data-v="${v}">${t}</button>`).join('')}</div></div></div>
     
@@ -1741,7 +1766,7 @@ function renderProfile(){
     ${V.confirmReset?`<div style="padding:12px 14px;display:flex;flex-direction:column;gap:10px"><div class="hint">${CLOUD?'This deletes all your logged days from your account. It cannot be undone.':'This clears every entry and plan for everyone on this phone.'}</div><div class="grid2"><button class="btn ghost" data-a="reset0">Keep data</button><button class="btn warn" data-a="reset1">Clear everything</button></div></div>`
       :srow('data-a="reset"','trash','rose',CLOUD?'Delete all my entries':'Clear all data','','',' danger')}
   </div>
-  <p class="hint" style="text-align:center;margin:4px 0 0">${CLOUD?syncLine():'Test version. Entries are saved on this phone until the shared account is connected.'}</p>`;
+  <p class="hint" style="text-align:center;margin:4px 0 0">${CLOUD?syncLine():'Test version. Entries are saved on this phone until the shared account is connected.'}<br>Samyama Sadhana · version ${APP_VERSION}</p>`;
 }
 /* ---------- My sadhana: the checklist, edited the way it appears on Today ---------- */
 const LOCK='<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>';
@@ -1839,6 +1864,20 @@ function sadDiff(A,B){
   if(hp(A)!==hp(B)&&!B.int.hathaBoth)out.push(['Hatha pattern',{alt:'Yogasanas Mon, Wed, Fri',alt2:'Surya Mon, Wed, Fri',both:'Both daily'}[B.hatha]]);
   return out}
 const sadDirty=()=>!!(V.sadDraft&&sadDiff(sadOf(ME),V.sadDraft).length);
+const changeList=list=>list.map(c=>`<section class="card"><h2>${esc(c.t)} <span>Version ${c.v} · ${short(c.d)}</span></h2><ul class="chg">${c.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`).join('');
+function newSince(){const P=ME&&S.people[ME];if(!P||!P.sad.seen||isAdmin())return [];const seen=P.sad.ver||'1.0';return CHANGES.filter(c=>verLt(seen,c.v))}
+function renderNews(){
+  let el=document.getElementById('news');const list=newSince();
+  if(V.ob||V.tour!=null||V.tmView||!list.length||V.tab!=='today'||V.sub){if(el)el.remove();return}
+  if(!el){el=document.createElement('div');el.id='news';document.body.appendChild(el)}
+  el.innerHTML=`<div class="sheet-bg"></div><div class="sheet" role="dialog" aria-label="What's new"><div class="grab"></div>
+    <div class="eb" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);font-weight:700">What's new · version ${APP_VERSION}</div>
+    ${list.map(c=>`<h3>${esc(c.t)}</h3><ul class="chg">${c.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`).join('')}
+    <button class="btn" data-a="newsok">Got it</button><button class="linkbtn" style="text-align:center" data-a="newsall">See all updates</button></div>`;
+}
+function renderUpdates(){return `<p class="note" style="margin:0 4px">Every update to the app, newest first. You are on version ${APP_VERSION}.</p>${changeList(CHANGES)}
+  <section class="card"><h2>How the daily score works</h2><div class="hint" style="margin-top:-4px">Isha mandatory practices make up ${Math.round((1-EXTRA_SHARE)*100)}% of the score, and anything else on your checklist ${Math.round(EXTRA_SHARE*100)}%. Within the mandatory:</div>
+    <dl class="dl">${mandList(norm({})).map(x=>`<dt>${esc(x.n)}</dt><dd>${x.w}</dd>`).join('')}</dl></section>`}
 function renderSadBar(){
   let bar=document.getElementById('sadbar'),sh=document.getElementById('sadsheet');
   const on=V.tab==='profile'&&V.sub==='sad'&&!V.ob;
@@ -2069,6 +2108,7 @@ function render(){
   else if(V.tab==='plan') h=renderPlan();
   else if(V.tab==='progress') h=renderProgress();
   else if(V.sub==='durs') h=renderDurs();
+  else if(V.sub==='updates') h=renderUpdates();
   else if(V.sub==='sad'){if(!V.sadDraft)V.sadDraft=fixSad(sadSnap(sadOf(ME)));h=renderSad()}
   else if(V.sub==='rem') h=renderRem();
   else if(V.sub==='sangha'){h=renderSangha();if(CLOUD&&!V.sanghaFresh&&S.people[ME].visible){V.sanghaFresh=true;pushNow().then(fetchSangha).then(()=>{if(V.sub==='sangha')render()})}}
@@ -2082,7 +2122,7 @@ function render(){
   else h=renderProfile();
   $('#main').innerHTML=h;
   V.just=null;
-  renderSheet();renderTimer();renderSadBar();
+  renderSheet();renderTimer();renderSadBar();renderNews();
   if(V.toast){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=V.toast;document.body.appendChild(t);V.toast=null;setTimeout(()=>t.remove(),3800)}
   const ds=document.getElementById('dstrip');if(ds){const on=ds.querySelector('.on');if(on)ds.scrollLeft=on.offsetLeft-ds.clientWidth+on.offsetWidth+4}
   renderTour();
@@ -2283,7 +2323,7 @@ async function pushNow(){
   if(!CLOUD||!ME||syncing)return;syncing=true;
   S.synced=S.synced||{};const snap=S.synced[ME]||(S.synced[ME]={p:null,d:{}});const mine=S.logs[ME]||{};
   const ups=[],nts=[],dels=[],js={};
-  const force=!snap.sv; // once after v1.0: resend every day so each carries its sangha summary
+  const force=(snap.sv||0)<2; // once after each scoring change: resend every day so its sangha summary carries the new score
   for(const k in mine){const l=norm(mine[k]),j=JSON.stringify(l);if(force||snap.d[k]!==j){const {note,...data}=l;ups.push({user_id:ME,day:k,data,summary:summaryOf(atK(l,k),ME),updated_at:new Date().toISOString()});nts.push({user_id:ME,day:k,text:note||'',updated_at:new Date().toISOString()});js[k]=j}}
   for(const k in snap.d) if(!mine[k]) dels.push(k);
   const pf=pfOf(S.people[ME]),pj=JSON.stringify(pf);
@@ -2292,7 +2332,7 @@ async function pushNow(){
       const r2=await sb.from('notes').upsert(nts.slice(i,i+200),{onConflict:'user_id,day'});if(r2.error)throw r2.error}
     if(dels.length){const r=await sb.from('logs').delete().eq('user_id',ME).in('day',dels);if(r.error)throw r.error;await sb.from('notes').delete().eq('user_id',ME).in('day',dels)}
     if(snap.p!==pj){const r=await sb.from('profiles').update({...pf,updated_at:new Date().toISOString()}).eq('id',ME);if(r.error)throw r.error}
-    Object.assign(snap.d,js);dels.forEach(k=>delete snap.d[k]);snap.p=pj;snap.sv=1;syncState='ok';lastSync=Date.now();
+    Object.assign(snap.d,js);dels.forEach(k=>delete snap.d[k]);snap.p=pj;snap.sv=2;syncState='ok';lastSync=Date.now();
   }catch(e){syncState=navigator.onLine===false?'offline':'error';console.warn('sync',e)}
   finally{syncing=false;saveLocal()}
 }
@@ -2530,8 +2570,8 @@ document.addEventListener('click',e=>{
   if(a==='tmcancel'){V.tmCancel=true;renderTimer();return}
   if(a==='tmcancel0'){V.tmCancel=false;renderTimer();return}
   if(a==='tmcancel1'){V.tmCancel=false;timerClear();V.toast='Sitting discarded.';render();return}
-  if(a==='tournext'){V.tour++;if(V.tour>=TOUR.length){V.tour=null;S.people[ME].sad.tour=1;save();scrollTo(0,0)}renderTour();return}
-  if(a==='tourend'){V.tour=null;S.people[ME].sad.tour=1;save();renderTour();return}
+  if(a==='tournext'){V.tour++;if(V.tour>=TOUR.length){V.tour=null;S.people[ME].sad.tour=1;save();scrollTo(0,0)}renderTour();renderNews();return}
+  if(a==='tourend'){V.tour=null;S.people[ME].sad.tour=1;save();renderTour();renderNews();return}
   if(a==='tourstart'){V.tab='today';V.sub=null;V.day=todayK();V.tour=0;render();scrollTo(0,0);renderTour();return}
   if(a==='obvis'){V.obVis=b.dataset.v==='1';if(!V.obVis)V.obShare=false;render();return}
   if(a==='obshare'){V.obShare=!V.obShare;render();return}
@@ -2616,12 +2656,13 @@ document.addEventListener('click',e=>{
   if(a==='signout'&&CLOUD){cloudSignOut();return}
   if(a==='signout'){ls.del(STORE+'-me');ls.del(STORE+'-adminok');ADMIN_TODAY=null;ME=null;V.ob=S.order.some(id=>!S.people[id].demo)?'who':'welcome';V.tab='today';V.sub=null;render();scrollTo(0,0);return}
   if(a==='sadmode'){if(V.ob)V.obSad.mode=b.dataset.v;else{sadOf(ME).mode=b.dataset.v;if(V.sadDraft)V.sadDraft.mode=b.dataset.v;save()}render();return}
+  if(a==='newsok'||a==='newsall'){S.people[ME].sad.ver=APP_VERSION;save();if(a==='newsall'){V.tab='profile';V.sub='updates'}render();scrollTo(0,0);return}
   if(a==='introok'){sadOf(ME).intro=1;if(V.tour===0)V.tour=1;save();V.toast='You can change it any time in Profile → My sadhana.';render();return}
   if(a==='introedit'){sadOf(ME).intro=1;save();V.tour=null;V.tab='profile';V.sub='sad';render();scrollTo(0,0);return}
   if(a==='sadguide'){INT.forEach(x=>sadT().int[x.id]=true);sadChanged();return}
   if(a==='sadreview'){V.sadConfirm=true;renderSadBar();return}
   if(a==='sadkeep'){V.sadConfirm=false;V.sadLeave=null;renderSadBar();return}
-  if(a==='sadsave'){const P=S.people[ME],o=P.sad;sadCommit(P,{...sadSnap(V.sadDraft),mode:o.mode,rem:o.rem,seen:o.seen,tour:o.tour,intro:1});
+  if(a==='sadsave'){const P=S.people[ME],o=P.sad;sadCommit(P,{...sadSnap(V.sadDraft),mode:o.mode,rem:o.rem,seen:o.seen,tour:o.tour,intro:1,ver:o.ver});
     const go=V.sadLeave;V.sadDraft=null;V.sadConfirm=false;V.sadLeave=null;V.cf=null;save();rebuildPlans();V.toast='Checklist saved. It applies from today.';
     if(go)leaveTo(go);else render();return}
   if(a==='saddiscard'){const go=V.sadLeave;V.sadDraft=null;V.sadConfirm=false;V.sadLeave=null;V.cf=null;if(go)leaveTo(go);else render();return}
